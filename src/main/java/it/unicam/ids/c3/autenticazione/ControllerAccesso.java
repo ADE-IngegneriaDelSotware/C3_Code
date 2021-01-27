@@ -1,13 +1,11 @@
 package it.unicam.ids.c3.autenticazione;
 
 import it.unicam.ids.c3.personale.Cliente;
-import it.unicam.ids.c3.personale.ClienteRepository;
+import it.unicam.ids.c3.dbmanager.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

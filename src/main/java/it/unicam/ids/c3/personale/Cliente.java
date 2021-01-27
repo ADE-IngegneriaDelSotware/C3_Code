@@ -1,16 +1,13 @@
 package it.unicam.ids.c3.personale;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Cliente{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String nome;
     private String cognome;
@@ -18,6 +15,10 @@ public class Cliente{
     private String email;
     private String userName;
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ruolo_id", referencedColumnName = "id")
+    private Ruolo ruolo;
 
     public Cliente(String nome, String cognome, String codiceFiscale, String email, String userName, String password) {
         this.nome = nome;
@@ -28,18 +29,7 @@ public class Cliente{
         this.password = password;
     }
 
-    public Cliente(long id, String nome, String cognome, String codiceFiscale, String email, String userName, String password) {
-        this.id = id;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.codiceFiscale = codiceFiscale;
-        this.email = email;
-        this.userName = userName;
-        this.password = password;
-    }
-
     public Cliente() {
-
     }
 
     public long getId() {
@@ -70,6 +60,14 @@ public class Cliente{
         return password;
     }
 
+    public Ruolo getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(Ruolo ruolo) {
+        this.ruolo = ruolo;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -80,6 +78,7 @@ public class Cliente{
                 ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", ruolo=" + ruolo +
                 '}';
     }
 }

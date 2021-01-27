@@ -1,7 +1,5 @@
 package it.unicam.ids.c3.autenticazione;
 
-import it.unicam.ids.c3.personale.ClienteRepository;
-import it.unicam.ids.c3.view.InteractManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

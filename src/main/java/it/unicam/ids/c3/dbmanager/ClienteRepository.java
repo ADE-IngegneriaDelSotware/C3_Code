@@ -1,5 +1,6 @@
-package it.unicam.ids.c3.personale;
+package it.unicam.ids.c3.dbmanager;
 
+import it.unicam.ids.c3.personale.Cliente;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
