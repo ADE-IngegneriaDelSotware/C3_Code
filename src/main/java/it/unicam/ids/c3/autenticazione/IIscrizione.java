@@ -18,9 +18,9 @@ import java.io.IOException;
 public class IIscrizione {
 
     @Autowired
-    private ControllerIscrizione ci;
+    private GestoreIscrizione ci;
     @Autowired
-    private ControllerAccesso ca;
+    private GestoreAccesso ca;
 
     @FXML
     private TextField nomeIscrizione;
@@ -69,11 +69,11 @@ public class IIscrizione {
         stage1.close();
     }
 
-    public void setController(ControllerIscrizione ci) {
+    public void setController(GestoreIscrizione ci) {
         this.ci = ci;
     }
 
-    public void setControllerAccesso(ControllerAccesso ca) {
+    public void setControllerAccesso(GestoreAccesso ca) {
         this.ca = ca;
     }
 }

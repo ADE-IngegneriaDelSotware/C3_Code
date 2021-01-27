@@ -1,14 +1,8 @@
 package it.unicam.ids.c3;
 
-import it.unicam.ids.c3.dbmanager.AddettoNegozioRepository;
-import it.unicam.ids.c3.dbmanager.AmministratoreRepository;
-import it.unicam.ids.c3.dbmanager.RuoloRepository;
+import it.unicam.ids.c3.dbmanager.*;
 import it.unicam.ids.c3.javafx.JavaFxApplication;
-import it.unicam.ids.c3.personale.AddettoNegozio;
-import it.unicam.ids.c3.personale.Amministratore;
-import it.unicam.ids.c3.personale.Cliente;
-import it.unicam.ids.c3.dbmanager.ClienteRepository;
-import it.unicam.ids.c3.personale.RuoloSistema;
+import it.unicam.ids.c3.personale.*;
 import javafx.application.Application;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +21,8 @@ public class C3Application{
 	@Bean
 	CommandLineRunner commandLineRunner(ClienteRepository clienteRepository, RuoloRepository ruoloRepository,
 										AmministratoreRepository amministratoreRepository,
-										AddettoNegozioRepository addettoNegozioRepository){
+										AddettoNegozioRepository addettoNegozioRepository,
+										CommercianteRepository commercianteRepository){
 		return args -> {
 			Cliente cliente1 = new Cliente("Andrea", "Marsili", "ANDMRS", "andreamarsili@gmail.com", "brunomars", "magliano");
 			Cliente cliente2 = new Cliente("Davide", "Zeppilli", "DVDZEP", "davidezeppilli@gmail.com", "davidezep", "yag");
@@ -45,12 +40,14 @@ public class C3Application{
 
 			AddettoNegozio addettoNegozio = new AddettoNegozio(RuoloSistema.ADDETTONEGOZIO);
 			cliente2.setRuolo(addettoNegozio);
-			/*amministratoreRepository.save(admin);
-			ruoloRepository.save(admin);*/
+
+			Commerciante commerciante = new Commerciante(RuoloSistema.COMMERCIANTE);
+			cliente3.setRuolo(commerciante);
+
+			Corriere corriere = new Corriere(RuoloSistema.CORRIERE, "Tom corriere", "Via Francigena", "324213212");
+			cliente4.setRuolo(corriere);
+
 			clienteRepository.saveAll(List.of(cliente1,cliente2,cliente3,cliente4,cliente5,cliente6,cliente7,cliente8,cliente9));
-
-
-
 		};
 	}
 }

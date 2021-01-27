@@ -1,5 +1,10 @@
 package it.unicam.ids.c3.autenticazione;
 
+import it.unicam.ids.c3.gestori.GestoreAddetto;
+import it.unicam.ids.c3.gestori.GestoreAmministratore;
+import it.unicam.ids.c3.gestori.GestoreClienti;
+import it.unicam.ids.c3.gestori.GestoreCorrieri;
+import it.unicam.ids.c3.view.InteractManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,12 +23,19 @@ import java.util.ResourceBundle;
 @Component
 public class IAccesso implements Initializable{
 
-//    private InteractManager im = new InteractManager()
+    private InteractManager im = new InteractManager();
     @Autowired
-    private ControllerAccesso ca;
+    private GestoreAccesso ca;
     @Autowired
-    private ControllerIscrizione ci;
-
+    private GestoreIscrizione ci;
+    @Autowired
+    private GestoreClienti gestoreClienti;
+    @Autowired
+    private GestoreCorrieri gestoreCorrieri;
+    @Autowired
+    private GestoreAddetto gestoreAddetto;
+    @Autowired
+    private GestoreAmministratore gestoreAmministratore;
 
     /*******************Accesso cliente********************/
 
@@ -76,130 +88,37 @@ public class IAccesso implements Initializable{
         ruolo.setVisible(flag);
     }
 
-    public boolean accesso(String email, String password){
+    public String accesso(String email, String password){
          return ca.accesso(email,password);
     }
 
     @FXML
     void accessoButtonEvent(ActionEvent event) {
-        if(accesso(userNameAccesso.getText(), passwordAccesso.getText())){
-            System.out.println("accesso effettuato");
+        String ruoloAccesso = accesso(userNameAccesso.getText(), passwordAccesso.getText());
+        if(ruoloAccesso.equals("CLIENTE")){
+            openCliente();
+        } else {
+            visibilitaRuolo(true);
+            switch (ruoloAccesso){
+              case "AMMINISTRATORE":
+                  ruolo.getItems().add("AMMINISTRATORE");
+                  ruolo.getItems().add("CLIENTE");
+                  break;
+              case "CORRIERE":
+                  ruolo.getItems().add("CORRIERE");
+                  ruolo.getItems().add("CLIENTE");
+                   break;
+              case "ADDETTONEGOZIO":
+                  ruolo.getItems().add("ADDETTO");
+                  ruolo.getItems().add("CLIENTE");
+                  break;
+              case "COMMERCIANTE":
+                  ruolo.getItems().add("COMMERCIANTE");
+                  ruolo.getItems().add("CLIENTE");
+                  break;
+            }
         }
     }
-
-    private void openCorriere(){
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ICorriere.fxml"));
-//        Parent root1 = null;
-//        try {
-//            root1 = (Parent) fxmlLoader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        IM.setIc(fxmlLoader.getController());
-//        IM.getIc().setControllerCorriere(controllerCorriere);
-//        Stage stage = new Stage();
-//        stage.setTitle("Interfaccia Accesso Corriere");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
-    }
-
-    private void openCliente(){
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ICliente.fxml"));
-//        Parent root1 = null;
-//        try {
-//            root1 = (Parent) fxmlLoader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        IM.setIcl(fxmlLoader.getController());
-//        IM.getIcl().setControllerCliente(controllerCliente);
-//        Stage stage = new Stage();
-//        stage.setTitle("Interfaccia accesso cliente");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
-    }
-
-    private void openAmministratore(){
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("IAmministratore.fxml"));
-//        Parent root1 = null;
-//        try {
-//            root1 = (Parent) fxmlLoader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        IM.setIam(fxmlLoader.getController());
-//        IM.getIam().setController(controllerAmministratore);
-//        Stage stage = new Stage();
-//        stage.setTitle("Interfaccia Accesso Amministratore");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
-    }
-
-    private void openAddetto(){
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("IANCommesso.fxml"));
-//        Parent root1 = null;
-//        try {
-//            root1 = (Parent) fxmlLoader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        IM.setIa(fxmlLoader.getController());
-//        IM.getIa().setControllerNegozio(controllerNegozio);
-//        Stage stage = new Stage();
-//        stage.setTitle("Interfaccia commesso");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
-    }
-
-    private void openCommerciante() {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("IANCommerciante.fxml"));
-//        Parent root1 = null;
-//        try {
-//            root1 = (Parent) fxmlLoader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        IM.setIa(fxmlLoader.getController());
-//        IM.getIa().setControllerNegozio(controllerNegozio);
-//        Stage stage = new Stage();
-//        stage.setTitle("Interfaccia commerciante");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
-    }
-
-//    @FXML
-//    void accessoButtonEvent(ActionEvent event) {
-//        accesso(userNameAccesso.getText(), passwordAccesso.getText());
-//        if(accesso(userNameAccesso.getText(), passwordAccesso.getText()) != null){
-//            Cliente cliente = accesso(userNameAccesso.getText(), passwordAccesso.getText());
-//            if(cliente.getRuolo()!=null){
-//                visibilitaRuolo(true);
-//                switch (cliente.getRuolo().getRuoloSistema()){
-//                    case AMMINISTRATORE:
-//                        ruolo.getItems().add("AMMINISTRATORE");
-//                        ruolo.getItems().add("CLIENTE");
-//                        break;
-//                    case CORRIERE:
-//                        ruolo.getItems().add("CORRIERE");
-//                        ruolo.getItems().add("CLIENTE");
-//                        break;
-//                    case ADDETTONEGOZIO:
-//                        ruolo.getItems().add("ADDETTO");
-//                        ruolo.getItems().add("CLIENTE");
-//                        break;
-//                    case COMMERCIANTE:
-//                        ruolo.getItems().add("COMMERCIANTE");
-//                        ruolo.getItems().add("CLIENTE");
-//                        break;
-//                }
-//            } else {
-//                openCliente();
-//            }
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR, "Utente non valido", ButtonType.FINISH);
-//            alert.show();
-//        }
-//    }
 
     @FXML
     void confermaAccessoButtonEvent(ActionEvent event) {
@@ -221,7 +140,87 @@ public class IAccesso implements Initializable{
         }
     }
 
-    public void setController(ControllerAccesso ca) {
+    private void openCorriere(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/ICorriere.fxml"));
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        im.setIc(fxmlLoader.getController());
+        im.getIc().setGestoreCorriere(gestoreCorrieri);
+        Stage stage = new Stage();
+        stage.setTitle("Interfaccia Accesso Corriere");
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
+
+    private void openCliente(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/ICliente.fxml"));
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        im.setIcl(fxmlLoader.getController());
+        im.getIcl().setGestoreClienti(gestoreClienti);
+        Stage stage = new Stage();
+        stage.setTitle("Interfaccia accesso cliente");
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
+
+    private void openAmministratore(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/IAmministratore.fxml"));
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        im.setIam(fxmlLoader.getController());
+        im.getIam().setGestoreAmministraotre(gestoreAmministratore);
+        Stage stage = new Stage();
+        stage.setTitle("Interfaccia Accesso Amministratore");
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
+
+    private void openAddetto(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/IAddetto.fxml"));
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        im.setIa(fxmlLoader.getController());
+        im.getIa().setGestoreAddetto(gestoreAddetto);
+        Stage stage = new Stage();
+        stage.setTitle("Interfaccia commesso");
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
+
+    private void openCommerciante() {
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("IANCommerciante.fxml"));
+//        Parent root1 = null;
+//        try {
+//            root1 = (Parent) fxmlLoader.load();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        IM.setIa(fxmlLoader.getController());
+//        IM.getIa().setControllerNegozio(controllerNegozio);
+//        Stage stage = new Stage();
+//        stage.setTitle("Interfaccia commerciante");
+//        stage.setScene(new Scene(root1));
+//        stage.show();
+    }
+
+    public void setController(GestoreAccesso ca) {
         this.ca = ca;
     }
 

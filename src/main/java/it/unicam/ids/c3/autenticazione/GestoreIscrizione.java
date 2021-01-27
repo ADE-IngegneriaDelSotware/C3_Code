@@ -8,12 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ControllerIscrizione {
+public class GestoreIscrizione {
 
     private final ClienteRepository clienteRepository;
 
     @Autowired
-    public ControllerIscrizione(ClienteRepository clienteRepository) {
+    public GestoreIscrizione(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
 
