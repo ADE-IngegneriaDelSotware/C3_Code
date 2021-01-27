@@ -1,4 +1,4 @@
-package it.unicam.ids.c3.dbmanager;
+package it.unicam.ids.c3.persistenza;
 
 import it.unicam.ids.c3.personale.Ruolo;
 import org.springframework.data.jpa.repository.JpaRepository;

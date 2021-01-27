@@ -5,16 +5,18 @@ import javax.persistence.*;
 @Entity
 public class MerceAlPubblico {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private double prezzo;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    //TODO forse c'è da cambiare in ALL
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "merce_fk", referencedColumnName = "id")
     private Merce merce;
     private double sconto;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    //TODO forse c'è da cambiare in ALL
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "promozione_fk", referencedColumnName = "id")
     private Promozione promozione;
 

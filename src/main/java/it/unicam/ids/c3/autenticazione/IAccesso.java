@@ -1,9 +1,6 @@
 package it.unicam.ids.c3.autenticazione;
 
-import it.unicam.ids.c3.gestori.GestoreAddetto;
-import it.unicam.ids.c3.gestori.GestoreAmministratore;
-import it.unicam.ids.c3.gestori.GestoreClienti;
-import it.unicam.ids.c3.gestori.GestoreCorrieri;
+import it.unicam.ids.c3.gestori.*;
 import it.unicam.ids.c3.view.InteractManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,11 +33,13 @@ public class IAccesso implements Initializable{
     private GestoreAddetto gestoreAddetto;
     @Autowired
     private GestoreAmministratore gestoreAmministratore;
+    @Autowired
+    private GestoreCommerciante gestoreCommerciante;
 
     /*******************Accesso cliente********************/
 
     @FXML
-    private TextField userNameAccesso;
+    private TextField emailAccesso;
 
     @FXML
     private TextField passwordAccesso;
@@ -94,7 +93,7 @@ public class IAccesso implements Initializable{
 
     @FXML
     void accessoButtonEvent(ActionEvent event) {
-        String ruoloAccesso = accesso(userNameAccesso.getText(), passwordAccesso.getText());
+        String ruoloAccesso = accesso(emailAccesso.getText(), passwordAccesso.getText());
         if(ruoloAccesso.equals("CLIENTE")){
             openCliente();
         } else {
@@ -205,19 +204,19 @@ public class IAccesso implements Initializable{
     }
 
     private void openCommerciante() {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("IANCommerciante.fxml"));
-//        Parent root1 = null;
-//        try {
-//            root1 = (Parent) fxmlLoader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        IM.setIa(fxmlLoader.getController());
-//        IM.getIa().setControllerNegozio(controllerNegozio);
-//        Stage stage = new Stage();
-//        stage.setTitle("Interfaccia commerciante");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/ICommerciante.fxml"));
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        im.setIcm(fxmlLoader.getController());
+        im.getIcm().setGestoreCommerciante(gestoreCommerciante);
+        Stage stage = new Stage();
+        stage.setTitle("Interfaccia commerciante");
+        stage.setScene(new Scene(root1));
+        stage.show();
     }
 
     public void setController(GestoreAccesso ca) {

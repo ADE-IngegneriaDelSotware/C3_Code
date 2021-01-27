@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.ids.c3.IAddettoNegozio">
+    <children>
+        <GridPane style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.39996337890625" minWidth="10.0" prefWidth="371.199951171875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="753.6000518798828" minWidth="10.0" prefWidth="628.800048828125" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="54.59999599456787" minHeight="10.0" prefHeight="54.59999599456787" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="209.60001831054686" minHeight="60.0" prefHeight="146.20000400543213" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="208.8" minHeight="3.1999938964843864" prefHeight="50.59998168945316" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="305.6000061035156" minHeight="10.0" prefHeight="219.60001220703123" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="305.6000061035156" minHeight="10.0" prefHeight="93.19998779296873" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label text="Tipo di ritiro" textFill="WHITE">
+               <effect>
+                  <Blend />
+               </effect></Label>
+                <ChoiceBox fx:id="tipoRitiro" prefWidth="150.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" />
+                <Label fx:id="corrieriDisponibiliLabel" text="Corrieri disponibili" textFill="WHITE" GridPane.rowIndex="1">
+               <effect>
+                  <Blend />
+               </effect></Label>
+                <ListView fx:id="corrieriDisponibili" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label fx:id="trcLabel" text="Luogo Di Ritiro" textFill="WHITE" GridPane.rowIndex="2">
+               <effect>
+                  <Blend />
+               </effect></Label>
+                <ChoiceBox fx:id="luogoDiRitiro" prefWidth="150.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <ListView fx:id="puntiDiRitiroDisponibili" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label fx:id="prLabel" text="Punti di ritiro disponibili" textFill="WHITE" GridPane.rowIndex="3">
+               <effect>
+                  <Blend />
+               </effect></Label>
+                <Label fx:id="indirizzoLabel" prefHeight="47.0" prefWidth="62.0" text="Indirizzo" textFill="WHITE" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+               <effect>
+                  <Blend />
+               </effect>
+                </Label>
+                <TextField fx:id="indirizzoRitiro" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Button fx:id="venditaButton" mnemonicParsing="false" onAction="#venditaButtonEvent" prefHeight="58.0" prefWidth="90.0" style="-fx-background-color: #444959;" text="Inserisci" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="430.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="confermaTipoRitiroButton" mnemonicParsing="false" onAction="#confermaTipoRitiroButtonEvent" style="-fx-background-color: #444959;" text="conferma" textFill="WHITE" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="200.0" />
+               </GridPane.margin>
+               <effect>
+                  <Blend />
+               </effect>
+            </Button>
+            <Button fx:id="confermaLuogoDiRitiroButton" mnemonicParsing="false" onAction="#confermaLuogoDiRitiroButtonEvent" style="-fx-background-color: #444959;" text="conferma" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="200.0" />
+               </GridPane.margin>
+               <effect>
+                  <Blend />
+               </effect>
+            </Button>
+            <TextField fx:id="codiceClienteInRegistrazione" prefHeight="26.0" prefWidth="162.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="400.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label fx:id="codiceClienteInRegistrazioneLabel" text="Codice cliente2" textFill="WHITE" GridPane.rowIndex="4">
+               <effect>
+                  <Blend />
+               </effect></Label>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>
