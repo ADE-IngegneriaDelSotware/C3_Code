@@ -1,13 +1,15 @@
 package it.unicam.ids.c3.personale;
 
 
+import it.unicam.ids.c3.negozio.Carta;
+
 import javax.persistence.*;
 
 @Entity
 public class Cliente{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String nome;
     private String cognome;
@@ -16,8 +18,11 @@ public class Cliente{
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ruolo_id", referencedColumnName = "id")
+    @JoinColumn(name = "ruolo_fk", referencedColumnName = "id")
     private Ruolo ruolo;
+
+    @OneToOne(mappedBy = "cliente")
+    private Carta carta;
 
     public Cliente(String nome, String cognome, String codiceFiscale, String email,String password) {
         this.nome = nome;
@@ -34,6 +39,9 @@ public class Cliente{
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
     public String getNome() {
         return nome;
     }
@@ -62,6 +70,14 @@ public class Cliente{
         this.ruolo = ruolo;
     }
 
+    public Carta getCarta() {
+        return carta;
+    }
+
+    public void setCarta(Carta carta) {
+        this.carta = carta;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -72,6 +88,7 @@ public class Cliente{
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", ruolo=" + ruolo +
+                ", carta=" + carta +
                 '}';
     }
 }

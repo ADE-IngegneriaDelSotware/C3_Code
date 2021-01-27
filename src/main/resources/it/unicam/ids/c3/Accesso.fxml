@@ -9,44 +9,59 @@
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="it.unicam.ids.c3.autenticazione.IAccesso">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.ids.c3.autenticazione.IAccesso">
    <children>
-      <AnchorPane prefHeight="470.0" prefWidth="414.0">
+      <GridPane prefHeight="470.0" prefWidth="400.0" style="-fx-background-color: #444959;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="277.0" minHeight="10.0" prefHeight="277.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <AnchorPane prefHeight="470.0" prefWidth="406.0" style="-fx-background-color: #444959;">
-               <children>
-                  <Button fx:id="registrazioneButton" layoutX="232.0" layoutY="143.0" mnemonicParsing="false" onAction="#registrazioneButtonEvent" prefHeight="26.0" prefWidth="86.0" text="Sign up now!" />
-                  <Label layoutX="14.0" layoutY="65.0" prefHeight="63.0" prefWidth="340.0" text="WELCOME TO C3 SYSTEM" textFill="WHITE">
-                     <font>
-                        <Font name="Cambria" size="29.0" />
-                     </font>
-                     <effect>
-                        <Blend />
-                     </effect>
-                  </Label>
-                  <Label layoutX="14.0" layoutY="128.0" prefHeight="56.0" prefWidth="218.0" text="HAVEN'T AN ACCOUNT YET? " textFill="WHITE">
-                     <font>
-                        <Font name="Cambria" size="17.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="218.0" fitWidth="264.0" layoutX="99.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@register-image.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </AnchorPane>
+            <Button fx:id="registrazioneButton" mnemonicParsing="false" onAction="#registrazioneButtonEvent" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #272A33;" text="Sign up now!" textFill="WHITE" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="290.0" />
+               </GridPane.margin>
+            </Button>
+            <Label prefHeight="56.0" prefWidth="254.0" text="NON SIETE ANCORA REGISTRATI?" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Cambria" size="17.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="63.0" prefWidth="340.0" text="WELCOME TO C3 SYSTEM" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Cambria" size="29.0" />
+               </font>
+               <effect>
+                  <Blend />
+               </effect>
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </Label>
+            <ImageView fitHeight="253.0" fitWidth="289.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@immagini/register-image.jpg" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="80.0" />
+               </GridPane.margin>
+            </ImageView>
          </children>
-      </AnchorPane>
-      <GridPane prefHeight="470.0" prefWidth="403.0" style="-fx-background-color: #272A33;">
+      </GridPane>
+      <GridPane prefHeight="470.0" prefWidth="400.0" style="-fx-background-color: #272A33;">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.199951171875" minWidth="10.0" prefWidth="86.79997558593749" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="545.0000244140625" minWidth="10.0" prefWidth="254.40001220703127" />

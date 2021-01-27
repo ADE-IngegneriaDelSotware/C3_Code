@@ -6,12 +6,14 @@ import javax.persistence.*;
 
 @Entity
 public class MerceVendita {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private double prezzoTotaleVendita;
     private double quantitaVenduta;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "merceAlPubblico_fk", referencedColumnName = "id")
     private MerceAlPubblico merceAlPubblico;
 

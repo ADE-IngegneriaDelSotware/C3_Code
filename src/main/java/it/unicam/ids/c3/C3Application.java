@@ -2,12 +2,21 @@ package it.unicam.ids.c3;
 
 import it.unicam.ids.c3.dbmanager.*;
 import it.unicam.ids.c3.javafx.JavaFxApplication;
+import it.unicam.ids.c3.merce.Categoria;
+import it.unicam.ids.c3.merce.Merce;
+import it.unicam.ids.c3.merce.MerceAlPubblico;
+import it.unicam.ids.c3.merce.MerceInventarioNegozio;
+import it.unicam.ids.c3.negozio.Carta;
+import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.personale.*;
+import it.unicam.ids.c3.vendita.MerceVendita;
+import it.unicam.ids.c3.vendita.Vendita;
 import javafx.application.Application;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -22,7 +31,13 @@ public class C3Application{
 	CommandLineRunner commandLineRunner(ClienteRepository clienteRepository, RuoloRepository ruoloRepository,
 										AmministratoreRepository amministratoreRepository,
 										AddettoNegozioRepository addettoNegozioRepository,
-										CommercianteRepository commercianteRepository){
+										CommercianteRepository commercianteRepository,
+										MerceInventarioNegozioRepository merceInventarioNegozioRepository,
+										MerceRepository merceRepository,
+										CartaRepository cartaRepository,
+										MerceVenditaRepository merceVenditaRepository,
+										VenditaRepository venditaRepository
+										){
 		return args -> {
 			Cliente cliente1 = new Cliente("Andrea", "Marsili", "ANDMRS", "andreamarsili@gmail.com", "magliano");
 			Cliente cliente2 = new Cliente("Davide", "Zeppilli", "DVDZEP", "davidezeppilli@gmail.com", "yag");
@@ -48,6 +63,30 @@ public class C3Application{
 			cliente4.setRuolo(corriere);
 
 			clienteRepository.saveAll(List.of(cliente1,cliente2,cliente3,cliente4,cliente5,cliente6,cliente7,cliente8,cliente9));
+
+			Merce merce = new Merce("jeans", Categoria.ABBIGLIAMENTO, "jeans slavati");
+			Merce merce1 = new Merce("felpa", Categoria.ABBIGLIAMENTO, "felpa aperta");
+			Merce merce2 = new Merce("iphone 12", Categoria.TECNOLOGIA, "256 GB , 8 GB di RAM");
+			Merce merce3 = new Merce("pane casereccio", Categoria.ALIMENTI, "pane con farina 00");
+			Merce merce4 = new Merce("racchetta di tennis", Categoria.SPORT, "racchetta professionale");
+			merceRepository.saveAll(List.of(merce,merce1,merce2,merce3,merce4));
+			MerceAlPubblico merceAlPubblico = new MerceAlPubblico(23, merce);
+			MerceAlPubblico merceAlPubblico1 = new MerceAlPubblico(3, merce1);
+			MerceInventarioNegozio merceInventarioNegozio = new MerceInventarioNegozio(3.3, merceAlPubblico);
+			MerceInventarioNegozio merceInventarioNegozio1 = new MerceInventarioNegozio(3, merceAlPubblico1);
+			merceInventarioNegozioRepository.saveAll(List.of(merceInventarioNegozio,merceInventarioNegozio1));
+
+			Carta carta = new Carta(cliente7, TipoScontoCliente.LAVORATORE);
+			cartaRepository.save(carta);
+
+			MerceVendita merceVendita = new MerceVendita(12.3, 2, merceAlPubblico);
+			MerceVendita merceVendita1 = new MerceVendita(3,3 , merceAlPubblico1);
+			List<MerceVendita> listaMerciVendita = new ArrayList<>();
+			listaMerciVendita.add(merceVendita);
+			listaMerciVendita.add(merceVendita1);
+			Vendita vendita = new Vendita(32.5, listaMerciVendita);
+			venditaRepository.save(vendita);
+
 		};
 	}
 }

@@ -8,12 +8,14 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Vendita {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int ID;
+    private int id;
     private LocalDate data;
     private double prezzo;
-    @OneToMany(targetEntity = MerceVendita.class, cascade= CascadeType.ALL)
+
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="vendita_fk", referencedColumnName = "id")
     private List<MerceVendita> listaMerceVendita;
 
@@ -27,12 +29,12 @@ public class Vendita {
 
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public LocalDate getData() {
