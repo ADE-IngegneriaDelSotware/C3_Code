@@ -1,6 +1,14 @@
 package it.unicam.ids.c3.personale;
 
+import it.unicam.ids.c3.vendita.StatoConsegna;
+import it.unicam.ids.c3.vendita.VenditaSpedita;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Entity
 public class Corriere extends Ruolo{
@@ -9,14 +17,16 @@ public class Corriere extends Ruolo{
     private String indirizzo;
     private String p_iva;
     private boolean disponiblita;
-    //private List<VenditaSpedita> vendite;
+
+    @OneToMany(mappedBy = "corriere")
+    private List<VenditaSpedita> vendite;
 
     public Corriere(RuoloSistema ruolo, String nomeDitta, String indirizzo, String p_iva) {
         super(ruolo);
         this.nomeDitta = nomeDitta;
         this.indirizzo = indirizzo;
         this.p_iva = p_iva;
-        //this.vendite = new ArrayList<>();
+        this.vendite = new ArrayList<>();
     }
 
     public Corriere (){}
@@ -37,7 +47,7 @@ public class Corriere extends Ruolo{
         return disponiblita;
     }
 
-    /*public List<VenditaSpedita> getVendite() {
+    public List<VenditaSpedita> getVendite() {
         return vendite;
     }
 
@@ -56,8 +66,6 @@ public class Corriere extends Ruolo{
         }
         return venditePerTipo;
     }
-
-    */
 
     public void setDisponiblita(boolean disponiblita){
         this.disponiblita = disponiblita;

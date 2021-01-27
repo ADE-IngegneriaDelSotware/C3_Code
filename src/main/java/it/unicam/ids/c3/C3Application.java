@@ -9,8 +9,10 @@ import it.unicam.ids.c3.merce.MerceInventarioNegozio;
 import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.personale.*;
+import it.unicam.ids.c3.vendita.LuogoDiRitiro;
 import it.unicam.ids.c3.vendita.MerceVendita;
 import it.unicam.ids.c3.vendita.Vendita;
+import it.unicam.ids.c3.vendita.VenditaSpedita;
 import javafx.application.Application;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +30,8 @@ public class C3Application{
 
 
 	@Bean
-	CommandLineRunner commandLineRunner(ClienteRepository clienteRepository, RuoloRepository ruoloRepository,
+	CommandLineRunner commandLineRunner(ClienteRepository clienteRepository,
+										RuoloRepository ruoloRepository,
 										AmministratoreRepository amministratoreRepository,
 										AddettoNegozioRepository addettoNegozioRepository,
 										CommercianteRepository commercianteRepository,
@@ -36,7 +39,8 @@ public class C3Application{
 										MerceRepository merceRepository,
 										CartaRepository cartaRepository,
 										MerceVenditaRepository merceVenditaRepository,
-										VenditaRepository venditaRepository
+										VenditaRepository venditaRepository,
+										VenditaSpeditaRepository venditaSpeditaRepository
 										){
 		return args -> {
 			Cliente cliente1 = new Cliente("Andrea", "Marsili", "ANDMRS", "andreamarsili@gmail.com", "magliano");
@@ -61,6 +65,7 @@ public class C3Application{
 
 			Corriere corriere = new Corriere(RuoloSistema.CORRIERE, "Tom corriere", "Via Francigena", "324213212");
 			cliente4.setRuolo(corriere);
+			ruoloRepository.save(corriere);
 
 			clienteRepository.saveAll(List.of(cliente1,cliente2,cliente3,cliente4,cliente5,cliente6,cliente7,cliente8,cliente9));
 
@@ -69,7 +74,8 @@ public class C3Application{
 			Merce merce2 = new Merce("iphone 12", Categoria.TECNOLOGIA, "256 GB , 8 GB di RAM");
 			Merce merce3 = new Merce("pane casereccio", Categoria.ALIMENTI, "pane con farina 00");
 			Merce merce4 = new Merce("racchetta di tennis", Categoria.SPORT, "racchetta professionale");
-			merceRepository.saveAll(List.of(merce,merce1,merce2,merce3,merce4));
+			//merceRepository.saveAll(List.of(merce,merce1,merce2,merce3,merce4));
+
 			MerceAlPubblico merceAlPubblico = new MerceAlPubblico(23, merce);
 			MerceAlPubblico merceAlPubblico1 = new MerceAlPubblico(3, merce1);
 			MerceInventarioNegozio merceInventarioNegozio = new MerceInventarioNegozio(3.3, merceAlPubblico);
@@ -77,15 +83,27 @@ public class C3Application{
 			merceInventarioNegozioRepository.saveAll(List.of(merceInventarioNegozio,merceInventarioNegozio1));
 
 			Carta carta = new Carta(cliente7, TipoScontoCliente.LAVORATORE);
-			cartaRepository.save(carta);
+			Carta fedelta = new Carta(cliente7, TipoScontoCliente.LAVORATORE);
+			Carta carta1 = new Carta(cliente2, TipoScontoCliente.STUDENTE);
+			cartaRepository.saveAll(List.of(carta,fedelta,carta1));
 
 			MerceVendita merceVendita = new MerceVendita(12.3, 2, merceAlPubblico);
 			MerceVendita merceVendita1 = new MerceVendita(3,3 , merceAlPubblico1);
+			MerceVendita merceVendita2 = new MerceVendita(10, 1, merceAlPubblico);
+			MerceVendita merceVendita3 = new MerceVendita(3,1 , merceAlPubblico1);
+			merceVenditaRepository.saveAll(List.of(merceVendita,merceVendita1,merceVendita2,merceVendita3));
+
 			List<MerceVendita> listaMerciVendita = new ArrayList<>();
 			listaMerciVendita.add(merceVendita);
 			listaMerciVendita.add(merceVendita1);
 			Vendita vendita = new Vendita(32.5, listaMerciVendita);
 			venditaRepository.save(vendita);
+
+			List<MerceVendita> lista = new ArrayList<>();
+
+			lista.addAll(List.of(merceVendita2,merceVendita3));
+			VenditaSpedita venditaSpedita = new VenditaSpedita(12, lista, "Viale della transumanza", corriere, LuogoDiRitiro.DOMICILIO);
+			venditaSpeditaRepository.save(venditaSpedita);
 
 		};
 	}

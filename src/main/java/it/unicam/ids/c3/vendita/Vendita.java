@@ -15,7 +15,7 @@ public class Vendita {
     private LocalDate data;
     private double prezzo;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name="vendita_fk", referencedColumnName = "id")
     private List<MerceVendita> listaMerceVendita;
 

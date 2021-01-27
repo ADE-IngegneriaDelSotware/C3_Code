@@ -17,7 +17,7 @@ public class Cliente{
     private String email;
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "ruolo_fk", referencedColumnName = "id")
     private Ruolo ruolo;
 
