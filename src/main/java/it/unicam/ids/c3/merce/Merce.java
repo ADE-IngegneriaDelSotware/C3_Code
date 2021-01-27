@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Merce {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int ID;
     private String nome;
 

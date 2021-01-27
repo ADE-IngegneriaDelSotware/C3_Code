@@ -9,7 +9,8 @@ import java.time.LocalDate;
 @Entity
 public class Promozione {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     private LocalDate dataInizio;
     private LocalDate dataFine;
     private double percentualeSconto;

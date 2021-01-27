@@ -1,14 +1,8 @@
 package it.unicam.ids.c3.autenticazione;
 
-import it.unicam.ids.c3.gestori.GestoreAddetto;
-import it.unicam.ids.c3.gestori.GestoreClienti;
-import it.unicam.ids.c3.gestori.GestoreCommerciante;
-import it.unicam.ids.c3.gestori.GestoreCorrieri;
-import it.unicam.ids.c3.personale.AddettoNegozio;
-import it.unicam.ids.c3.personale.Cliente;
-import it.unicam.ids.c3.dbmanager.ClienteRepository;
-import it.unicam.ids.c3.personale.Commerciante;
-import it.unicam.ids.c3.personale.Corriere;
+import it.unicam.ids.c3.gestori.*;
+import it.unicam.ids.c3.personale.*;
+import it.unicam.ids.c3.persistenza.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +18,16 @@ public class GestoreAccesso {
     private final GestoreClienti gestoreClienti;
     private final GestoreAddetto gestoreAddetto;
     private final GestoreCommerciante gestoreCommerciante;
+    private final GestoreAmministratore gestoreAmministratore;
 
     @Autowired
-    public GestoreAccesso(ClienteRepository clienteRepository, GestoreCorrieri gestoreCorrieri, GestoreClienti gestoreClienti, GestoreAddetto gestoreAddetto, GestoreCommerciante gestoreCommerciante) {
+    public GestoreAccesso(ClienteRepository clienteRepository, GestoreCorrieri gestoreCorrieri, GestoreClienti gestoreClienti, GestoreAddetto gestoreAddetto, GestoreCommerciante gestoreCommerciante, GestoreAmministratore gestoreAmministratore) {
         this.clienteRepository = clienteRepository;
         this.gestoreCorrieri = gestoreCorrieri;
         this.gestoreClienti = gestoreClienti;
         this.gestoreAddetto = gestoreAddetto;
         this.gestoreCommerciante = gestoreCommerciante;
+        this.gestoreAmministratore = gestoreAmministratore;
     }
 
 
@@ -45,6 +41,7 @@ public class GestoreAccesso {
                             gestoreCorrieri.setCorriere((Corriere) cliente.get().getRuolo());
                             return "CORRIERE";
                         case AMMINISTRATORE:
+                            gestoreAmministratore.setAmministratore((Amministratore) cliente.get().getRuolo());
                             return "AMMINISTRATORE";
                         case ADDETTONEGOZIO:
                             gestoreAddetto.setAddettoNegozio((AddettoNegozio) cliente.get().getRuolo());

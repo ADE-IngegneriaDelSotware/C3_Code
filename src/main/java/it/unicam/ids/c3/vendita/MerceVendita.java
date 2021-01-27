@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class MerceVendita {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private double prezzoTotaleVendita;
     private double quantitaVenduta;

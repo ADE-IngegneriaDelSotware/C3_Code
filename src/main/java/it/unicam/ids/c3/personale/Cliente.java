@@ -4,6 +4,7 @@ package it.unicam.ids.c3.personale;
 import it.unicam.ids.c3.negozio.Carta;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Cliente{
@@ -21,8 +22,8 @@ public class Cliente{
     @JoinColumn(name = "ruolo_fk", referencedColumnName = "id")
     private Ruolo ruolo;
 
-    @OneToOne(mappedBy = "cliente")
-    private Carta carta;
+    @OneToMany(mappedBy = "cliente")
+    private List<Carta> carte;
 
     public Cliente(String nome, String cognome, String codiceFiscale, String email,String password) {
         this.nome = nome;
@@ -70,12 +71,8 @@ public class Cliente{
         this.ruolo = ruolo;
     }
 
-    public Carta getCarta() {
-        return carta;
-    }
-
-    public void setCarta(Carta carta) {
-        this.carta = carta;
+    public List<Carta> getCarte() {
+        return carte;
     }
 
     @Override
@@ -88,7 +85,7 @@ public class Cliente{
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", ruolo=" + ruolo +
-                ", carta=" + carta +
+                ", carte=" + carte +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package it.unicam.ids.c3.view;
 
 
 import it.unicam.ids.c3.gestori.GestoreAddetto;
+import it.unicam.ids.c3.gestori.GestoreCommerciante;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -235,4 +236,6 @@ public class IAddettoNegozio {
     public void setGestoreAddetto(GestoreAddetto gestoreAddetto) {
         this.gestoreAddetto = gestoreAddetto;
     }
+
+
 }

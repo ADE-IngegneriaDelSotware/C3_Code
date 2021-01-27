@@ -7,25 +7,53 @@ import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.Vendita;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Negozio {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String nome;
     private String indirizzo;
     private String p_iva;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "categorie_negozi", joinColumns = @JoinColumn(name = "id"))
+    @Enumerated(EnumType.STRING)
     private List<Categoria> settori;
-    private int ID;
+
+    @OneToMany(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<AddettoNegozio> addettiNegozio;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "negozio_corriere", joinColumns = @JoinColumn(name = "negozio_id"),inverseJoinColumns = @JoinColumn(name = "corriere_id"))
     private List<Corriere> corrieri;
+
+    @Transient
     private List<Negozio> negoziDisponibili;
+
+    @OneToMany(targetEntity = Carta.class, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<Carta> cartaList;
+
+    @OneToMany(targetEntity = VenditaSpedita.class, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<VenditaSpedita> venditePuntiDiRitiro;
+
+    @OneToMany(targetEntity = MerceInventarioNegozio.class,cascade = CascadeType.MERGE)
+    @JoinColumn(name="negozio_fk",referencedColumnName = "id")
     private List<MerceInventarioNegozio> merceInventarioNegozioList;
+
+    @OneToMany(targetEntity = Vendita.class, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<Vendita> vendite;
+
     private boolean disponibilitaRitiro;
-    private List<MerceInventarioNegozio> merciDaOrdinare;
 
     public Negozio(String nome,String indirizzo, String p_iva, List<Categoria> categorie){
         this.nome = nome;
@@ -39,7 +67,17 @@ public class Negozio {
         this.merceInventarioNegozioList = new ArrayList<>();
         this.vendite = new ArrayList<>();
         this.venditePuntiDiRitiro = new ArrayList<>();
-        this.merciDaOrdinare = new ArrayList<>();
+    }
+
+    public Negozio() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIndirizzo() {
@@ -55,11 +93,11 @@ public class Negozio {
     }
 
     public List<Carta> getCarte() {
-        return cartaList;
+        return this.cartaList;
     }
 
     public void addCarta(Carta carta) {
-        this.cartaList.add(carta);
+        getCarte().add(carta);
     }
 
     public List<Negozio> getNegoziDisponibili() {
@@ -116,18 +154,6 @@ public class Negozio {
 
     public void setDisponibilitaRitiro(boolean disponibilita) {
         this.disponibilitaRitiro = disponibilita;
-    }
-
-    public List<MerceInventarioNegozio> getMerciDaOrdinare() {
-        return merciDaOrdinare;
-    }
-
-    public void addMerciDaOrdinare(MerceInventarioNegozio min) {
-        merciDaOrdinare.add(min);
-    }
-
-    public void removeMerciDaOrdinare(List<MerceInventarioNegozio> lmdo) {
-        merciDaOrdinare.removeAll(lmdo);
     }
 
     public List<AddettoNegozio> getAddetti() {

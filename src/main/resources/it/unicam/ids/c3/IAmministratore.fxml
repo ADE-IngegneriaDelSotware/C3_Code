@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.ids.c3.view.IAmministratore">
+   <top>
+      <AnchorPane minHeight="-Infinity" prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #272A33;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="83.0" layoutY="15.0" prefHeight="22.0" prefWidth="185.0" text="INTERFACCIA AMMINISTRATORE" textFill="WHITE">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font name="Cambria" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="53.0" fitWidth="62.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="539.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@immagini/admin-icon.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="14.0" prefWidth="600.0" style="-fx-background-color: #272A33;" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #272A33;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Registra corriere">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="600.0" style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="47.0" text="Codice fiscale" textFill="WHITE">
+                                 <effect>
+                                    <Blend />
+                                 </effect>
+                              </Label>
+                              <TextField fx:id="cfRegistrazioneCorriere" layoutX="93.0" layoutY="43.0" />
+                              <Button fx:id="ricercaRegistrazioneCorriereButton" layoutX="289.0" layoutY="43.0" mnemonicParsing="false" onAction="#ricercaRegistrazioneCorriereEvent" prefHeight="25.0" prefWidth="111.0" style="-fx-background-color: #444959;" text="Ricerca" textFill="WHITE" />
+                              <ListView fx:id="listClientiRegistrazioneCorriere" layoutX="14.0" layoutY="92.0" prefHeight="98.0" prefWidth="228.0" style="-fx-background-color: #444959;" />
+                              <Button fx:id="confermaRegistraCorriereButton" layoutX="493.0" layoutY="86.0" mnemonicParsing="false" onAction="#confermaRegistraCorriereEvent" prefHeight="105.0" prefWidth="85.0" style="-fx-background-color: #444959;" text="Conferma" textFill="WHITE" />
+                              <Label layoutX="249.0" layoutY="92.0" text="Nome ditta" textFill="WHITE">
+                                 <effect>
+                                    <Blend />
+                                 </effect>
+                              </Label>
+                              <Label layoutX="249.0" layoutY="129.0" text="P.IVA" textFill="WHITE">
+                                 <effect>
+                                    <Blend />
+                                 </effect>
+                              </Label>
+                              <Label layoutX="249.0" layoutY="169.0" text="Indirizzo" textFill="WHITE">
+                                 <effect>
+                                    <Blend />
+                                 </effect>
+                              </Label>
+                              <TextField fx:id="nomeDittaRegistrazioneCorriere" layoutX="326.0" layoutY="88.0" />
+                              <TextField fx:id="pivaRegistrazioneCorriere" layoutX="326.0" layoutY="126.0" />
+                              <TextField fx:id="indirizzoRegistrazioneCorriere" layoutX="326.0" layoutY="165.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Registra negozio">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+                           <children>
+                              <GridPane layoutX="246.0" layoutY="178.0" prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-200.0" AnchorPane.topAnchor="0.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Nome Negozio" textFill="WHITE">
+                                       <effect>
+                                          <Blend />
+                                       </effect>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Partita IVA" textFill="WHITE" GridPane.rowIndex="1">
+                                       <effect>
+                                          <Blend />
+                                       </effect>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Indirizzo" textFill="WHITE" GridPane.rowIndex="2">
+                                       <effect>
+                                          <Blend />
+                                       </effect>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Settori" textFill="WHITE" GridPane.rowIndex="3">
+                                       <effect>
+                                          <Blend />
+                                       </effect>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Codice Fiscale Cliente" textFill="WHITE" GridPane.rowIndex="4">
+                                       <effect>
+                                          <Blend />
+                                       </effect>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="nomeNegozio" GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets right="90.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <TextField fx:id="partitaIVA" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets right="90.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <TextField fx:id="indirizzoNegozio" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets right="90.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <TextField fx:id="cfClienteRicerca" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets right="90.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <ListView fx:id="settoriList" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets right="90.0" />
+                                       </GridPane.margin>
+                                    </ListView>
+                                    <Button fx:id="ricercaCFCLienteButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#ricercaCFCLienteButtonEvent" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #444959;" text="Cerca" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets left="320.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </Button>
+                                    <ListView fx:id="clientiList" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets right="90.0" />
+                                       </GridPane.margin>
+                                    </ListView>
+                                    <Button fx:id="confermaRegistrazioneNegozioButton" mnemonicParsing="false" onAction="#confermaRegistrazioneNegozioButtonEvent" prefHeight="56.0" prefWidth="68.0" style="-fx-background-color: #444959;" text="Conferma" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets left="320.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

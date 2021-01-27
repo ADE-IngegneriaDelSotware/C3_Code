@@ -1,11 +1,10 @@
 package it.unicam.ids.c3.personale;
 
+import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.vendita.StatoConsegna;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,8 +17,12 @@ public class Corriere extends Ruolo{
     private String p_iva;
     private boolean disponiblita;
 
-    @OneToMany(mappedBy = "corriere")
+    @OneToMany(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "corriere_fk", referencedColumnName = "id")
     private List<VenditaSpedita> vendite;
+
+    @ManyToMany(mappedBy = "corrieri")
+    private List<Negozio> negozi;
 
     public Corriere(RuoloSistema ruolo, String nomeDitta, String indirizzo, String p_iva) {
         super(ruolo);
@@ -27,9 +30,22 @@ public class Corriere extends Ruolo{
         this.indirizzo = indirizzo;
         this.p_iva = p_iva;
         this.vendite = new ArrayList<>();
+        this.negozi = new ArrayList<>();
     }
 
     public Corriere (){}
+
+    public List<Negozio> getNegozi() {
+        return negozi;
+    }
+
+    public void addNegozio(Negozio negozio) {
+        this.negozi.add(negozio);
+    }
+
+    public void removeNegozio(Negozio negozio) {
+        this.negozi.remove(negozio);
+    }
 
     public String getNomeDitta() {
         return nomeDitta;

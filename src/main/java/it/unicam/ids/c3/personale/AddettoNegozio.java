@@ -1,8 +1,8 @@
 package it.unicam.ids.c3.personale;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import it.unicam.ids.c3.negozio.Negozio;
+
+import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -13,4 +13,5 @@ public class AddettoNegozio extends Ruolo {
     }
 
     public AddettoNegozio(){}
+
 }

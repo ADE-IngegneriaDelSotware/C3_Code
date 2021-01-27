@@ -6,18 +6,17 @@ import org.springframework.stereotype.Component;
 public class InteractManager {
 
     private IAddettoNegozio ia;
-
     private ICorriere ic;
-
     private ICliente icl;
-
     private IAmministratore iam;
+    private ICommerciante icm;
 
     public InteractManager() {
         this.ia = new IAddettoNegozio();
         this.ic = new ICorriere();
         this.icl = new ICliente();
         this.iam = new IAmministratore();
+        this.icm = new ICommerciante();
     }
 
     public IAddettoNegozio getIa(){
@@ -52,4 +51,11 @@ public class InteractManager {
         this.iam = iam;
     }
 
+    public ICommerciante getIcm() {
+        return icm;
+    }
+
+    public void setIcm(ICommerciante icm) {
+        this.icm = icm;
+    }
 }
