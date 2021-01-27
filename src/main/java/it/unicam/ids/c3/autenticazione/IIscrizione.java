@@ -35,9 +35,6 @@ public class IIscrizione {
     private TextField emailIscrizione;
 
     @FXML
-    private TextField usernameIscrizione;
-
-    @FXML
     private TextField passwordIscrizione;
 
     @FXML
@@ -45,13 +42,13 @@ public class IIscrizione {
 
     /******************Iscrizione cliente******************/
 
-    public void iscrizione(String nome,String cognome,String codiceFiscale, String email,String username, String password){
-        ci.iscrizione(nome,cognome,codiceFiscale,email,username,password);
+    public void iscrizione(String nome,String cognome,String codiceFiscale, String email, String password){
+        ci.iscrizione(nome,cognome,codiceFiscale,email,password);
     }
 
     @FXML
     void iscrizioneButtonEvent(ActionEvent event) {
-        iscrizione(nomeIscrizione.getText(),cognomeIscrizione.getText(),cfIscrizione.getText(),emailIscrizione.getText(),usernameIscrizione.getText(), passwordIscrizione.getText());
+        iscrizione(nomeIscrizione.getText(),cognomeIscrizione.getText(),cfIscrizione.getText(),emailIscrizione.getText(), passwordIscrizione.getText());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/Accesso.fxml"));
         Parent root1 = null;
         try {
