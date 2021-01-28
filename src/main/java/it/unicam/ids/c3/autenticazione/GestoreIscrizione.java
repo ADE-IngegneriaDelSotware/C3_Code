@@ -17,8 +17,8 @@ public class GestoreIscrizione {
         this.clienteRepository = clienteRepository;
     }
 
-    public void iscrizione(String nome,String cognome,String codiceFiscale,String email,String password){
-        Cliente cliente = new Cliente(nome,cognome,codiceFiscale,email,password);
+    public void iscrizione(String nome,String cognome,String email,String password){
+        Cliente cliente = new Cliente(nome,cognome,email,password);
         clienteRepository.save(cliente);
     }
 }

@@ -6,6 +6,8 @@ import it.unicam.ids.c3.personale.AddettoNegozio;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.Vendita;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -42,14 +44,17 @@ public class Negozio {
     private List<Carta> cartaList;
 
     @OneToMany(targetEntity = VenditaSpedita.class, cascade = CascadeType.MERGE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<VenditaSpedita> venditePuntiDiRitiro;
 
-    @OneToMany(targetEntity = MerceInventarioNegozio.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @OneToMany(targetEntity = MerceInventarioNegozio.class, cascade = CascadeType.MERGE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name="negozio_fk",referencedColumnName = "id")
     private List<MerceInventarioNegozio> merceInventarioNegozioList;
 
     @OneToMany(targetEntity = Vendita.class, cascade = CascadeType.MERGE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<Vendita> vendite;
 

@@ -2,8 +2,12 @@ package it.unicam.ids.c3.personale;
 
 
 import it.unicam.ids.c3.negozio.Carta;
+import it.unicam.ids.c3.vendita.Vendita;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +18,6 @@ public class Cliente{
     private long id;
     private String nome;
     private String cognome;
-    private String codiceFiscale;
     private String email;
     private String password;
 
@@ -23,14 +26,20 @@ public class Cliente{
     private Ruolo ruolo;
 
     @OneToMany(mappedBy = "cliente")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Carta> carte;
 
-    public Cliente(String nome, String cognome, String codiceFiscale, String email,String password) {
+    @OneToMany(cascade = CascadeType.MERGE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "cliente_fk", referencedColumnName = "id")
+    private List<Vendita> acquisti;
+
+    public Cliente(String nome, String cognome, String email,String password) {
         this.nome = nome;
         this.cognome = cognome;
-        this.codiceFiscale = codiceFiscale;
         this.email = email;
         this.password = password;
+        this.acquisti = new ArrayList<>();
     }
 
     public Cliente() {
@@ -51,12 +60,12 @@ public class Cliente{
         return cognome;
     }
 
-    public String getCodiceFiscale() {
-        return codiceFiscale;
-    }
-
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -75,17 +84,19 @@ public class Cliente{
         return carte;
     }
 
+    public List<Vendita> getAcquisti() {
+        return acquisti;
+    }
+
+    public  void addAcquisto(Vendita vendita){
+        this.acquisti.add(vendita);
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
-                ", codiceFiscale='" + codiceFiscale + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", ruolo=" + ruolo +
-                ", carte=" + carte +
-                '}';
+        return id +
+                ", " + nome +
+                ", " + cognome +
+                ", " + email;
     }
 }

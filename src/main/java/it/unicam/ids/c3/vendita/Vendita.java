@@ -1,6 +1,8 @@
 package it.unicam.ids.c3.vendita;
 
 
+import it.unicam.ids.c3.personale.Cliente;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;

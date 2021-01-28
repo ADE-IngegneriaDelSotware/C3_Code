@@ -153,6 +153,8 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia Accesso Corriere");
         stage.setScene(new Scene(root1));
         stage.show();
+        Stage stage1 = (Stage) confermaAccessoButton.getScene().getWindow();
+        stage1.close();
     }
 
     private void openCliente(){
@@ -169,6 +171,10 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia accesso cliente");
         stage.setScene(new Scene(root1));
         stage.show();
+        Stage stage1 = (Stage) accessoButton.getScene().getWindow();
+        stage1.close();
+        Stage stage12 = (Stage) confermaAccessoButton.getScene().getWindow();
+        stage12.close();
     }
 
     private void openAmministratore(){
@@ -185,6 +191,8 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia Accesso Amministratore");
         stage.setScene(new Scene(root1));
         stage.show();
+        Stage stage1 = (Stage) confermaAccessoButton.getScene().getWindow();
+        stage1.close();
     }
 
     private void openAddetto(){
@@ -197,10 +205,15 @@ public class IAccesso implements Initializable{
         }
         im.setIa(fxmlLoader.getController());
         im.getIa().setGestoreAddetto(gestoreAddetto);
+        im.getIa().initAssegnazioneCartaField();
+        im.getIa().initRichiestaCartField();
+        im.getIa().getInventario();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia commesso");
         stage.setScene(new Scene(root1));
         stage.show();
+        Stage stage1 = (Stage) confermaAccessoButton.getScene().getWindow();
+        stage1.close();
     }
 
     private void openCommerciante() {
@@ -217,6 +230,8 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia commerciante");
         stage.setScene(new Scene(root1));
         stage.show();
+        Stage stage1 = (Stage) confermaAccessoButton.getScene().getWindow();
+        stage1.close();
     }
 
     public void setController(GestoreAccesso ca) {

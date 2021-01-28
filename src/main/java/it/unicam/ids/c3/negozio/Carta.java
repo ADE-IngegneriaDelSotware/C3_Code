@@ -1,6 +1,8 @@
 package it.unicam.ids.c3.negozio;
 
 import it.unicam.ids.c3.personale.Cliente;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 
@@ -84,13 +86,9 @@ public class Carta {
 
     @Override
     public String toString() {
-        return "Carta{" +
-                "id=" + id +
-                ", cliente=" + cliente +
-                ", tipoSconto=" + tipoSconto +
-                ", codice=" + codice +
-                ", sconto=" + sconto +
-                '}';
+        return ", " + tipoSconto +
+                ", " + codice
+                ;
     }
 
 }

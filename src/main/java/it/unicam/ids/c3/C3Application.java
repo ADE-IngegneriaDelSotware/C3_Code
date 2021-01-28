@@ -46,15 +46,15 @@ public class C3Application{
 		return args -> {
 
 			/*********Parte del personale********************/
-			Cliente cliente1 = new Cliente("Andrea", "Marsili", "ANDMRS", "andreamarsili@gmail.com", "magliano");
-			Cliente cliente2 = new Cliente("Davide", "Zeppilli", "DVDZEP", "davidezeppilli@gmail.com", "yag");
-			Cliente cliente3 = new Cliente("Stefano", "Tosetto", "STFTST", "stefanotosetto@gmail.com","geova");
-			Cliente cliente4 = new Cliente("Chiara","Antifora", "CHRANT", "chiaraantifora@gmai.com","vecchia");
-			Cliente cliente5 = new Cliente("Elvira", "Rameti","ELVRMT", "elvirona@gmail.com","ramen");
-			Cliente cliente6 = new Cliente("Rebecca", "Montagna", "RBCMNT", "rebeccamontagna@gmail.com","pifferaia");
-			Cliente cliente7 = new Cliente("Beatrice", "giovale", "BTCGVL", "beatricegiovale@gmail.com", "maschiaccio");
-			Cliente cliente8 = new Cliente("Kristopher", "Porfiri", "KRSPRF", "kristoporfi@gmail.com", "disamuel");
-			Cliente cliente9 = new Cliente("Michele", "Mercuri", "MCRMRC", "michelemercuri@gmail.com", "psyco");
+			Cliente cliente1 = new Cliente("Andrea", "Marsili", "andreamarsili@gmail.com", "magliano");
+			Cliente cliente2 = new Cliente("Davide", "Zeppilli", "davidezeppilli@gmail.com", "yag");
+			Cliente cliente3 = new Cliente("Stefano", "Tosetto",  "stefanotosetto@gmail.com","geova");
+			Cliente cliente4 = new Cliente("Chiara","Antifora", "chiaraantifora@gmai.com","vecchia");
+			Cliente cliente5 = new Cliente("Elvira", "Rameti", "elvirona@gmail.com","ramen");
+			Cliente cliente6 = new Cliente("Rebecca", "Montagna", "rebeccamontagna@gmail.com","pifferaia");
+			Cliente cliente7 = new Cliente("Beatrice", "giovale", "beatricegiovale@gmail.com", "maschiaccio");
+			Cliente cliente8 = new Cliente("Kristopher", "Porfiri", "kristoporfi@gmail.com", "disamuel");
+			Cliente cliente9 = new Cliente("Michele", "Mercuri", "michelemercuri@gmail.com", "psyco");
 			clienteRepository.saveAll(List.of(cliente1,cliente2,cliente3,cliente4,cliente5,cliente6,cliente7,cliente8,cliente9));
 
 			Amministratore admin = new Amministratore(RuoloSistema.AMMINISTRATORE);
@@ -81,7 +81,7 @@ public class C3Application{
 			Merce merce3 = new Merce("pane casereccio", Categoria.ALIMENTI, "pane con farina 00");
 			Merce merce4 = new Merce("racchetta di tennis", Categoria.SPORT, "racchetta professionale");
 			merceRepository.saveAll(List.of(merce,merce1,merce2,merce3,merce4));
-			MerceAlPubblico merceAlPubblico = new MerceAlPubblico(23, merce);
+			MerceAlPubblico merceAlPubblico = new MerceAlPubblico(23, merce, 2);
 			MerceAlPubblico merceAlPubblico1 = new MerceAlPubblico(3, merce1);
 			Promozione promozione = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
 			Promozione promozione1 = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 20);
@@ -139,6 +139,7 @@ public class C3Application{
 			corriere.addMerceDaSpedire(venditaSpedita);
 			venditaSpeditaRepository.save(venditaSpedita);
 			negozio.addVenditaInNegozioRitiro(venditaSpedita);
+			cliente7.addAcquisto(venditaSpedita);
 			negozioRepository.save(negozio);
 		};
 	}

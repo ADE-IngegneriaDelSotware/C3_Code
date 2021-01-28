@@ -14,18 +14,18 @@ public class Promozione {
     private LocalDate dataInizio;
     private LocalDate dataFine;
     private double percentualeSconto;
-    private boolean disponibilita;
+    private boolean disponibile;
     private double prezzoPromozione;
 
     public Promozione(LocalDate dataInizio, LocalDate dataFine, double percentualeSconto) {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.percentualeSconto = percentualeSconto;
-        this.disponibilita = true;
+        this.disponibile = true;
     }
 
-    public Promozione(boolean disponibilita) {
-        this.disponibilita = disponibilita;
+    public Promozione(boolean disponibile) {
+        this.disponibile = disponibile;
     }
 
     public Promozione() {
@@ -64,12 +64,12 @@ public class Promozione {
         this.percentualeSconto = percentualeSconto;
     }
 
-    public boolean isDisponibilita() {
-        return disponibilita;
+    public boolean isDisponibile() {
+        return disponibile;
     }
 
-    public void setDisponibilita(boolean disponibilita) {
-        this.disponibilita = disponibilita;
+    public void setDisponibile(boolean disponibilita) {
+        this.disponibile = disponibilita;
     }
 
     public double getPrezzoPromozione() {

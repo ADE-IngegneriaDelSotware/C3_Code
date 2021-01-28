@@ -42,10 +42,10 @@ public class MerceInventarioNegozio {
 
     @Override
     public String toString() {
-        return "MerceInventarioNegozioClass{" +
-                "quantita=" + quantita +
-                ", merceAlPubblico=" + merceAlPubblico +
-                '}';
+        return merceAlPubblico.getMerce().getNome() +
+                ", " + merceAlPubblico.getMerce().getDescrizione() +
+                ", " + merceAlPubblico.getPrezzo() +
+                ", " +quantita;
     }
 }
 
