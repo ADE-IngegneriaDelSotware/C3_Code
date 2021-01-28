@@ -153,6 +153,46 @@ public class IAddettoNegozio {
     @FXML
     private Button confermaConsegnaOrdine;
 
+
+    public void startCarrello(){
+        gestoreAddetto.startCarrello();
+    }
+
+    public double getPrezzo(long id, double quantita){
+        return gestoreAddetto.getPrezzo(id, quantita);
+    }
+
+    public double getSconto(int id) {
+        return gestoreAddetto.getSconto(id);
+    }
+
+    @FXML
+    void trovaPrezzoEScontoButtonEvent(ActionEvent event) {
+        //startCarrello();
+        prezzoMerce.setText(String.valueOf(getPrezzo(Long.parseLong(idMerce.getText()), Double.parseDouble(quantitaMerce.getText()))));
+        /*if(prezzoMerce.getText()=="0"){
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Merce inserita non presente, inserire il prezzo manualmente", ButtonType.OK);
+            alert.show();
+        }
+        scontoMerce.setText(String.valueOf(getSconto(Integer.parseInt(idMerce.getText()))));
+        if(scontoMerce.getText()=="0"){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"Merce inserita non ha uno sconto, puoi inserire sconto manualmente", ButtonType.OK);
+            alert.show();
+        }*/
+    }
+
+    @FXML
+    void inserisciButtonEvent(ActionEvent event) {
+
+    }
+
+    private void clearCheckoutFields() {
+        idMerce.clear();
+        quantitaMerce.clear();
+        prezzoMerce.clear();
+        scontoMerce.clear();
+    }
+
     @FXML
     void applyScontoCartaButtonEvent(ActionEvent event) {
 
@@ -199,11 +239,6 @@ public class IAddettoNegozio {
     }
 
     @FXML
-    void inserisciButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void iscrizioneClienteCheckoutButtonEvent(ActionEvent event) {
 
     }
@@ -220,11 +255,6 @@ public class IAddettoNegozio {
 
     @FXML
     void registraVenditaButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void trovaPrezzoEScontoButtonEvent(ActionEvent event) {
 
     }
 

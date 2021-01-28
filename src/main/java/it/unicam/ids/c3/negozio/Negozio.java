@@ -45,7 +45,7 @@ public class Negozio {
     @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<VenditaSpedita> venditePuntiDiRitiro;
 
-    @OneToMany(targetEntity = MerceInventarioNegozio.class,cascade = CascadeType.MERGE)
+    @OneToMany(targetEntity = MerceInventarioNegozio.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name="negozio_fk",referencedColumnName = "id")
     private List<MerceInventarioNegozio> merceInventarioNegozioList;
 
@@ -70,6 +70,10 @@ public class Negozio {
     }
 
     public Negozio() {
+    }
+
+    public List<MerceInventarioNegozio> getMerceInventarioNegozio() {
+        return this.merceInventarioNegozioList;
     }
 
     public int getId() {
@@ -114,10 +118,6 @@ public class Negozio {
 
     public void addNegozioDisponibile(Negozio pdr) {
         negoziDisponibili.add(pdr);
-    }
-
-    public List<MerceInventarioNegozio> getMerceInventarioNegozio() {
-        return merceInventarioNegozioList;
     }
 
     public void addMerceInventarioNegozio(MerceInventarioNegozio merceInventarioNegozio) {
