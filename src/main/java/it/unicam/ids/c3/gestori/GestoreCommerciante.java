@@ -106,8 +106,6 @@ public class GestoreCommerciante {
                             Vendita vendita = venditaIterator.next();
                             if(vendita.getId() == vs.getId()){
                                 list.add(vs);
-                                System.out.println(cliente.get().getAcquisti().size());
-                                System.out.println(getNegozio().getVenditeNegozioRitiro().size());
                             }
                         }
 

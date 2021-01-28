@@ -168,6 +168,7 @@ public class IAccesso implements Initializable{
         }
         im.setIcl(fxmlLoader.getController());
         im.getIcl().setGestoreClienti(gestoreClienti);
+        im.getIcl().init();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia accesso cliente");
         stage.setScene(new Scene(root1));
