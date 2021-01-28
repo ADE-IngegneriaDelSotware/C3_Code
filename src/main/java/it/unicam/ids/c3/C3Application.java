@@ -108,10 +108,15 @@ public class C3Application{
 			List<MerceVendita> lista = new ArrayList<>();
 			lista.addAll(List.of(merceVendita2, merceVendita3));
 			VenditaSpedita venditaSpedita = new VenditaSpedita(12, lista, "Viale della transumanza");
+			VenditaSpedita venditaSpedita1 = new VenditaSpedita(10, lista, "Viale del boschetto");
 			venditaSpeditaRepository.save(venditaSpedita);
+			venditaSpeditaRepository.save(venditaSpedita1);
 			corriere.addMerceDaSpedire(venditaSpedita);
+			corriere.addMerceDaSpedire(venditaSpedita1);
 			ruoloRepository.save(corriere);
 			venditaSpeditaRepository.save(venditaSpedita);
+			venditaSpeditaRepository.save(venditaSpedita1);
+
 
 			/****************************Parte Negozio************************************/
 			Carta carta = new Carta(cliente7, TipoScontoCliente.LAVORATORE);
@@ -140,14 +145,21 @@ public class C3Application{
 			negozioRepository.save(negozio1);
 
 			venditaSpedita.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
+			venditaSpedita1.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
 
 			negozio.addVendita(vendita);
 			negozio.addVendita(venditaSpedita);
 			negozioRepository.save(negozio);
-			corriere.addMerceDaSpedire(venditaSpedita);
-			venditaSpeditaRepository.save(venditaSpedita);
+
+			negozio1.addVendita(venditaSpedita1);
+			negozioRepository.save(negozio1);
+//			corriere.addMerceDaSpedire(venditaSpedita);
+//			venditaSpeditaRepository.save(venditaSpedita);
 			negozio.addVenditaInNegozioRitiro(venditaSpedita);
+			negozio1.addVenditaInNegozioRitiro(venditaSpedita1);
 			cliente7.addAcquisto(venditaSpedita);
+			cliente6.addAcquisto(venditaSpedita1);
+			clienteRepository.saveAll(List.of(cliente6,cliente7));
 			negozioRepository.save(negozio);
 			negozioRepository.save(negozio1);
 		};
