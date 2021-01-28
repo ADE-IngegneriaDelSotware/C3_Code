@@ -1,12 +1,16 @@
 package it.unicam.ids.c3.autenticazione;
 
 import it.unicam.ids.c3.gestori.*;
+import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.persistenza.NegozioRepository;
+import it.unicam.ids.c3.persistenza.RuoloRepository;
 import it.unicam.ids.c3.personale.*;
 import it.unicam.ids.c3.persistenza.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -14,6 +18,8 @@ import java.util.Optional;
 public class GestoreAccesso {
 
     private final ClienteRepository clienteRepository;
+    private final RuoloRepository ruoloRepository;
+    private final NegozioRepository negozioRepository;
     private final GestoreCorrieri gestoreCorrieri;
     private final GestoreClienti gestoreClienti;
     private final GestoreAddetto gestoreAddetto;
@@ -21,8 +27,10 @@ public class GestoreAccesso {
     private final GestoreAmministratore gestoreAmministratore;
 
     @Autowired
-    public GestoreAccesso(ClienteRepository clienteRepository, GestoreCorrieri gestoreCorrieri, GestoreClienti gestoreClienti, GestoreAddetto gestoreAddetto, GestoreCommerciante gestoreCommerciante, GestoreAmministratore gestoreAmministratore) {
+    public GestoreAccesso(ClienteRepository clienteRepository, RuoloRepository ruoloRepository, NegozioRepository negozioRepository, GestoreCorrieri gestoreCorrieri, GestoreClienti gestoreClienti, GestoreAddetto gestoreAddetto, GestoreCommerciante gestoreCommerciante, GestoreAmministratore gestoreAmministratore) {
         this.clienteRepository = clienteRepository;
+        this.ruoloRepository = ruoloRepository;
+        this.negozioRepository = negozioRepository;
         this.gestoreCorrieri = gestoreCorrieri;
         this.gestoreClienti = gestoreClienti;
         this.gestoreAddetto = gestoreAddetto;
@@ -45,7 +53,19 @@ public class GestoreAccesso {
                             return "AMMINISTRATORE";
                         case ADDETTONEGOZIO:
                             gestoreAddetto.setAddettoNegozio((AddettoNegozio) cliente.get().getRuolo());
+                            Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
+                            while (negozioIterator.hasNext()){
+                                Negozio negozio = negozioIterator.next();
+                                Iterator<AddettoNegozio> addettoNegozioIterator = negozio.getAddetti().iterator();
+                                while (addettoNegozioIterator.hasNext()){
+                                    AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
+                                    if(addettoNegozio.equals(cliente.get().getRuolo())){
+                                        gestoreAddetto.setNegozio(negozio);
+                                    }
+                                }
+                            }
                             return "ADDETTONEGOZIO";
+
                         case COMMERCIANTE:
                             gestoreCommerciante.setCommerciante((Commerciante) cliente.get().getRuolo());
                             return "COMMERCIANTE";
@@ -56,5 +76,4 @@ public class GestoreAccesso {
         gestoreClienti.setCliente(cliente.get());
         return "CLIENTE";
     }
-
 }
