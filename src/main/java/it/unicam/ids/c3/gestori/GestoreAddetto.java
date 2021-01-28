@@ -3,11 +3,11 @@ package it.unicam.ids.c3.gestori;
 import it.unicam.ids.c3.merce.Merce;
 import it.unicam.ids.c3.merce.MerceAlPubblico;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
+import it.unicam.ids.c3.merce.Promozione;
 import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
-import it.unicam.ids.c3.persistenza.ClienteRepository;
-import it.unicam.ids.c3.persistenza.NegozioRepository;
+import it.unicam.ids.c3.persistenza.*;
 import it.unicam.ids.c3.personale.AddettoNegozio;
 import it.unicam.ids.c3.personale.Cliente;
 import it.unicam.ids.c3.vendita.MerceVendita;
@@ -17,7 +17,7 @@ import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.management.OperatingSystemMXBean;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,20 +33,21 @@ public class GestoreAddetto {
     private List<MerceVendita> merciCarrello;
     private double prezzoCarrello;
     private ClienteRepository clienteRepository;
+    private VenditaSpeditaRepository venditaSpeditaRepository;
 
-    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository) {
+    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository) {
         this.negozioRepository = negozioRepository;
         this.clienteRepository = clienteRepository;
+        this.venditaSpeditaRepository = venditaSpeditaRepository;
         this.merciCarrello = new ArrayList<>();
         this.prezzoCarrello = 0;
-        //this.negozio = setNegozio();
     }
 
     public Negozio getNegozio(){
         return this.negozio;
     }
 
-    /**********Checkout Merce*********/
+    /********** Checkout Merce *********/
 
     public List<MerceVendita> getMerciCarrello() {
         return this.merciCarrello;
@@ -223,13 +224,18 @@ public class GestoreAddetto {
         List<VenditaSpedita> list = new ArrayList<>();
         Optional<Cliente> cliente = clienteRepository.findByEmail(email);
         if(cliente.isPresent()){
-            Iterator<VenditaSpedita> venditaSpeditaIterator = getNegozio().getVenditeNegozioRitiro().iterator();
-            while (venditaSpeditaIterator.hasNext()){
-                VenditaSpedita vs = venditaSpeditaIterator.next();
-                for(Vendita vendita:cliente.get().getAcquisti()){
-                    if(vendita.equals(vs)){
-                        System.out.println("sono arrivato qui");
-                        list.add(vs);
+            if(!cliente.get().getAcquisti().isEmpty()){
+                Iterator<VenditaSpedita> venditeNegozio = getNegozio().getVenditeNegozioRitiro().iterator();
+                while(venditeNegozio.hasNext()){
+                    VenditaSpedita vs = venditeNegozio.next();
+                    if(vs.getStatoConsegna().equals(StatoConsegna.CONSEGNATO_AL_NEGOZIO)){
+                        Iterator<Vendita> venditaIterator = cliente.get().getAcquisti().iterator();
+                        while(venditaIterator.hasNext()){
+                            Vendita vendita = venditaIterator.next();
+                            if(vendita.getId() == vs.getId()){
+                                list.add(vs);
+                            }
+                        }
                     }
                 }
             }
@@ -239,7 +245,10 @@ public class GestoreAddetto {
 
     public void confermaConsegnaVenditaAssegnata(List<VenditaSpedita> vendite) {
         aggiornaStatoVendita(vendite,StatoConsegna.CONSEGNATO_AL_CLIENTE);
-        getNegozio().removeVenditeInNegozioRitiro(vendite);
+        venditaSpeditaRepository.saveAll(vendite);
+        //TODO: forse c'è da rimettere le due righe sotto
+        //getNegozio().removeVenditeInNegozioRitiro(vendite);
+        //negozioRepository.save(getNegozio());
     }
 
     public void aggiornaStatoVendita(List<VenditaSpedita> list, StatoConsegna sc) {
@@ -248,7 +257,6 @@ public class GestoreAddetto {
             iterator.next().setStatoConsegna(sc);
         }
     }
-
     /************************ Fine Consegna Vendita Assegnata**********************/
 
     public void setAddettoNegozio(AddettoNegozio addettoNegozio){

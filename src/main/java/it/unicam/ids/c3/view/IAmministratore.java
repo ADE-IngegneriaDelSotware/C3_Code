@@ -1,13 +1,18 @@
 package it.unicam.ids.c3.view;
 
 import it.unicam.ids.c3.gestori.GestoreAmministratore;
+import it.unicam.ids.c3.merce.Categoria;
+import it.unicam.ids.c3.personale.Cliente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class IAmministratore {
@@ -16,13 +21,16 @@ public class IAmministratore {
     private GestoreAmministratore gestoreAmministratore;
 
     @FXML
-    private TextField cfRegistrazioneCorriere;
+    public TextField emailClienteRicerca;
+
+    @FXML
+    public TextField emailRegistrazioneCorriere;
 
     @FXML
     private Button ricercaRegistrazioneCorriereButton;
 
     @FXML
-    private ListView<?> listClientiRegistrazioneCorriere;
+    private ListView<Cliente> listClientiRegistrazioneCorriere;
 
     @FXML
     private Button confermaRegistraCorriereButton;
@@ -46,41 +54,52 @@ public class IAmministratore {
     private TextField indirizzoNegozio;
 
     @FXML
-    private TextField cfClienteRicerca;
+    private ListView<Categoria> settoriList;
 
     @FXML
-    private ListView<?> settoriList;
+    private Button ricercaEmailClienteButton;
 
     @FXML
-    private Button ricercaCFCLienteButton;
-
-    @FXML
-    private ListView<?> clientiList;
+    private ListView<Cliente> clientiList;
 
     @FXML
     private Button confermaRegistrazioneNegozioButton;
 
+    public void init() {
+        settoriList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        settoriList.getItems().addAll(Categoria.values());
+    }
+    public Cliente ricercaCliente(String email) {
+        return gestoreAmministratore.ricercaCliente(email);
+    }
+    public void registraCorriere(Cliente cliente,String nomeDitta,String piva,String indirizzoRegistrazione) {
+        gestoreAmministratore.registraCorriere(cliente,nomeDitta,piva,indirizzoRegistrazione);
+    }
+    public void registraNegozio(List<Categoria> categorie, Cliente cliente, String nomeDitta, String piva, String indirizzoRegistrazione) {
+        gestoreAmministratore.registraNegozio(categorie,cliente,nomeDitta,piva,indirizzoRegistrazione);
+    }
     @FXML
     void confermaRegistraCorriereEvent(ActionEvent event) {
-
+        registraCorriere(listClientiRegistrazioneCorriere.getSelectionModel().getSelectedItem(),nomeDittaRegistrazioneCorriere.getText(),pivaRegistrazioneCorriere.getText(),indirizzoRegistrazioneCorriere.getText());
     }
 
     @FXML
     void confermaRegistrazioneNegozioButtonEvent(ActionEvent event) {
-
+        registraNegozio(settoriList.getSelectionModel().getSelectedItems(),clientiList.getSelectionModel().getSelectedItem(),nomeNegozio.getText(),partitaIVA.getText(),indirizzoNegozio.getText());
     }
 
     @FXML
-    void ricercaCFCLienteButtonEvent(ActionEvent event) {
-
+    void ricercaEmailClienteButtonEvent(ActionEvent event) {
+        clientiList.getItems().add(ricercaCliente(emailClienteRicerca.getText()));
     }
 
     @FXML
     void ricercaRegistrazioneCorriereEvent(ActionEvent event) {
-
+        listClientiRegistrazioneCorriere.getItems().add(ricercaCliente(emailRegistrazioneCorriere.getText()));
     }
 
-    public void setGestoreAmministraotre(GestoreAmministratore gestoreAmministratore) {
+    public void setGestoreAmministratore(GestoreAmministratore gestoreAmministratore) {
         this.gestoreAmministratore = gestoreAmministratore;
     }
+
 }

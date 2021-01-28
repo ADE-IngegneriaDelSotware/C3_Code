@@ -52,22 +52,23 @@ public class GestoreAccesso {
                             gestoreAmministratore.setAmministratore((Amministratore) cliente.get().getRuolo());
                             return "AMMINISTRATORE";
                         case ADDETTONEGOZIO:
-                            gestoreAddetto.setAddettoNegozio((AddettoNegozio) cliente.get().getRuolo());
-                            Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
-                            while (negozioIterator.hasNext()){
-                                Negozio negozio = negozioIterator.next();
-                                Iterator<AddettoNegozio> addettoNegozioIterator = negozio.getAddetti().iterator();
-                                while (addettoNegozioIterator.hasNext()){
-                                    AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
-                                    if(addettoNegozio.equals(cliente.get().getRuolo())){
-                                        gestoreAddetto.setNegozio(negozio);
-                                    }
-                                }
-                            }
+//                            gestoreAddetto.setAddettoNegozio((AddettoNegozio) cliente.get().getRuolo());
+//                            Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
+//                            while (negozioIterator.hasNext()){
+//                                Negozio negozio = negozioIterator.next();
+//                                Iterator<AddettoNegozio> addettoNegozioIterator = negozio.getAddetti().iterator();
+//                                while (addettoNegozioIterator.hasNext()){
+//                                    AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
+//                                    if(addettoNegozio.equals(cliente.get().getRuolo())){
+//                                        gestoreAddetto.setNegozio(negozio);
+//                                    }
+//                                }
+//                            }
+                            setNegozioAddetto(cliente.get());
                             return "ADDETTONEGOZIO";
 
                         case COMMERCIANTE:
-                            gestoreCommerciante.setCommerciante((Commerciante) cliente.get().getRuolo());
+                            setNegozioCommerciante(cliente.get());
                             return "COMMERCIANTE";
                     }
                 }
@@ -76,4 +77,33 @@ public class GestoreAccesso {
         gestoreClienti.setCliente(cliente.get());
         return "CLIENTE";
     }
-}
+
+    private void setNegozioAddetto(Cliente cliente){
+        Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
+        while (negozioIterator.hasNext()){
+            Negozio negozio = negozioIterator.next();
+            Iterator<AddettoNegozio> addettoNegozioIterator = negozio.getAddetti().iterator();
+            while (addettoNegozioIterator.hasNext()){
+                AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
+                if(addettoNegozio.equals(cliente.getRuolo())){
+                    gestoreAddetto.setNegozio(negozio);
+                }
+            }
+        }
+    }
+
+    private void setNegozioCommerciante(Cliente cliente){
+        Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
+        while (negozioIterator.hasNext()){
+            Negozio negozio = negozioIterator.next();
+            Iterator<AddettoNegozio> addettoNegozioIterator = negozio.getAddetti().iterator();
+            while (addettoNegozioIterator.hasNext()){
+                AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
+                if(addettoNegozio.equals(cliente.getRuolo())){
+                    gestoreCommerciante.setNegozio(negozio);
+                }
+            }
+        }
+    }
+
+ }

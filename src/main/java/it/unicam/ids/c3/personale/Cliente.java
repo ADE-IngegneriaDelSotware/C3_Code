@@ -2,13 +2,16 @@ package it.unicam.ids.c3.personale;
 
 
 import it.unicam.ids.c3.negozio.Carta;
+import it.unicam.ids.c3.vendita.StatoConsegna;
 import it.unicam.ids.c3.vendita.Vendita;
+import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Entity
 public class Cliente{
@@ -86,6 +89,18 @@ public class Cliente{
 
     public List<Vendita> getAcquisti() {
         return acquisti;
+    }
+
+    public List<VenditaSpedita> getAcquistiDaRitirare(){
+        List<VenditaSpedita> vdr = new ArrayList<>();
+        for(Vendita vendita : getAcquisti()){
+            if(vendita instanceof VenditaSpedita){
+                if(((VenditaSpedita) vendita).getStatoConsegna().equals(StatoConsegna.CONSEGNATO_AL_NEGOZIO)){
+                    vdr.add((VenditaSpedita) vendita);
+                }
+            }
+        }
+        return vdr;
     }
 
     public  void addAcquisto(Vendita vendita){

@@ -149,6 +149,7 @@ public class IAccesso implements Initializable{
         }
         im.setIc(fxmlLoader.getController());
         im.getIc().setGestoreCorriere(gestoreCorrieri);
+        im.getIc().init();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia Accesso Corriere");
         stage.setScene(new Scene(root1));
@@ -186,7 +187,8 @@ public class IAccesso implements Initializable{
             e.printStackTrace();
         }
         im.setIam(fxmlLoader.getController());
-        im.getIam().setGestoreAmministraotre(gestoreAmministratore);
+        im.getIam().setGestoreAmministratore(gestoreAmministratore);
+        im.getIam().init();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia Accesso Amministratore");
         stage.setScene(new Scene(root1));
@@ -226,6 +228,9 @@ public class IAccesso implements Initializable{
         }
         im.setIcm(fxmlLoader.getController());
         im.getIcm().setGestoreCommerciante(gestoreCommerciante);
+        im.getIcm().initAssegnazioneCartaField();
+        im.getIcm().initRichiestaCartField();
+        im.getIcm().getInventario();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia commerciante");
         stage.setScene(new Scene(root1));

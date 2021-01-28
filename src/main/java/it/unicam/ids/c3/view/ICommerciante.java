@@ -1,17 +1,28 @@
 package it.unicam.ids.c3.view;
 
 import it.unicam.ids.c3.gestori.GestoreCommerciante;
+import it.unicam.ids.c3.merce.Categoria;
+import it.unicam.ids.c3.merce.MerceInventarioNegozio;
+import it.unicam.ids.c3.negozio.TipoScontoCliente;
+import it.unicam.ids.c3.persistenza.VenditaRepository;
+import it.unicam.ids.c3.personale.Cliente;
+import it.unicam.ids.c3.vendita.VenditaSpedita;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ICommerciante {
 
     @Autowired
     private GestoreCommerciante gestoreCommerciante;
+
+    @FXML
+    private TabPane tabPaneCommerciante;
 
     @FXML
     private Button checkoutCompletedButton;
@@ -119,16 +130,16 @@ public class ICommerciante {
     private Button noScontoCartaButton;
 
     @FXML
-    private TextField codiceFiscaleAC;
+    private TextField emailAC;
 
     @FXML
     private Button cercaClienteACButton;
 
     @FXML
-    private ListView<?> clientiFiltratiAC;
+    private ListView<Cliente> clientiFiltratiAC;
 
     @FXML
-    private ChoiceBox<?> tscAC;
+    private ChoiceBox<TipoScontoCliente> tscAC;
 
     @FXML
     private Button assegnaCartaButton;
@@ -179,7 +190,7 @@ public class ICommerciante {
     private Button confermAggiuntaCorriereButton;
 
     @FXML
-    private ListView<?> listViewConsultaInventario;
+    private ListView<MerceInventarioNegozio> listViewConsultaInventario;
 
     @FXML
     private Button confermaConsultaInventarioButton;
@@ -194,13 +205,13 @@ public class ICommerciante {
     private Button confermaClienteConsegnaOrdine;
 
     @FXML
-    private ListView<?> listaVenditeDaConsegnare;
+    private ListView<VenditaSpedita> listaVenditeDaConsegnare;
 
     @FXML
     private Button confermaConsegnaOrdine;
 
     @FXML
-    private ListView<?> merciInventario;
+    private ListView<MerceInventarioNegozio> merciInventario;
 
     @FXML
     private Button aggiungiButton;
@@ -248,7 +259,7 @@ public class ICommerciante {
     private TextField scontoMerceGI;
 
     @FXML
-    private ChoiceBox<?> categoriaMerceGI;
+    private ChoiceBox<Categoria> categoriaMerceGI;
 
     @FXML
     private TextField quantitaMerceGI;
@@ -257,41 +268,19 @@ public class ICommerciante {
     private Button confermaRimozioneMerceButton;
 
     @FXML
-    private ListView<?> merciDaOrdinare;
+    private Button inviaCodiceAlCheckoutButton;
 
     @FXML
-    private TextField cercaMerceField;
+    private Tab assegnaCartaTab;
 
     @FXML
-    private Button cercaMerceButton;
+    private Tab tabCheckout;
 
     @FXML
-    private Button confermaButton;
-
-    @FXML
-    private Button addMerceDaOrdinareButton;
-
-    @FXML
-    private Button removeMerceDaOrdinareButtton;
-
-    @FXML
-    private ListView<?> merceSearched;
-
-    @FXML
-    private TextField quantitaOrdine;
-
-    @FXML
-    void addMerceDaOrdinareButtonEvent(ActionEvent event) {
-
-    }
+    private TextField emailConsegnaOrdine;
 
     @FXML
     void addPromozioneButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void aggiungiButtonEvent(ActionEvent event) {
 
     }
 
@@ -311,11 +300,6 @@ public class ICommerciante {
     }
 
     @FXML
-    void assegnaCartaButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void calcolaRestoButtonEvent(ActionEvent event) {
 
     }
@@ -327,11 +311,6 @@ public class ICommerciante {
 
     @FXML
     void cercaClienteAAButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cercaClienteACButtonEvent(ActionEvent event) {
 
     }
 
@@ -351,11 +330,6 @@ public class ICommerciante {
     }
 
     @FXML
-    void confermaAggiuntaMerceButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void confermaAssunzioneAddettoButtonEvent(ActionEvent event) {
 
     }
@@ -367,26 +341,6 @@ public class ICommerciante {
 
     @FXML
     void confermaCFButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confermaClienteConsegnaOrdineButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confermaConsegnaOrdineButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confermaConsultaInventarioEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confermaRimozioneMerceButtonEvent(ActionEvent event) {
 
     }
 
@@ -421,16 +375,6 @@ public class ICommerciante {
     }
 
     @FXML
-    void rimuoviMerceButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void rimuoviPromozioneButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void trovaPrezzoEScontoButtonEvent(ActionEvent event) {
 
     }
@@ -439,6 +383,210 @@ public class ICommerciante {
     void verificaCodiceCartaButton(ActionEvent event) {
 
     }
+
+    @FXML
+    void rimuoviPromozioneButtonEvent(ActionEvent event){
+
+    }
+
+    public void initRichiestaCartField() {
+        siCartaDisponibile.setVisible(false);
+        noCartaDisponibile.setVisible(false);
+        cdLabel.setVisible(false);
+        cartaDisponibileButton.setVisible(false);
+        codiceCarta.setVisible(false);
+        codiceFiscale.setVisible(false);
+        confermaCF.setVisible(false);
+        verificaCodice.setVisible(false);
+        iscrizioneClienteCheckout.setVisible(false);
+        codiceCartaLabel.setVisible(false);
+        codiceFiscaleLabel.setVisible(false);
+        //codiceCarta.setText("0");
+        applyScontoCartaButton.setVisible(false);
+        answerRegistraVenditaLabel.setVisible(false);
+        siRegistraVendita.setVisible(false);
+        noRegistraVendita.setVisible(false);
+        registraVenditaButton.setVisible(false);
+        noScontoCartaButton.setVisible(false);
+        denaroRicevutoLabel.setVisible(false);
+        denaroRicevuto.setVisible(false);
+        calcolaRestoButton.setVisible(false);
+        resto.setVisible(false);
+        restoLabel.setVisible(false);
+        checkoutCompletedButton.setVisible(false);
+        annullaCheckoutButton.setVisible(false);
+    }
+
+
+    /***********************Assegnazione Carta****************************/
+
+    public void initAssegnazioneCartaField(){
+        inviaCodiceAlCheckoutButton.setVisible(false);
+        tscAC.getItems().addAll(TipoScontoCliente.values());
+    }
+
+    public void getClientiFiltered(String email){
+        clientiFiltratiAC.getItems().clear();
+        clientiFiltratiAC.getItems().add(gestoreCommerciante.getCliente(email));
+    }
+
+    public long assegnaCarta(Cliente cliente, TipoScontoCliente tsc){
+        return gestoreCommerciante.assegnaCarta(cliente,tsc);
+    }
+
+    @FXML
+    void cercaClienteACButtonEvent(ActionEvent event) {
+        getClientiFiltered(emailAC.getText());
+    }
+
+    @FXML
+    void assegnaCartaButtonEvent(ActionEvent event) {
+        codiceCartaAC.setText(String.valueOf(assegnaCarta(clientiFiltratiAC.getSelectionModel().getSelectedItem(), tscAC.getValue())));
+    }
+
+    @FXML
+    void inviaCodiceAlCheckoutButtonEvent(ActionEvent event) {
+        codiceCarta.setText(codiceCartaAC.getText());
+        tabPaneCommerciante.getSelectionModel().select(tabCheckout);
+    }
+
+    /******************Interfaccia Consulta Inventario*********************/
+
+    public void getInventario(){
+        listViewConsultaInventario.getItems().clear();
+        listViewConsultaInventario.getItems().addAll(gestoreCommerciante.getInventario());
+    }
+
+    public void getInfoMerce(MerceInventarioNegozio min){
+        infoMerceConsultaInventario.clear();
+        infoMerceConsultaInventario.setText(gestoreCommerciante.getInfoMerce(min));
+    }
+
+    @FXML
+    void confermaConsultaInventarioEvent(ActionEvent event) {
+        getInfoMerce(listViewConsultaInventario.getSelectionModel().getSelectedItem());
+    }
+
+    /****************Interfaccia Consegna Vendita Assegnata**************/
+
+    public void getAcquistiClienteDaRitirare(String email){
+        listaVenditeDaConsegnare.getItems().clear();
+        listaVenditeDaConsegnare.getItems().addAll(gestoreCommerciante.getAcquistiClienteDaRitirare(email));
+    }
+
+    public void confermaConsegnaVenditaAssegnata(List<VenditaSpedita> vendite) {
+        gestoreCommerciante.confermaConsegnaVenditaAssegnata(vendite);
+    }
+
+    @FXML
+    void confermaClienteConsegnaOrdineButton(ActionEvent event) {
+        getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
+    }
+
+    @FXML
+    void confermaConsegnaOrdineButton(ActionEvent event) {
+        confermaConsegnaVenditaAssegnata(listaVenditeDaConsegnare.getSelectionModel().getSelectedItems());
+        getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
+    }
+
+
+    /*****************Interfaccia Gestione Inventario**********************/
+
+    public void getMerciInventario(){
+        merciInventario.getItems().clear();
+        merciInventario.getItems().addAll(gestoreCommerciante.getInventario());
+    }
+
+    private void initFieldGestioneInventario(){
+        nomeMerceGI.setVisible(false);
+        idMerceGI.setVisible(false);
+        descrizioneMerceGI.setVisible(false);
+        categoriaMerceGI.setVisible(false);
+        quantitaMerceGI.setVisible(false);
+        prezzoMerceGI.setVisible(false);
+        scontoMerceGI.setVisible(false);
+        confermaAggiuntaMerceButton.setVisible(false);
+        confermaRimozioneMerceButton.setVisible(false);
+        nomeLabelGI.setVisible(false);
+        idLabelGI.setVisible(false);
+        descrizioneLabelGI.setVisible(false);
+        categoriaLabelGI.setVisible(false);
+        quantitaLabelGI.setVisible(false);
+        prezzoLabelGI.setVisible(false);
+        scontoLabelGI.setVisible(false);
+        categoriaMerceGI.getItems().addAll(Categoria.values());
+    }
+
+    private void clearAggiuntaGIField(){
+        nomeMerceGI.clear();
+        idMerceGI.clear();
+        descrizioneMerceGI.clear();
+        quantitaMerceGI.clear();
+        prezzoMerceGI.clear();
+        scontoMerceGI.clear();
+        categoriaMerceGI.getItems().clear();
+        initFieldGestioneInventario();
+    }
+
+    private void clearRimozioneGIField(){
+        quantitaMerceGI.clear();
+        quantitaMerceGI.setVisible(false);
+        quantitaLabelGI.setVisible(false);
+        confermaRimozioneMerceButton.setVisible(false);
+    }
+
+    public void addMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, int sconto){
+        gestoreCommerciante.addMerce(nome,descrizione,categoria,quantita,prezzo,sconto);
+    }
+
+    public void removeMerce(List<MerceInventarioNegozio> list, double quantita){
+        gestoreCommerciante.removeMerce(list,quantita);
+    }
+
+    @FXML
+    void aggiungiButtonEvent(ActionEvent event) {
+        nomeMerceGI.setVisible(true);
+        idMerceGI.setVisible(true);
+        descrizioneMerceGI.setVisible(true);
+        categoriaMerceGI.setVisible(true);
+        quantitaMerceGI.setVisible(true);
+        prezzoMerceGI.setVisible(true);
+        scontoMerceGI.setVisible(true);
+        confermaAggiuntaMerceButton.setVisible(true);
+        nomeLabelGI.setVisible(true);
+        idLabelGI.setVisible(true);
+        descrizioneLabelGI.setVisible(true);
+        categoriaLabelGI.setVisible(true);
+        quantitaLabelGI.setVisible(true);
+        prezzoLabelGI.setVisible(true);
+        scontoLabelGI.setVisible(true);
+    }
+
+    @FXML
+    void confermaAggiuntaMerceButtonEvent(ActionEvent event) {
+        addMerce(nomeMerceGI.getText(), descrizioneMerceGI.getText(), categoriaMerceGI.getValue(),
+                Double.parseDouble(quantitaMerceGI.getText()), Double.parseDouble(prezzoMerceGI.getText()), Integer.parseInt(scontoMerceGI.getText()));
+        getMerciInventario();
+        clearAggiuntaGIField();
+    }
+
+    @FXML
+    void rimuoviMerceButtonEvent(ActionEvent event) {
+        quantitaLabelGI.setVisible(true);
+        quantitaMerceGI.setVisible(true);
+        confermaRimozioneMerceButton.setVisible(true);
+    }
+
+    @FXML
+    void confermaRimozioneMerceButtonEvent(ActionEvent event){
+        removeMerce(merciInventario.getSelectionModel().getSelectedItems(), Double.parseDouble(quantitaMerceGI.getText()));
+        getMerciInventario();
+        clearRimozioneGIField();
+    }
+
+    /*********************** Fine Gestione Inventario ***********************/
+
+
 
     public void setGestoreCommerciante(GestoreCommerciante gestoreCommerciante) {
         this.gestoreCommerciante = gestoreCommerciante;

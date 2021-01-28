@@ -152,7 +152,7 @@ public class IAddettoNegozio {
     private TextArea infoMerceConsultaInventario;
 
     @FXML
-    private TextField codiceFiscaleConsegnaOrdine;
+    private TextField emailConsegnaOrdine;
 
     @FXML
     private Button confermaClienteConsegnaOrdine;
@@ -449,14 +449,15 @@ public class IAddettoNegozio {
 
     @FXML
     void confermaClienteConsegnaOrdineButton(ActionEvent event) {
-        getAcquistiClienteDaRitirare(codiceFiscaleConsegnaOrdine.getText());
+        getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
     }
 
     @FXML
     void confermaConsegnaOrdineButton(ActionEvent event) {
         confermaConsegnaVenditaAssegnata(listaVenditeDaConsegnare.getSelectionModel().getSelectedItems());
-        getAcquistiClienteDaRitirare(codiceFiscaleConsegnaOrdine.getText());
+        getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
     }
+
 
 
 

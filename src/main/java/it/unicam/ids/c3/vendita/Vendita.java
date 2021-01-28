@@ -1,8 +1,6 @@
 package it.unicam.ids.c3.vendita;
 
 
-import it.unicam.ids.c3.personale.Cliente;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +11,7 @@ public class Vendita {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private LocalDate data;
     private double prezzo;
 
@@ -31,11 +29,11 @@ public class Vendita {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -61,5 +59,12 @@ public class Vendita {
 
     public void setListaMerceVendita(List<MerceVendita> listaMerceVendita) {
         this.listaMerceVendita = listaMerceVendita;
+    }
+
+    @Override
+    public String toString() {
+        return id +
+                ", " + data +
+                ", " + prezzo;
     }
 }

@@ -8,6 +8,7 @@ import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.personale.*;
 import it.unicam.ids.c3.vendita.MerceVendita;
+import it.unicam.ids.c3.vendita.StatoConsegna;
 import it.unicam.ids.c3.vendita.Vendita;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
 import javafx.application.Application;
@@ -49,7 +50,7 @@ public class C3Application{
 			Cliente cliente1 = new Cliente("Andrea", "Marsili", "andreamarsili@gmail.com", "magliano");
 			Cliente cliente2 = new Cliente("Davide", "Zeppilli", "davidezeppilli@gmail.com", "yag");
 			Cliente cliente3 = new Cliente("Stefano", "Tosetto",  "stefanotosetto@gmail.com","geova");
-			Cliente cliente4 = new Cliente("Chiara","Antifora", "chiaraantifora@gmai.com","vecchia");
+			Cliente cliente4 = new Cliente("Chiara","Antifora", "chiaraantifora@gmail.com","vecchia");
 			Cliente cliente5 = new Cliente("Elvira", "Rameti", "elvirona@gmail.com","ramen");
 			Cliente cliente6 = new Cliente("Rebecca", "Montagna", "rebeccamontagna@gmail.com","pifferaia");
 			Cliente cliente7 = new Cliente("Beatrice", "giovale", "beatricegiovale@gmail.com", "maschiaccio");
@@ -80,33 +81,36 @@ public class C3Application{
 			Merce merce2 = new Merce("iphone 12", Categoria.TECNOLOGIA, "256 GB , 8 GB di RAM");
 			Merce merce3 = new Merce("pane casereccio", Categoria.ALIMENTI, "pane con farina 00");
 			Merce merce4 = new Merce("racchetta di tennis", Categoria.SPORT, "racchetta professionale");
-			merceRepository.saveAll(List.of(merce,merce1,merce2,merce3,merce4));
+			merceRepository.saveAll(List.of(merce, merce1, merce2, merce3, merce4));
 			MerceAlPubblico merceAlPubblico = new MerceAlPubblico(23, merce, 2);
 			MerceAlPubblico merceAlPubblico1 = new MerceAlPubblico(3, merce1);
 			Promozione promozione = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
 			Promozione promozione1 = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 20);
-			promozioneRepository.saveAll(List.of(promozione,promozione1));
+			promozioneRepository.saveAll(List.of(promozione, promozione1));
 			merceAlPubblico.setPromozione(promozione);
 			merceAlPubblico1.setPromozione(promozione1);
-			merceAlPubblicoRepository.saveAll(List.of(merceAlPubblico,merceAlPubblico1));
+			merceAlPubblicoRepository.saveAll(List.of(merceAlPubblico, merceAlPubblico1));
 			MerceInventarioNegozio merceInventarioNegozio = new MerceInventarioNegozio(3.3, merceAlPubblico);
 			MerceInventarioNegozio merceInventarioNegozio1 = new MerceInventarioNegozio(3, merceAlPubblico1);
-			merceInventarioNegozioRepository.saveAll(List.of(merceInventarioNegozio,merceInventarioNegozio1));
+			merceInventarioNegozioRepository.saveAll(List.of(merceInventarioNegozio, merceInventarioNegozio1));
 
 			/***********************Parte Vendita**********************/
 			MerceVendita merceVendita = new MerceVendita(12.3, 2, merceAlPubblico);
-			MerceVendita merceVendita1 = new MerceVendita(3,3 , merceAlPubblico1);
+			MerceVendita merceVendita1 = new MerceVendita(3, 3, merceAlPubblico1);
 			MerceVendita merceVendita2 = new MerceVendita(10, 1, merceAlPubblico);
-			MerceVendita merceVendita3 = new MerceVendita(3,1 , merceAlPubblico1);
-			merceVenditaRepository.saveAll(List.of(merceVendita,merceVendita1,merceVendita2,merceVendita3));
+			MerceVendita merceVendita3 = new MerceVendita(3, 1, merceAlPubblico1);
+			merceVenditaRepository.saveAll(List.of(merceVendita, merceVendita1, merceVendita2, merceVendita3));
 			List<MerceVendita> listaMerciVendita = new ArrayList<>();
 			listaMerciVendita.add(merceVendita);
 			listaMerciVendita.add(merceVendita1);
 			Vendita vendita = new Vendita(32.5, listaMerciVendita);
 			venditaRepository.save(vendita);
 			List<MerceVendita> lista = new ArrayList<>();
-			lista.addAll(List.of(merceVendita2,merceVendita3));
+			lista.addAll(List.of(merceVendita2, merceVendita3));
 			VenditaSpedita venditaSpedita = new VenditaSpedita(12, lista, "Viale della transumanza");
+			venditaSpeditaRepository.save(venditaSpedita);
+			corriere.addMerceDaSpedire(venditaSpedita);
+			ruoloRepository.save(corriere);
 			venditaSpeditaRepository.save(venditaSpedita);
 
 			/****************************Parte Negozio************************************/
@@ -134,13 +138,18 @@ public class C3Application{
 			negozioRepository.saveAll(List.of(negozio,negozio1));
 			negozio1.addCarta(carta3);
 			negozioRepository.save(negozio1);
+
+			venditaSpedita.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
+
 			negozio.addVendita(vendita);
+			negozio.addVendita(venditaSpedita);
 			negozioRepository.save(negozio);
 			corriere.addMerceDaSpedire(venditaSpedita);
 			venditaSpeditaRepository.save(venditaSpedita);
 			negozio.addVenditaInNegozioRitiro(venditaSpedita);
 			cliente7.addAcquisto(venditaSpedita);
 			negozioRepository.save(negozio);
+			negozioRepository.save(negozio1);
 		};
 	}
 }
