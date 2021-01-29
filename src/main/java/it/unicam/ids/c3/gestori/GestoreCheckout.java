@@ -3,10 +3,13 @@ package it.unicam.ids.c3.gestori;
 import it.unicam.ids.c3.merce.Merce;
 import it.unicam.ids.c3.merce.MerceAlPubblico;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
+import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.persistenza.*;
+import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.MerceVendita;
 import it.unicam.ids.c3.vendita.Vendita;
+import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +29,19 @@ public class GestoreCheckout {
     private MerceInventarioNegozioRepository merceInventarioNegozioRepository;
     private MerceVenditaRepository merceVenditaRepository;
     private VenditaRepository venditaRepository;
+    private VenditaSpeditaRepository venditaSpeditaRepository;
+    private NegozioRepository negozioRepository;
+    private RuoloRepository ruoloRepository;
 
-    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository) {
+    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, RuoloRepository ruoloRepository) {
         this.merceRepository = merceRepository;
         this.merceAlPubblicoRepository = merceAlPubblicoRepository;
         this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
         this.merceVenditaRepository = merceVenditaRepository;
         this.venditaRepository = venditaRepository;
+        this.venditaSpeditaRepository = venditaSpeditaRepository;
+        this.negozioRepository = negozioRepository;
+        this.ruoloRepository = ruoloRepository;
         merciCarrello = new ArrayList<>();
         prezzoCarrello = 0;
     }
@@ -162,7 +171,122 @@ public class GestoreCheckout {
         svuotaCarrello();
     }
 
+    public boolean verificaCodiceCarta(long cc, Negozio negozio){
+        if(!negozio.getCarte().isEmpty()) {
+            Iterator<Carta> it = negozio.getCarte().iterator();
+            while (it.hasNext()) {
+                Carta c = it.next();
+                if (c.getCodice() == cc) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
+    public long searchCodiceCartaFromEmail(String email, Negozio negozio){
+        if(!negozio.getCarte().isEmpty()) {
+            Iterator<Carta> it = negozio.getCarte().iterator();
+            while (it.hasNext()) {
+                Carta c = it.next();
+                if (c.getCliente().getEmail().equals(email)) {
+                    return c.getCodice();
+                }
+            }
+        }
+        return 0;
+    }
 
+    public List<Corriere> getCorrieriDisponibili(Negozio negozio) {
+        List<Corriere> corrieriDisponibiliList = new ArrayList<>();
+        if(!negozio.getCorrieri().isEmpty()){
+            Iterator<Corriere> corriereIterator = negozio.getCorrieri().iterator();
+            while(corriereIterator.hasNext()){
+                Corriere corriereDisponibile = corriereIterator.next();
+                if(corriereDisponibile.isDisponibilitaRitiro()){
+                    corrieriDisponibiliList.add(corriereDisponibile);
+                }
+            }
+        }
+        return corrieriDisponibiliList;
+    }
 
+    public List<Negozio> getNegoziDisponibili(Negozio negozio) {
+        List<Negozio> puntiDiRitiriDisponibiliList = new ArrayList<>();
+        Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
+        while (negozioIterator.hasNext()){
+            Negozio negozioIterato = negozioIterator.next();
+            if(negozioIterato.getDisponibilitaRitiro() && negozio.getId()!=negozioIterato.getId()){
+                puntiDiRitiriDisponibiliList.add(negozioIterato);
+            }
+        }
+        return puntiDiRitiriDisponibiliList;
+    }
+
+    public void registraAcquistoCliente(long cc, Negozio pdr, String indirizzo, Corriere cr, Negozio negozio) {
+        Carta carta = searchCarta(cc, negozio);
+        VenditaSpedita vs;
+        if(indirizzo.isEmpty()){
+            vs = new VenditaSpedita(getPrezzoCarrello(), pdr.getIndirizzo(), getMerciCarrello());
+        } else {
+            vs = new VenditaSpedita(getPrezzoCarrello(),getMerciCarrello(),indirizzo);
+        }
+        venditaSpeditaRepository.save(vs);
+        carta.getCliente().getAcquisti().add(vs);
+        negozio.addVendita(vs);
+        cr.addMerceDaSpedire(vs);
+        pdr.addVenditaInNegozioRitiro(vs);
+        negozioRepository.save(negozio);
+        negozioRepository.save(pdr);
+        ruoloRepository.save(cr);
+    }
+
+    public void registraAcquistoCliente(long cc, Negozio negozio) {
+        Carta carta = searchCarta(cc, negozio);
+        Vendita v = new Vendita(getPrezzoCarrello(), getMerciCarrello());
+        carta.getCliente().getAcquisti().add(v);
+        negozio.addVendita(v);
+        venditaRepository.save(v);
+        negozioRepository.save(negozio);
+    }
+
+    public Carta searchCarta(long cc, Negozio negozio) {
+        if(!negozio.getCarte().isEmpty()){
+            Iterator<Carta> carte = negozio.getCarte().iterator();
+            while(carte.hasNext()){
+                Carta carta = carte.next();
+                if(carta.getCodice() == cc){
+                    return carta;
+                }
+            }
+        }
+        return null;
+    }
+
+    public double applyScontoCarta(long cc, Negozio negozio) {
+        if(cc!=0){
+            this.prezzoCarrello = prezzoCarrello-((calcolaScontoCarta(cc, negozio)/100) * prezzoCarrello);
+        }
+        return prezzoCarrello;
+    }
+
+    public double calcolaScontoCarta(long cc, Negozio negozio) {
+        if(!negozio.getCarte().isEmpty()){
+            Iterator<Carta> carte = negozio.getCarte().iterator();
+            while(carte.hasNext()){
+                Carta carta = carte.next();
+                if(carta.getCodice() == cc){
+                    return carta.getSconto();
+                }
+            }
+        }
+        return 0;
+    }
+
+    public void addVenditaInventario(Negozio negozio) {
+        Vendita v = new Vendita(getPrezzoCarrello(), getMerciCarrello());
+        negozio.addVendita(v);
+        venditaRepository.save(v);
+        negozioRepository.save(negozio);
+    }
 }
