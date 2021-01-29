@@ -3,7 +3,6 @@ package it.unicam.ids.c3.gestori;
 import it.unicam.ids.c3.merce.Merce;
 import it.unicam.ids.c3.merce.MerceAlPubblico;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
-import it.unicam.ids.c3.merce.Promozione;
 import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
@@ -17,7 +16,6 @@ import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,11 +32,17 @@ public class GestoreAddetto {
     private double prezzoCarrello;
     private ClienteRepository clienteRepository;
     private VenditaSpeditaRepository venditaSpeditaRepository;
+    private MerceRepository merceRepository;
+    private MerceAlPubblicoRepository merceAlPubblicoRepository;
+    private MerceVenditaRepository merceVenditaRepository;
 
-    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository) {
+    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceVenditaRepository merceVenditaRepository) {
         this.negozioRepository = negozioRepository;
         this.clienteRepository = clienteRepository;
         this.venditaSpeditaRepository = venditaSpeditaRepository;
+        this.merceRepository = merceRepository;
+        this.merceAlPubblicoRepository = merceAlPubblicoRepository;
+        this.merceVenditaRepository = merceVenditaRepository;
         this.merciCarrello = new ArrayList<>();
         this.prezzoCarrello = 0;
     }
@@ -76,19 +80,19 @@ public class GestoreAddetto {
     }
 
     public double searchPrezzo(long id) {
-        if(!negozio.getMerceInventarioNegozio().isEmpty()){
-            Iterator<MerceInventarioNegozio> it = getNegozio().getMerceInventarioNegozio().iterator();
-            while (it.hasNext()){
-                MerceInventarioNegozio min = it.next();
-                if(min.getMerceAlPubblico().getMerce().getID()==id){
-                    return min.getMerceAlPubblico().getPrezzo();
-                }
+        Iterator<MerceInventarioNegozio> min = getNegozio().getMerceInventarioNegozio().iterator();
+        while(min.hasNext()){
+            MerceInventarioNegozio m = min.next();
+            MerceAlPubblico map = m.getMerceAlPubblico();
+            Merce merce = map.getMerce();
+            if(merce.getID() == id){
+                return map.getPrezzo();
             }
         }
         return 0;
     }
 
-    public double getSconto(int id) {
+    public double getSconto(long id) {
         Iterator<MerceInventarioNegozio> it = getNegozio().getMerceInventarioNegozio().iterator();
         while (it.hasNext()){
             MerceInventarioNegozio min = it.next();
@@ -116,16 +120,20 @@ public class GestoreAddetto {
         }
     }
 
-    public double aggiuntaMerceNelCarrello(double prezzo, double sconto, int id, double quantita) {
+    public double aggiuntaMerceNelCarrello(double prezzo, double sconto, long id, double quantita) {
         MerceAlPubblico mp = getMerce(id,prezzo,quantita);
+
+
+
         scaloQuantita(mp,quantita);
         this.prezzoCarrello = calcolaPrezzoTotale(prezzo,sconto);
         MerceVendita mv = new MerceVendita(prezzo - ((sconto/100)*prezzo),quantita,mp);
+        merceVenditaRepository.save(mv);
         addMerceCarrello(mv);
         return this.prezzoCarrello;
     }
 
-    public MerceAlPubblico getMerce(int id, double prezzo, double quantita) {
+    public MerceAlPubblico getMerce(long id, double prezzo, double quantita) {
         Iterator<MerceInventarioNegozio> it = getNegozio().getMerceInventarioNegozio().iterator();
         while (it.hasNext()){
             MerceInventarioNegozio min = it.next();
@@ -133,8 +141,16 @@ public class GestoreAddetto {
                 return min.getMerceAlPubblico();
             }
         }
-        Merce merce = new Merce();
-        MerceAlPubblico ma = new MerceAlPubblico((prezzo/quantita),merce);
+        MerceAlPubblico ma;
+        Optional<Merce> merceOptional = merceRepository.findById(id);
+        if(merceOptional.isPresent()){
+             ma = new MerceAlPubblico((prezzo/quantita),merceOptional.get());
+        } else {
+            Merce merce1 = new Merce();
+            merceRepository.save(merce1);
+            ma = new MerceAlPubblico((prezzo/quantita),merce1);
+        }
+        merceAlPubblicoRepository.save(ma);
         return ma;
     }
 

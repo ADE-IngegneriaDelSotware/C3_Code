@@ -2,13 +2,12 @@ package it.unicam.ids.c3.merce;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 public class MerceAlPubblico {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private long id;
     private double prezzo;
 
     //TODO forse c'è da cambiare in ALL
@@ -28,7 +27,7 @@ public class MerceAlPubblico {
         this.promozione = new Promozione(false);
     }
 
-    public MerceAlPubblico(double prezzo, Merce merce, int sconto) {
+    public MerceAlPubblico(double prezzo, Merce merce, double sconto) {
         this.prezzo = prezzo;
         this.merce = merce;
         this.sconto = sconto;

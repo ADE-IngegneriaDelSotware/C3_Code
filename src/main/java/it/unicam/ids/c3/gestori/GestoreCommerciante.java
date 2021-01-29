@@ -28,20 +28,24 @@ public class GestoreCommerciante {
     private Negozio negozio;
     private RuoloRepository ruoloRepository;
     private ClienteRepository clienteRepository;
+    private CartaRepository cartaRepository;
     private VenditaSpeditaRepository venditaSpeditaRepository;
     private MerceInventarioNegozioRepository merceInventarioNegozioRepository;
     private MerceAlPubblicoRepository merceAlPubblicoRepository;
     private CorriereRepository corriereRepository;
     private NegozioRepository negozioRepository;
+    private MerceRepository merceRepository;
 
-    public GestoreCommerciante(RuoloRepository ruoloRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, CorriereRepository corriereRepository, NegozioRepository negozioRepository) {
+    public GestoreCommerciante(RuoloRepository ruoloRepository, ClienteRepository clienteRepository, CartaRepository cartaRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, CorriereRepository corriereRepository, NegozioRepository negozioRepository, MerceRepository merceRepository) {
         this.ruoloRepository = ruoloRepository;
         this.clienteRepository = clienteRepository;
+        this.cartaRepository = cartaRepository;
         this.venditaSpeditaRepository = venditaSpeditaRepository;
         this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
         this.merceAlPubblicoRepository = merceAlPubblicoRepository;
         this.corriereRepository = corriereRepository;
         this.negozioRepository = negozioRepository;
+        this.merceRepository = merceRepository;
     }
 
     /*****************Assegnazione Carta***************/
@@ -57,7 +61,9 @@ public class GestoreCommerciante {
     public long assegnaCarta(Cliente cliente, TipoScontoCliente tsc){
         Carta carta= new Carta(cliente,tsc);
         generateCodCarta(carta);
+        cartaRepository.save(carta);
         getNegozio().addCarta(carta);
+        negozioRepository.save(negozio);
         return carta.getCodice();
     }
 
@@ -138,20 +144,6 @@ public class GestoreCommerciante {
     }
     /************************ Fine Consegna Vendita Assegnata**********************/
 
-    /******************GestioneInventario********************/
-
-    public void addMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, int sconto) {
-        Merce merce = new Merce(nome,categoria,descrizione);
-        MerceAlPubblico mp = new MerceAlPubblico(prezzo,merce,sconto);
-        MerceInventarioNegozio min = new MerceInventarioNegozio(quantita,mp);
-        negozio.addMerceInventarioNegozio(min);
-    }
-
-    public void removeMerce(List<MerceInventarioNegozio> list, double quantita){
-        for(MerceInventarioNegozio min : list){
-            min.setQuantita(min.getQuantita() - quantita);
-        }
-    }
 
     /*****************GestionePromozioni*****************/
 
@@ -235,6 +227,40 @@ public class GestoreCommerciante {
         negozioRepository.save(negozio);
     }
 
+    /***************Gestione Inventario********************/
+
+    public void addMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto) {
+        Merce merce = new Merce(nome,categoria,descrizione);
+        merceRepository.save(merce);
+        MerceAlPubblico mp = new MerceAlPubblico(prezzo,merce,sconto);
+        merceAlPubblicoRepository.save(mp);
+        MerceInventarioNegozio min = new MerceInventarioNegozio(quantita,mp);
+        merceInventarioNegozioRepository.save(min);
+        getNegozio().addMerceInventarioNegozio(min);
+        negozioRepository.save(getNegozio());
+    }
+
+    public void removeMerce(List<MerceInventarioNegozio> list, double quantita){
+        Iterator<MerceInventarioNegozio> minIterator=getNegozio().getMerceInventarioNegozio().iterator();
+        while (minIterator.hasNext()) {
+            MerceInventarioNegozio min=minIterator.next();
+            Iterator<MerceInventarioNegozio> daRimuovere = list.iterator();
+            while(daRimuovere.hasNext()) {
+                MerceInventarioNegozio minDaRimuovere= daRimuovere.next();
+                if(min.equals(minDaRimuovere)) {
+                    double nuovaQuantita=min.getQuantita()-quantita;
+                    min.setQuantita(nuovaQuantita);
+                }
+            }
+        }
+        negozioRepository.save(negozio);
+    }
+
+    public List<MerceInventarioNegozio> getMerciInventarioNegozio() {
+        return getNegozio().getMerceInventarioNegozio();
+    }
+
+    /************************** Fine gestione inventario ******************************/
 
 
 

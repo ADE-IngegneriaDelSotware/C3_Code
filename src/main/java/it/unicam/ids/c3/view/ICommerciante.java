@@ -136,7 +136,7 @@ public class ICommerciante {
     private Button annullaCheckoutButton;
 
     @FXML
-    private Tab assegnaCartaTab;
+    private Tab tabAssegnazioneCarta;
 
     @FXML
     private TextField emailAC;
@@ -223,16 +223,13 @@ public class ICommerciante {
     private Button confermAggiuntaCorriereButton;
 
     @FXML
-    private ListView<?> merciInventario;
+    private ListView<MerceInventarioNegozio> merciInventario;
 
     @FXML
     private Button aggiungiButton;
 
     @FXML
     private Button rimuoviMerceButton;
-
-    @FXML
-    private Label idLabelGI;
 
     @FXML
     private Label nomeLabelGI;
@@ -271,7 +268,7 @@ public class ICommerciante {
     private TextField scontoMerceGI;
 
     @FXML
-    private ChoiceBox<?> categoriaMerceGI;
+    private ChoiceBox<Categoria> categoriaMerceGI;
 
     @FXML
     private TextField quantitaMerceGI;
@@ -287,6 +284,24 @@ public class ICommerciante {
 
     @FXML
     private Label scontoPromozione;
+
+    @FXML
+    private Tab tabConsultaInventario;
+
+    @FXML
+    private Tab tavConsegnaVendita;
+
+    @FXML
+    private Tab tabAssunzioneAddetto;
+
+    @FXML
+    private Tab tabGestionePromozioni;
+
+    @FXML
+    private Tab tabGestioneCorrieri;
+
+    @FXML
+    private Tab tabGestioneInventario;
 
 
     public void initRichiestaCartField() {
@@ -318,11 +333,6 @@ public class ICommerciante {
     }
 
     @FXML
-    void aggiungiButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void annullaCheckoutButtonEvent(ActionEvent event) {
 
     }
@@ -348,17 +358,7 @@ public class ICommerciante {
     }
 
     @FXML
-    void confermaAggiuntaMerceButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void confermaCFButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confermaRimozioneMerceButtonEvent(ActionEvent event) {
 
     }
 
@@ -384,11 +384,6 @@ public class ICommerciante {
 
     @FXML
     void registraVenditaButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void rimuoviMerceButtonEvent(ActionEvent event) {
 
     }
 
@@ -574,6 +569,79 @@ public class ICommerciante {
     void confermaAssunzioneAddettoButtonEvent(ActionEvent event) {
         assunzioneAddetto(clientiFiltratiAA.getSelectionModel().getSelectedItem());
         clientiFiltratiAA.getItems().clear();
+    }
+
+    /****************Gestione inventario**************/
+
+    public void initGestioneInventario() {
+        getMerciInventario();
+        categoriaMerceGI.getItems().addAll(Categoria.values());
+        nomeLabelGI.setVisible(false);
+        nomeMerceGI.setVisible(false);
+        descrizioneLabelGI.setVisible(false);
+        descrizioneMerceGI.setVisible(false);
+        categoriaLabelGI.setVisible(false);
+        categoriaMerceGI.setVisible(false);
+        quantitaLabelGI.setVisible(false);
+        quantitaMerceGI.setVisible(false);
+        prezzoLabelGI.setVisible(false);
+        prezzoMerceGI.setVisible(false);
+        scontoLabelGI.setVisible(false);
+        scontoMerceGI.setVisible(false);
+        confermaAggiuntaMerceButton.setVisible(false);
+        confermaRimozioneMerceButton.setVisible(false);
+    }
+
+    public void getMerciInventario() {
+        merciInventario.getItems().clear();
+        merciInventario.getItems().addAll(gestoreCommerciante.getMerciInventarioNegozio());
+    }
+    public void rimuoviMerce(List<MerceInventarioNegozio> min,double quantita) {
+        gestoreCommerciante.removeMerce(min,quantita);
+    }
+    private void aggiungiMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto) {
+        gestoreCommerciante.addMerce(nome,descrizione,categoria,quantita,prezzo,sconto);
+    }
+
+    @FXML
+    void aggiungiButtonEvent(ActionEvent event) {
+        nomeLabelGI.setVisible(true);
+        nomeMerceGI.setVisible(true);
+        descrizioneLabelGI.setVisible(true);
+        descrizioneMerceGI.setVisible(true);
+        categoriaLabelGI.setVisible(true);
+        categoriaMerceGI.setVisible(true);
+        quantitaLabelGI.setVisible(true);
+        quantitaMerceGI.setVisible(true);
+        prezzoLabelGI.setVisible(true);
+        prezzoMerceGI.setVisible(true);
+        scontoLabelGI.setVisible(true);
+        scontoMerceGI.setVisible(true);
+        confermaAggiuntaMerceButton.setVisible(true);
+
+    }
+
+    @FXML
+    void confermaAggiuntaMerceButtonEvent(ActionEvent event) {
+        aggiungiMerce(nomeMerceGI.getText(),
+                descrizioneMerceGI.getText(),
+                categoriaMerceGI.getValue(),
+                Double.parseDouble(quantitaMerceGI.getText()),
+                Double.parseDouble(prezzoMerceGI.getText()),
+                Double.parseDouble(scontoMerceGI.getText()));
+        initGestioneInventario();
+    }
+    @FXML
+    void confermaRimozioneMerceButtonEvent(ActionEvent event) {
+        rimuoviMerce(merciInventario.getSelectionModel().getSelectedItems(),Double.parseDouble(quantitaMerceGI.getText()));
+        initGestioneInventario();
+    }
+
+    @FXML
+    void rimuoviMerceButtonEvent(ActionEvent event) {
+        quantitaLabelGI.setVisible(true);
+        quantitaMerceGI.setVisible(true);
+        confermaRimozioneMerceButton.setVisible(true);
     }
 
 

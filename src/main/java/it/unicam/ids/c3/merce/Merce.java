@@ -7,7 +7,7 @@ public class Merce {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int ID;
+    private long ID;
     private String nome;
 
     @Enumerated(EnumType.STRING)
@@ -24,11 +24,11 @@ public class Merce {
 
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
 

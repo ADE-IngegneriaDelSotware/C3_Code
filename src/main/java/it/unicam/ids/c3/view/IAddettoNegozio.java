@@ -185,26 +185,25 @@ public class IAddettoNegozio {
         return gestoreAddetto.getPrezzo(id, quantita);
     }
 
-    public double getSconto(int id) {
+    public double getSconto(long id) {
         return gestoreAddetto.getSconto(id);
     }
 
     @FXML
     void trovaPrezzoEScontoButtonEvent(ActionEvent event) {
-        startCarrello();
         prezzoMerce.setText(String.valueOf(getPrezzo(Long.parseLong(idMerce.getText()), Double.parseDouble(quantitaMerce.getText()))));
         if(prezzoMerce.getText()=="0"){
             Alert alert = new Alert(Alert.AlertType.ERROR,"Merce inserita non presente, inserire il prezzo manualmente", ButtonType.OK);
             alert.show();
         }
-        scontoMerce.setText(String.valueOf(getSconto(Integer.parseInt(idMerce.getText()))));
+        scontoMerce.setText(String.valueOf(getSconto(Long.parseLong(idMerce.getText()))));
         if(scontoMerce.getText()=="0"){
             Alert alert = new Alert(Alert.AlertType.INFORMATION,"Merce inserita non ha uno sconto, puoi inserire sconto manualmente", ButtonType.OK);
             alert.show();
         }
     }
 
-    public double aggiuntaMerceNelCarrello(double prezzo, double sconto, int id, double quantita){
+    public double aggiuntaMerceNelCarrello(double prezzo, double sconto, long id, double quantita){
         return gestoreAddetto.aggiuntaMerceNelCarrello(prezzo,sconto,id,quantita);
     }
 

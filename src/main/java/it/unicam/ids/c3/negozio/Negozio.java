@@ -41,6 +41,7 @@ public class Negozio {
     private List<Negozio> negoziDisponibili;
 
     @OneToMany(targetEntity = Carta.class, cascade = CascadeType.MERGE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<Carta> cartaList;
 

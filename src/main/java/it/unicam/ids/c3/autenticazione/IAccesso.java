@@ -211,6 +211,7 @@ public class IAccesso implements Initializable{
         im.getIa().initAssegnazioneCartaField();
         im.getIa().initRichiestaCartField();
         im.getIa().getInventario();
+        im.getIa().startCarrello();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia commesso");
         stage.setScene(new Scene(root1));
@@ -234,6 +235,7 @@ public class IAccesso implements Initializable{
         im.getIcm().getInventario();
         im.getIcm().initFieldPromozioni();
         im.getIcm().getCorrieri();
+        im.getIcm().initGestioneInventario();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia commerciante");
         stage.setScene(new Scene(root1));

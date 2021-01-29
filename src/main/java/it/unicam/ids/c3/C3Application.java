@@ -47,6 +47,7 @@ public class C3Application{
 		return args -> {
 
 			/*********Parte del personale********************/
+
 			Cliente cliente1 = new Cliente("Andrea", "Marsili", "andreamarsili@gmail.com", "magliano");
 			Cliente cliente2 = new Cliente("Davide", "Zeppilli", "davidezeppilli@gmail.com", "yag");
 			Cliente cliente3 = new Cliente("Stefano", "Tosetto",  "stefanotosetto@gmail.com","geova");
@@ -88,15 +89,12 @@ public class C3Application{
 			MerceAlPubblico merceAlPubblico = new MerceAlPubblico(23, merce, 2);
 			MerceAlPubblico merceAlPubblico1 = new MerceAlPubblico(3, merce1);
 			MerceAlPubblico merceAlPubblico2 = new MerceAlPubblico(10, merce2);
-			merceAlPubblico.setPromozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
-			merceAlPubblico1.setPromozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
-//
-//
-//			Promozione promozione = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
-//			Promozione promozione1 = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 20);
-//			promozioneRepository.saveAll(List.of(promozione, promozione1));
-//			merceAlPubblico.setPromozione(promozione);
-//			merceAlPubblico1.setPromozione(promozione1);
+
+
+//			merceAlPubblico.setPromozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
+//			merceAlPubblico1.setPromozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
+
+
 			merceAlPubblicoRepository.saveAll(List.of(merceAlPubblico, merceAlPubblico1, merceAlPubblico2));
 			MerceInventarioNegozio merceInventarioNegozio = new MerceInventarioNegozio(3.3, merceAlPubblico);
 			MerceInventarioNegozio merceInventarioNegozio1 = new MerceInventarioNegozio(3, merceAlPubblico1);
