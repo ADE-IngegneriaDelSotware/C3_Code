@@ -37,8 +37,9 @@ public class GestoreAddetto {
     private CartaRepository cartaRepository;
     private RuoloRepository ruoloRepository;
     private VenditaRepository venditaRepository;
+    private GestoreCheckout gestoreCheckout;
 
-    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceVenditaRepository merceVenditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, CartaRepository cartaRepository, RuoloRepository ruoloRepository, VenditaRepository venditaRepository) {
+    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceVenditaRepository merceVenditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, CartaRepository cartaRepository, RuoloRepository ruoloRepository, VenditaRepository venditaRepository, GestoreCheckout gestoreCheckout) {
         this.negozioRepository = negozioRepository;
         this.clienteRepository = clienteRepository;
         this.venditaSpeditaRepository = venditaSpeditaRepository;
@@ -49,6 +50,7 @@ public class GestoreAddetto {
         this.cartaRepository = cartaRepository;
         this.ruoloRepository = ruoloRepository;
         this.venditaRepository = venditaRepository;
+        this.gestoreCheckout = gestoreCheckout;
         this.merciCarrello = new ArrayList<>();
         this.prezzoCarrello = 0;
     }
@@ -82,106 +84,113 @@ public class GestoreAddetto {
     }
 
     public double getPrezzo(long id, double quantita) {
-        return searchPrezzo(id)*quantita;
+        return gestoreCheckout.getPrezzo(id,quantita,getNegozio());
+//        return searchPrezzo(id)*quantita;
     }
 
-    public double searchPrezzo(long id) {
-        Iterator<MerceInventarioNegozio> min = getNegozio().getMerceInventarioNegozio().iterator();
-        while(min.hasNext()){
-            MerceInventarioNegozio m = min.next();
-            MerceAlPubblico map = m.getMerceAlPubblico();
-            Merce merce = map.getMerce();
-            if(merce.getID() == id){
-                return map.getPrezzo();
-            }
-        }
-        return 0;
-    }
+//    public double searchPrezzo(long id) {
+//        Iterator<MerceInventarioNegozio> min = getNegozio().getMerceInventarioNegozio().iterator();
+//        while(min.hasNext()){
+//            MerceInventarioNegozio m = min.next();
+//            MerceAlPubblico map = m.getMerceAlPubblico();
+//            Merce merce = map.getMerce();
+//            if(merce.getID() == id){
+//                return map.getPrezzo();
+//            }
+//        }
+//        return 0;
+//    }
 
     public double getSconto(long id) {
-        Iterator<MerceInventarioNegozio> it = getNegozio().getMerceInventarioNegozio().iterator();
-        while (it.hasNext()){
-            MerceInventarioNegozio min = it.next();
-            if(min.getMerceAlPubblico().getMerce().getID()==id){
-                return min.getMerceAlPubblico().getSconto();
-            }
-        }
-        return 0;
+//        Iterator<MerceInventarioNegozio> it = getNegozio().getMerceInventarioNegozio().iterator();
+//        while (it.hasNext()){
+//            MerceInventarioNegozio min = it.next();
+//            if(min.getMerceAlPubblico().getMerce().getID()==id){
+//                return min.getMerceAlPubblico().getSconto();
+//            }
+//        }
+//        return 0;
+        return gestoreCheckout.getSconto(id,getNegozio());
     }
 
-    public double calcolaPrezzoMerce(double prezzo,double sconto) {
-        double price = prezzo-((sconto/100)*prezzo);
-        return price;
-    }
+//    public double calcolaPrezzoMerce(double prezzo,double sconto) {
+//        double price = prezzo-((sconto/100)*prezzo);
+//        return price;
+//    }
 
-    public double calcolaPrezzoTotale(double prezzo,double sconto) {
-        return prezzoCarrello + calcolaPrezzoMerce(prezzo,sconto);
-    }
+//    public double calcolaPrezzoTotale(double prezzo,double sconto) {
+//        return prezzoCarrello + calcolaPrezzoMerce(prezzo,sconto);
+//    }
 
-    public void scaloQuantita(MerceAlPubblico mp , double quantita){
-        for(MerceInventarioNegozio min : getNegozio().getMerceInventarioNegozio()){
-            if(min.getMerceAlPubblico().equals(mp)){
-                min.setQuantita(min.getQuantita()-quantita);
-                merceInventarioNegozioRepository.save(min);
-            }
-        }
-    }
+//    public void scaloQuantita(MerceAlPubblico mp , double quantita){
+//        for(MerceInventarioNegozio min : getNegozio().getMerceInventarioNegozio()){
+//            if(min.getMerceAlPubblico().equals(mp)){
+//                min.setQuantita(min.getQuantita()-quantita);
+//                merceInventarioNegozioRepository.save(min);
+//            }
+//        }
+//    }
 
     public double aggiuntaMerceNelCarrello(double prezzo, double sconto, long id, double quantita) {
-        MerceAlPubblico mp = getMerce(id,prezzo,quantita);
-        scaloQuantita(mp,quantita);
-        this.prezzoCarrello = calcolaPrezzoTotale(prezzo,sconto);
-        MerceVendita mv = new MerceVendita(prezzo - ((sconto/100)*prezzo),quantita,mp);
-        merceVenditaRepository.save(mv);
-        addMerceCarrello(mv);
-        return this.prezzoCarrello;
+        return gestoreCheckout.aggiuntaMerceNelCarrello(prezzo, sconto , id, quantita , getNegozio());
+//        MerceAlPubblico mp = getMerce(id,prezzo,quantita);
+//        scaloQuantita(mp,quantita);
+//        this.prezzoCarrello = calcolaPrezzoTotale(prezzo,sconto);
+//        MerceVendita mv = new MerceVendita(prezzo - ((sconto/100)*prezzo),quantita,mp);
+//        merceVenditaRepository.save(mv);
+//        addMerceCarrello(mv);
+//        return this.prezzoCarrello;
     }
 
-    public MerceAlPubblico getMerce(long id, double prezzo, double quantita) {
-        Iterator<MerceInventarioNegozio> it = getNegozio().getMerceInventarioNegozio().iterator();
-        while (it.hasNext()){
-            MerceInventarioNegozio min = it.next();
-            if(min.getMerceAlPubblico().getMerce().getID()==id){
-                return min.getMerceAlPubblico();
-            }
-        }
-        MerceAlPubblico ma;
-        Optional<Merce> merceOptional = merceRepository.findById(id);
-        if(merceOptional.isPresent()){
-             ma = new MerceAlPubblico((prezzo/quantita),merceOptional.get());
-        } else {
-            Merce merce1 = new Merce();
-            merceRepository.save(merce1);
-            ma = new MerceAlPubblico((prezzo/quantita),merce1);
-        }
-        merceAlPubblicoRepository.save(ma);
-        return ma;
-    }
+//    public MerceAlPubblico getMerce(long id, double prezzo, double quantita) {
+//        Iterator<MerceInventarioNegozio> it = getNegozio().getMerceInventarioNegozio().iterator();
+//        while (it.hasNext()){
+//            MerceInventarioNegozio min = it.next();
+//            if(min.getMerceAlPubblico().getMerce().getID()==id){
+//                return min.getMerceAlPubblico();
+//            }
+//        }
+//        MerceAlPubblico ma;
+//        Optional<Merce> merceOptional = merceRepository.findById(id);
+//        if(merceOptional.isPresent()){
+//             ma = new MerceAlPubblico((prezzo/quantita),merceOptional.get());
+//        } else {
+//            Merce merce1 = new Merce();
+//            merceRepository.save(merce1);
+//            ma = new MerceAlPubblico((prezzo/quantita),merce1);
+//        }
+//        merceAlPubblicoRepository.save(ma);
+//        return ma;
+//    }
 
     public double calcoraResto(double denaro) {
-        double resto = denaro - getPrezzoCarrello();
-        return resto;
+//        double resto = denaro - getPrezzoCarrello();
+//        return resto;
+        return gestoreCheckout.calcoraResto(denaro);
     }
 
     public void checkoutCompletato() {
-        svuotaCarrello();
+//        svuotaCarrello();
+        gestoreCheckout.checkoutCompletato();
     }
 
     public void reinserimentoQuantita(){
-        for(MerceVendita mv : getMerciCarrello()){
-            for(MerceInventarioNegozio min : getNegozio().getMerceInventarioNegozio()){
-                if(mv.getMerceAlPubblico().equals(min.getMerceAlPubblico())){
-                    min.setQuantita(min.getQuantita()+mv.getQuantitaVenduta());
-                }
-            }
-        }
+        gestoreCheckout.reinserimentoQuantita(getNegozio());
+//        for(MerceVendita mv : getMerciCarrello()){
+//            for(MerceInventarioNegozio min : getNegozio().getMerceInventarioNegozio()){
+//                if(mv.getMerceAlPubblico().equals(min.getMerceAlPubblico())){
+//                    min.setQuantita(min.getQuantita()+mv.getQuantitaVenduta());
+//                }
+//            }
+//        }
     }
 
     public void annullaCheckout() {
-        reinserimentoQuantita();
-        Vendita v = venditaRepository.findTopByOrderByIdDesc();
-        venditaRepository.delete(v);
-        svuotaCarrello();
+        gestoreCheckout.annullaCheckout(getNegozio());
+//        reinserimentoQuantita();
+//        Vendita v = venditaRepository.findTopByOrderByIdDesc();
+//        venditaRepository.delete(v);
+//        svuotaCarrello();
     }
 
     /****************Richiesta Carta*******************/
