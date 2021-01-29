@@ -126,11 +126,11 @@ public class C3Application{
 
 
 			/****************************Parte Negozio************************************/
-			Carta carta = new Carta(cliente7, TipoScontoCliente.LAVORATORE);
-			Carta carta1 = new Carta(cliente2, TipoScontoCliente.STUDENTE);
-			Carta carta2 = new Carta(cliente7, TipoScontoCliente.LAVORATORE);
-			Carta carta3 = new Carta(cliente8, TipoScontoCliente.STUDENTE);
-			cartaRepository.saveAll(List.of(carta,carta1,carta2,carta3));
+//			Carta carta = new Carta(cliente7, TipoScontoCliente.LAVORATORE);
+//			Carta carta1 = new Carta(cliente2, TipoScontoCliente.STUDENTE);
+//			Carta carta2 = new Carta(cliente7, TipoScontoCliente.LAVORATORE);
+//			Carta carta3 = new Carta(cliente8, TipoScontoCliente.STUDENTE);
+//			cartaRepository.saveAll(List.of(carta,carta1,carta2,carta3));
 
 			List<Categoria> categoryList = new ArrayList<>();
 			categoryList.addAll(List.of(Categoria.TECNOLOGIA, Categoria.GIOCHI));
@@ -144,11 +144,11 @@ public class C3Application{
 			negozio1.addMerceInventarioNegozio(merceInventarioNegozio2);
 			negozioRepository.save(negozio1);
 
-			negozio.addCarta(carta);
-			negozio.addCarta(carta1);
-			negozio1.addCarta(carta2);
+//			negozio.addCarta(carta);
+//			negozio.addCarta(carta1);
+//			negozio1.addCarta(carta2);
 			negozioRepository.saveAll(List.of(negozio,negozio1));
-			negozio1.addCarta(carta3);
+//			negozio1.addCarta(carta3);
 			negozioRepository.save(negozio1);
 
 			venditaSpedita.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);

@@ -17,7 +17,7 @@ public class Corriere extends Ruolo{
     private String nomeDitta;
     private String indirizzo;
     private String p_iva;
-    private boolean disponiblitaRitiro;
+    private boolean disponibilitaRitiro;
     private boolean disponibilitaAssociazione;
 
     @OneToMany(cascade = CascadeType.MERGE)
@@ -35,7 +35,7 @@ public class Corriere extends Ruolo{
         this.p_iva = p_iva;
         this.vendite = new ArrayList<>();
         this.negozi = new ArrayList<>();
-        this.disponiblitaRitiro = true;
+        this.disponibilitaRitiro = true;
         disponibilitaAssociazione = true;
     }
 
@@ -65,8 +65,8 @@ public class Corriere extends Ruolo{
         return p_iva;
     }
 
-    public boolean isDisponiblitaRitiro() {
-        return disponiblitaRitiro;
+    public boolean isDisponibilitaRitiro() {
+        return disponibilitaRitiro;
     }
 
     public boolean isDisponibilitaAssociazione() {
@@ -97,8 +97,8 @@ public class Corriere extends Ruolo{
         return venditePerTipo;
     }
 
-    public void setDisponiblitaRitiro(boolean disponiblita){
-        this.disponiblitaRitiro = disponiblita;
+    public void setDisponibilitaRitiro(boolean disponiblita){
+        this.disponibilitaRitiro = disponiblita;
     }
 
     @Override

@@ -37,9 +37,6 @@ public class Negozio {
     @JoinTable(name = "negozio_corriere", joinColumns = @JoinColumn(name = "negozio_id"),inverseJoinColumns = @JoinColumn(name = "corriere_id"))
     private List<Corriere> corrieri;
 
-    @Transient
-    private List<Negozio> negoziDisponibili;
-
     @OneToMany(targetEntity = Carta.class, cascade = CascadeType.MERGE)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
@@ -69,7 +66,6 @@ public class Negozio {
         this.settori = categorie;
         this.addettiNegozio = new ArrayList<>();
         this.corrieri = new ArrayList<>();
-        this.negoziDisponibili = new ArrayList<>();
         this.cartaList = new ArrayList<>();
         this.merceInventarioNegozioList = new ArrayList<>();
         this.vendite = new ArrayList<>();
@@ -111,20 +107,12 @@ public class Negozio {
         getCarte().add(carta);
     }
 
-    public List<Negozio> getNegoziDisponibili() {
-        return negoziDisponibili;
-    }
-
     public List<Corriere> getCorrieri() {
         return corrieri;
     }
 
     public void addCorriere(Corriere corriere2) {
         corrieri.add(corriere2);
-    }
-
-    public void addNegozioDisponibile(Negozio pdr) {
-        negoziDisponibili.add(pdr);
     }
 
     public void addMerceInventarioNegozio(MerceInventarioNegozio merceInventarioNegozio) {
