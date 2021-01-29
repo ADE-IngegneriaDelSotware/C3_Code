@@ -35,8 +35,10 @@ public class GestoreAddetto {
     private MerceVenditaRepository merceVenditaRepository;
     private MerceInventarioNegozioRepository merceInventarioNegozioRepository;
     private CartaRepository cartaRepository;
+    private RuoloRepository ruoloRepository;
+    private VenditaRepository venditaRepository;
 
-    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceVenditaRepository merceVenditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, CartaRepository cartaRepository) {
+    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceVenditaRepository merceVenditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, CartaRepository cartaRepository, RuoloRepository ruoloRepository, VenditaRepository venditaRepository) {
         this.negozioRepository = negozioRepository;
         this.clienteRepository = clienteRepository;
         this.venditaSpeditaRepository = venditaSpeditaRepository;
@@ -45,6 +47,8 @@ public class GestoreAddetto {
         this.merceVenditaRepository = merceVenditaRepository;
         this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
         this.cartaRepository = cartaRepository;
+        this.ruoloRepository = ruoloRepository;
+        this.venditaRepository = venditaRepository;
         this.merciCarrello = new ArrayList<>();
         this.prezzoCarrello = 0;
     }
@@ -175,6 +179,8 @@ public class GestoreAddetto {
 
     public void annullaCheckout() {
         reinserimentoQuantita();
+        Vendita v = venditaRepository.findTopByOrderByIdDesc();
+        venditaRepository.delete(v);
         svuotaCarrello();
     }
 
@@ -243,9 +249,14 @@ public class GestoreAddetto {
         } else {
             vs = new VenditaSpedita(getPrezzoCarrello(),getMerciCarrello(),indirizzo);
         }
+        venditaSpeditaRepository.save(vs);
         carta.getCliente().getAcquisti().add(vs);
         getNegozio().addVendita(vs);
-        addVenditaToCorriere(vs,cr);
+        cr.addMerceDaSpedire(vs);
+        pdr.addVenditaInNegozioRitiro(vs);
+        negozioRepository.save(negozio);
+        negozioRepository.save(pdr);
+        ruoloRepository.save(cr);
     }
 
     public void registraAcquistoCliente(long cc) {
@@ -253,10 +264,8 @@ public class GestoreAddetto {
         Vendita v = new Vendita(getPrezzoCarrello(), getMerciCarrello());
         carta.getCliente().getAcquisti().add(v);
         getNegozio().addVendita(v);
-    }
-
-    public void addVenditaToCorriere(VenditaSpedita vs, Corriere corriere) {
-        corriere.addMerceDaSpedire(vs);
+        venditaRepository.save(v);
+        negozioRepository.save(getNegozio());
     }
 
     public Carta searchCarta(long cc) {
@@ -273,7 +282,6 @@ public class GestoreAddetto {
     }
 
     /***********Fine registra vendita***********/
-
 
     /*****************Assegnazione Carta***************/
 
@@ -330,6 +338,8 @@ public class GestoreAddetto {
     public void addVenditaInventario() {
         Vendita v = new Vendita(getPrezzoCarrello(), getMerciCarrello());
         getNegozio().addVendita(v);
+        venditaRepository.save(v);
+        negozioRepository.save(getNegozio());
     }
 
     /*********Consulta Inventario****************/

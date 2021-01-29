@@ -110,19 +110,19 @@ public class C3Application{
 			List<MerceVendita> listaMerciVendita = new ArrayList<>();
 			listaMerciVendita.add(merceVendita);
 			listaMerciVendita.add(merceVendita1);
-			Vendita vendita = new Vendita(32.5, listaMerciVendita);
-			venditaRepository.save(vendita);
-			List<MerceVendita> lista = new ArrayList<>();
-			lista.addAll(List.of(merceVendita2, merceVendita3));
-			VenditaSpedita venditaSpedita = new VenditaSpedita(12, lista, "Viale della transumanza");
-			VenditaSpedita venditaSpedita1 = new VenditaSpedita(10, lista, "Viale del boschetto");
-			venditaSpeditaRepository.save(venditaSpedita);
-			venditaSpeditaRepository.save(venditaSpedita1);
-			corriere.addMerceDaSpedire(venditaSpedita);
-			corriere.addMerceDaSpedire(venditaSpedita1);
-			ruoloRepository.save(corriere);
-			venditaSpeditaRepository.save(venditaSpedita);
-			venditaSpeditaRepository.save(venditaSpedita1);
+//			Vendita vendita = new Vendita(32.5, listaMerciVendita);
+//			venditaRepository.save(vendita);
+//			List<MerceVendita> lista = new ArrayList<>();
+//			lista.addAll(List.of(merceVendita2, merceVendita3));
+//			VenditaSpedita venditaSpedita = new VenditaSpedita(12, lista, "Viale della transumanza");
+//			VenditaSpedita venditaSpedita1 = new VenditaSpedita(10, lista, "Viale del boschetto");
+//			venditaSpeditaRepository.save(venditaSpedita);
+//			venditaSpeditaRepository.save(venditaSpedita1);
+//			corriere.addMerceDaSpedire(venditaSpedita);
+//			corriere.addMerceDaSpedire(venditaSpedita1);
+//			ruoloRepository.save(corriere);
+//			venditaSpeditaRepository.save(venditaSpedita);
+//			venditaSpeditaRepository.save(venditaSpedita1);
 
 
 			/****************************Parte Negozio************************************/
@@ -136,6 +136,12 @@ public class C3Application{
 			categoryList.addAll(List.of(Categoria.TECNOLOGIA, Categoria.GIOCHI));
 			Negozio negozio = new Negozio("MadStore","Via Palmiro Togliatti", "2141234314", categoryList);
 			Negozio negozio1 = new Negozio("SamsungStore","Via Enrico Mattei", "4643524", categoryList);
+
+			Vendita vendita = new Vendita(46.7, listaMerciVendita);
+			venditaRepository.save(vendita);
+			cliente7.addAcquisto(vendita);
+			clienteRepository.save(cliente7);
+			negozio.addVendita(vendita);
 
 			negozio.addAddettoNegozio(addettoNegozio);
 			negozio.addMerceInventarioNegozio(merceInventarioNegozio);
@@ -151,21 +157,21 @@ public class C3Application{
 //			negozio1.addCarta(carta3);
 			negozioRepository.save(negozio1);
 
-			venditaSpedita.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
-			venditaSpedita1.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
-
-			negozio.addVendita(vendita);
-			negozio.addVendita(venditaSpedita);
-			negozioRepository.save(negozio);
-
-			negozio1.addVendita(venditaSpedita1);
+//			venditaSpedita.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
+//			venditaSpedita1.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
+//
+//			negozio.addVendita(vendita);
+//			negozio.addVendita(venditaSpedita);
+//			negozioRepository.save(negozio);
+//
+//			negozio1.addVendita(venditaSpedita1);
 			negozioRepository.save(negozio1);
 //			corriere.addMerceDaSpedire(venditaSpedita);
 //			venditaSpeditaRepository.save(venditaSpedita);
-			negozio.addVenditaInNegozioRitiro(venditaSpedita);
-			negozio1.addVenditaInNegozioRitiro(venditaSpedita1);
-			cliente7.addAcquisto(venditaSpedita);
-			cliente6.addAcquisto(venditaSpedita1);
+//			negozio.addVenditaInNegozioRitiro(venditaSpedita);
+//			negozio1.addVenditaInNegozioRitiro(venditaSpedita1);
+//			cliente7.addAcquisto(venditaSpedita);
+//			cliente6.addAcquisto(venditaSpedita1);
 			clienteRepository.saveAll(List.of(cliente6,cliente7));
 
 			negozio.addCorriere(corriere);

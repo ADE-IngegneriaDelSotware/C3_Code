@@ -10,7 +10,7 @@ import java.util.List;
 public class Vendita {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private LocalDate data;
     private double prezzo;

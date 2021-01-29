@@ -602,7 +602,6 @@ public class IAddettoNegozio {
         }
     }
 
-
     /***********************Assegnazione Carta****************************/
 
     public void initAssegnazioneCartaField(){

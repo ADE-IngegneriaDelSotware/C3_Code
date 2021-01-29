@@ -42,7 +42,7 @@ public class Negozio {
     @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<Carta> cartaList;
 
-    @OneToMany(targetEntity = VenditaSpedita.class, cascade = CascadeType.MERGE)
+    @OneToMany(targetEntity = VenditaSpedita.class, cascade = CascadeType.MERGE )
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<VenditaSpedita> venditePuntiDiRitiro;
@@ -52,7 +52,7 @@ public class Negozio {
     @JoinColumn(name="negozio_fk",referencedColumnName = "id")
     private List<MerceInventarioNegozio> merceInventarioNegozioList;
 
-    @OneToMany(targetEntity = Vendita.class, cascade = CascadeType.MERGE)
+    @OneToMany(targetEntity = Vendita.class)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
     private List<Vendita> vendite;
@@ -70,6 +70,7 @@ public class Negozio {
         this.merceInventarioNegozioList = new ArrayList<>();
         this.vendite = new ArrayList<>();
         this.venditePuntiDiRitiro = new ArrayList<>();
+        this.disponibilitaRitiro = true;
     }
 
     public Negozio() {
