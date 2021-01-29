@@ -187,7 +187,7 @@ public class ICommerciante {
     private TextField emailAA;
 
     @FXML
-    private ListView<?> clientiFiltratiAA;
+    private ListView<Cliente> clientiFiltratiAA;
 
     @FXML
     private Button cercaClienteAAButton;
@@ -343,22 +343,12 @@ public class ICommerciante {
     }
 
     @FXML
-    void cercaClienteAAButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void checkoutCompletedButtonEvent(ActionEvent event) {
 
     }
 
     @FXML
     void confermaAggiuntaMerceButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confermaAssunzioneAddettoButtonEvent(ActionEvent event) {
 
     }
 
@@ -563,6 +553,30 @@ public class ICommerciante {
         addCorrieri(corrieriDaAggiungere.getSelectionModel().getSelectedItems());
         getCorrieri();
     }
+
+    /******************Interfaccia assunzione addetto***************/
+
+    public void getClienti(String email){
+        clientiFiltratiAA.getItems().clear();
+        clientiFiltratiAA.getItems().addAll(gestoreCommerciante.getCliente(email));
+    }
+
+    public void assunzioneAddetto(Cliente cliente){
+        gestoreCommerciante.assunzioneAddetto(cliente);
+    }
+
+    @FXML
+    void cercaClienteAAButtonEvent(ActionEvent event) {
+        getClienti(emailAA.getText());
+    }
+
+    @FXML
+    void confermaAssunzioneAddettoButtonEvent(ActionEvent event) {
+        assunzioneAddetto(clientiFiltratiAA.getSelectionModel().getSelectedItem());
+        clientiFiltratiAA.getItems().clear();
+    }
+
+
 
 
     public void setGestoreCommerciante(GestoreCommerciante gestoreCommerciante) {

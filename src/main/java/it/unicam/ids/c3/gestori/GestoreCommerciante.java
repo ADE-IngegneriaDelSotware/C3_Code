@@ -6,9 +6,7 @@ import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.persistenza.*;
-import it.unicam.ids.c3.personale.Cliente;
-import it.unicam.ids.c3.personale.Commerciante;
-import it.unicam.ids.c3.personale.Corriere;
+import it.unicam.ids.c3.personale.*;
 import it.unicam.ids.c3.vendita.StatoConsegna;
 import it.unicam.ids.c3.vendita.Vendita;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
@@ -28,6 +26,7 @@ public class GestoreCommerciante {
 
     private Commerciante commerciante;
     private Negozio negozio;
+    private RuoloRepository ruoloRepository;
     private ClienteRepository clienteRepository;
     private VenditaSpeditaRepository venditaSpeditaRepository;
     private MerceInventarioNegozioRepository merceInventarioNegozioRepository;
@@ -35,7 +34,8 @@ public class GestoreCommerciante {
     private CorriereRepository corriereRepository;
     private NegozioRepository negozioRepository;
 
-    public GestoreCommerciante(ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, CorriereRepository corriereRepository, NegozioRepository negozioRepository) {
+    public GestoreCommerciante(RuoloRepository ruoloRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, CorriereRepository corriereRepository, NegozioRepository negozioRepository) {
+        this.ruoloRepository = ruoloRepository;
         this.clienteRepository = clienteRepository;
         this.venditaSpeditaRepository = venditaSpeditaRepository;
         this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
@@ -223,6 +223,20 @@ public class GestoreCommerciante {
         }
         negozioRepository.save(negozio);
     }
+
+    /****************Assunzione Addetto*******************/
+
+    public void assunzioneAddetto(Cliente cliente){
+        AddettoNegozio addettoNegozio = new AddettoNegozio(RuoloSistema.ADDETTONEGOZIO);
+        cliente.setRuolo(addettoNegozio);
+        ruoloRepository.save(addettoNegozio);
+        clienteRepository.save(cliente);
+        getNegozio().addAddettoNegozio(addettoNegozio);
+        negozioRepository.save(negozio);
+    }
+
+
+
 
     public Negozio getNegozio() {
         return this.negozio;
