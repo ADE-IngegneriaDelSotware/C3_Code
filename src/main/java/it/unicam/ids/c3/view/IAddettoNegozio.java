@@ -419,7 +419,6 @@ public class IAddettoNegozio {
         siRegistraVendita.setVisible(true);
         noRegistraVendita.setVisible(true);
         registraVenditaButton.setVisible(true);
-//        gestoreAddetto.setCc(Long.parseLong(codiceCarta.getText()));
     }
 
     @FXML
@@ -429,7 +428,6 @@ public class IAddettoNegozio {
         siRegistraVendita.setVisible(true);
         noRegistraVendita.setVisible(true);
         registraVenditaButton.setVisible(true);
-//        gestoreAddetto.setCc(Long.parseLong(codiceCarta.getText()));
     }
 
     private void registraVendita(boolean flag,long cc){

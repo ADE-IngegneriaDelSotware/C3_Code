@@ -4,10 +4,13 @@ import it.unicam.ids.c3.gestori.GestoreCommerciante;
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
 import it.unicam.ids.c3.merce.Promozione;
+import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.persistenza.VenditaRepository;
 import it.unicam.ids.c3.personale.Cliente;
 import it.unicam.ids.c3.personale.Corriere;
+import it.unicam.ids.c3.vendita.LuogoDiRitiro;
+import it.unicam.ids.c3.vendita.TipoDiRitiro;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -303,8 +306,103 @@ public class ICommerciante {
     @FXML
     private Tab tabGestioneInventario;
 
+    @FXML
+    private Tab tabRegistraVendita;
+
+    @FXML
+    private ChoiceBox<TipoDiRitiro> tipoRitiro;
+
+    @FXML
+    private Label corrieriDisponibiliLabel;
+
+    @FXML
+    private ListView<Corriere> corrieriDisponibili;
+
+    @FXML
+    private Label trcLabel;
+
+    @FXML
+    private ChoiceBox<LuogoDiRitiro> luogoDiRitiro;
+
+    @FXML
+    private ListView<Negozio> puntiDiRitiroDisponibili;
+
+    @FXML
+    private Label prLabel;
+
+    @FXML
+    private Label indirizzoLabel;
+
+    @FXML
+    private TextField indirizzoRitiro;
+
+    @FXML
+    private Button venditaButton;
+
+    @FXML
+    private Button inviaCodiceAllaRegistrazioneButton;
+
+    @FXML
+    private Button confermaTipoRitiroButton;
+
+    @FXML
+    private Button confermaLuogoDiRitiroButton;
+
+    @FXML
+    private TextField codiceClienteInRegistrazione;
+
+    @FXML
+    private Label codiceClienteInRegistrazioneLabel;
+
+    /******************* Checkout ******************/
+
+    public void startCarrello(){
+        gestoreCommerciante.startCarrello();
+    }
+
+    public double getPrezzo(long id, double quantita){
+        return gestoreCommerciante.getPrezzo(id, quantita);
+    }
+
+    public double getSconto(long id) {
+        return gestoreCommerciante.getSconto(id);
+    }
+
+    @FXML
+    void trovaPrezzoEScontoButtonEvent(ActionEvent event) {
+        prezzoMerce.setText(String.valueOf(getPrezzo(Long.parseLong(idMerce.getText()), Double.parseDouble(quantitaMerce.getText()))));
+        if(prezzoMerce.getText()=="0"){
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Merce inserita non presente, inserire il prezzo manualmente", ButtonType.OK);
+            alert.show();
+        }
+        scontoMerce.setText(String.valueOf(getSconto(Long.parseLong(idMerce.getText()))));
+        if(scontoMerce.getText()=="0"){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"Merce inserita non ha uno sconto, puoi inserire sconto manualmente", ButtonType.OK);
+            alert.show();
+        }
+    }
+
+    public double aggiuntaMerceNelCarrello(double prezzo, double sconto, long id, double quantita){
+        return gestoreCommerciante.aggiuntaMerceNelCarrello(prezzo,sconto,id,quantita);
+    }
+
+    @FXML
+    void inserisciButtonEvent(ActionEvent event) {
+        prezzoCarrello.setText(String.valueOf(aggiuntaMerceNelCarrello(Double.parseDouble(prezzoMerce.getText()),Double.parseDouble(scontoMerce.getText()),Integer.parseInt(idMerce.getText()),Double.parseDouble(quantitaMerce.getText()))));
+        clearCheckoutFields();
+    }
+
+    private void clearCheckoutFields() {
+        idMerce.clear();
+        quantitaMerce.clear();
+        prezzoMerce.clear();
+        scontoMerce.clear();
+    }
+
+    /********************Richiesta Carta******************/
 
     public void initRichiestaCartField() {
+        tabRegistraVendita.setDisable(true);
         siCartaDisponibile.setVisible(false);
         noCartaDisponibile.setVisible(false);
         cdLabel.setVisible(false);
@@ -332,75 +430,304 @@ public class ICommerciante {
         annullaCheckoutButton.setVisible(false);
     }
 
-    @FXML
-    void annullaCheckoutButtonEvent(ActionEvent event) {
+    /********************Richiesta Carta******************/
 
-    }
-
-    @FXML
-    void applyScontoCartaButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void calcolaRestoButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cartaDisponibileButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void checkoutCompletedButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confermaCFButton(ActionEvent event) {
-
-    }
-
-    @FXML
-    void inserisciButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void iscrizioneClienteCheckoutButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void noScontoCartaButtonEvent(ActionEvent event) {
-
+    private void possessoCarta(boolean flag){
+        if(flag){
+            siCartaDisponibile.setVisible(true);
+            noCartaDisponibile.setVisible(true);
+            cartaDisponibileButton.setVisible(true);
+            cdLabel.setVisible(true);
+        } else {
+            codiceCarta.setText("0");
+            iscrizioneClienteCheckout.setVisible(true);
+            codiceCarta.setVisible(true);
+            codiceCartaLabel.setVisible(true);
+            noScontoCartaButton.setVisible(true);
+        }
     }
 
     @FXML
     void possessoCartaButtonEvent(ActionEvent event) {
+        if(siCarta.isSelected()){
+            possessoCarta(true);
+        } else {
+            if(noCarta.isSelected()){
+                possessoCarta(false);
+            }
+        }
+    }
 
+    private void disponibilitaCarta(boolean disponibilita){
+        if(disponibilita){
+            codiceCarta.setVisible(true);
+            verificaCodice.setVisible(true);
+            codiceCartaLabel.setVisible(true);
+        } else {
+            codiceFiscale.setVisible(true);
+            confermaCF.setVisible(true);
+            codiceFiscaleLabel.setVisible(true);
+        }
     }
 
     @FXML
-    void registraVenditaButtonEvent(ActionEvent event) {
-
+    void cartaDisponibileButton(ActionEvent event) {
+        if(siCartaDisponibile.isSelected()) {
+            disponibilitaCarta(true);
+        } else {
+            if(noCartaDisponibile.isSelected()) {
+                disponibilitaCarta(false);
+            }
+        }
     }
 
-    @FXML
-    void trovaPrezzoEScontoButtonEvent(ActionEvent event) {
+    public boolean verificaCodiceCarta(long cc) {
+        return gestoreCommerciante.verificaCodiceCarta(cc);
+    }
 
+    public long searchCodiceCartaByEmail(String email) {
+        return gestoreCommerciante.searchCodiceCartaFromEmail(email);
     }
 
     @FXML
     void verificaCodiceCartaButton(ActionEvent event) {
+        if(verificaCodiceCarta(Long.parseLong(codiceCarta.getText()))) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Codice Carta valido!", ButtonType.OK);
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Codice Carta non valido!", ButtonType.OK);
+            alert.show();
+        }
+        applyScontoCartaButton.setVisible(true);
+    }
 
+    @FXML
+    void confermaCFButton(ActionEvent event) {
+        codiceCarta.setVisible(true);
+        codiceCartaLabel.setVisible(true);
+        codiceCarta.setText(String.valueOf(searchCodiceCartaByEmail(codiceFiscale.getText())));
+        if(codiceFiscale.getText()=="0") {
+            Alert alert = new Alert(Alert.AlertType.ERROR,"Codice Carta non trovato!", ButtonType.OK);
+            alert.show();
+        }
+        applyScontoCartaButton.setVisible(true);
+    }
+
+    private void richiestaAssegnazioneCarta(boolean flag){
+        if(flag){
+            applyScontoCartaButton.setVisible(true);
+            noScontoCartaButton.setVisible(false);
+            inviaCodiceAlCheckoutButton.setVisible(true);
+            tabPaneCommerciante.getSelectionModel().select(tabAssegnazioneCarta);
+        } else {
+            codiceCarta.setText("0");
+        }
+    }
+
+    @FXML
+    void iscrizioneClienteCheckoutButtonEvent(ActionEvent event) {
+        richiestaAssegnazioneCarta(true);
+    }
+
+    /********************Fine Richiesta Carta*******************/
+
+    public double applyScontoCarta(long cc){
+        return gestoreCommerciante.applyScontoCarta(cc);
+    }
+
+    @FXML
+    void applyScontoCartaButtonEvent(ActionEvent event) {
+        prezzoTotale.setText(String.valueOf(applyScontoCarta(Long.parseLong(codiceCarta.getText()))));
+        answerRegistraVenditaLabel.setVisible(true);
+        siRegistraVendita.setVisible(true);
+        noRegistraVendita.setVisible(true);
+        registraVenditaButton.setVisible(true);
+    }
+
+    @FXML
+    void noScontoCartaButtonEvent(ActionEvent event) {
+        prezzoTotale.setText(String.valueOf(applyScontoCarta(Long.parseLong(codiceCarta.getText()))));
+        answerRegistraVenditaLabel.setVisible(true);
+        siRegistraVendita.setVisible(true);
+        noRegistraVendita.setVisible(true);
+        registraVenditaButton.setVisible(true);
+    }
+
+    private void registraVendita(boolean flag,long cc){
+        if(flag && cc==0){
+            openAssegnazioneCarta();
+            changeVisibilityFieldRegistraVendita();
+        } else {
+            if(flag){
+                openRegistraVendita();
+                changeVisibilityFieldRegistraVendita();
+            } else {
+                changeVisibilityFieldRegistraVendita();
+                addVenditaInventario();
+            }
+        }
+    }
+
+    @FXML
+    void registraVenditaButtonEvent(ActionEvent event) {
+        boolean flag = true;
+        if(siRegistraVendita.isSelected()){
+            flag = true;
+        } else {
+            if (noRegistraVendita.isSelected()){
+                flag = false;
+            }
+        }
+        registraVendita(flag,Long.parseLong(codiceCarta.getText()));
+    }
+
+    private void openAssegnazioneCarta(){
+        inviaCodiceAllaRegistrazioneButton.setVisible(true);
+        tabPaneCommerciante.getSelectionModel().select(tabAssegnazioneCarta);
+    }
+
+    private void openRegistraVendita(){
+        tabRegistraVendita.setDisable(false);
+        initRegistrazioneVenditaField();
+        codiceClienteInRegistrazione.setText(codiceCarta.getText());
+        tabPaneCommerciante.getSelectionModel().select(tabRegistraVendita);
+    }
+
+    public void addVenditaInventario(){
+        gestoreCommerciante.addVenditaInventario();
+    }
+
+    public double calcolaResto(double denaro){
+        return gestoreCommerciante.calcoraResto(denaro);
+    }
+
+    @FXML
+    void calcolaRestoButtonEvent(ActionEvent event) {
+        resto.setText(String.valueOf(calcolaResto(Double.parseDouble(denaroRicevuto.getText()))));
+    }
+
+    public void checkoutCompletato(){
+        gestoreCommerciante.checkoutCompletato();
+    }
+
+    @FXML
+    void checkoutCompletedButtonEvent(ActionEvent event) {
+        checkoutCompletato();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Vendita andata a buon fine",ButtonType.FINISH);
+        alert.show();
+    }
+
+    public void annullaCheckout(){
+        gestoreCommerciante.annullaCheckout();
+    }
+
+    @FXML
+    void annullaCheckoutButtonEvent(ActionEvent event) {
+        annullaCheckout();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Vendita non andata a buon fine",ButtonType.FINISH);
+        alert.show();
+    }
+
+    public void changeVisibilityFieldRegistraVendita(){
+        denaroRicevutoLabel.setVisible(true);
+        denaroRicevuto.setVisible(true);
+        calcolaRestoButton.setVisible(true);
+        resto.setVisible(true);
+        restoLabel.setVisible(true);
+        checkoutCompletedButton.setVisible(true);
+        annullaCheckoutButton.setVisible(true);
+    }
+
+    /***********************Interfaccia registrazione vendita************************/
+
+    private void initRegistrazioneVenditaField() {
+        tipoRitiro.getItems().addAll(TipoDiRitiro.values());
+        luogoDiRitiro.getItems().addAll(LuogoDiRitiro.values());
+        prLabel.setVisible(false);
+        corrieriDisponibiliLabel.setVisible(false);
+        corrieriDisponibili.setVisible(false);
+        trcLabel.setVisible(false);
+        luogoDiRitiro.setVisible(false);
+        confermaLuogoDiRitiroButton.setVisible(false);
+        indirizzoLabel.setVisible(false);
+        indirizzoRitiro.setVisible(false);
+        puntiDiRitiroDisponibili.setVisible(false);
+//        codiceClienteInRegistrazione.setText(String.valueOf(gestoreAddetto.getCc()));
+        codiceClienteInRegistrazioneLabel.setVisible(false);
+        codiceClienteInRegistrazione.setVisible(false);
+        venditaButton.setVisible(false);
+    }
+
+    private void selectTipoRitiroVendita(TipoDiRitiro tr){
+        if(tr.equals(TipoDiRitiro.CORRIERE)){
+            corrieriDisponibiliLabel.setVisible(true);
+            corrieriDisponibili.getItems().addAll(getCorrieriDisponibili());
+            corrieriDisponibili.setVisible(true);
+            trcLabel.setVisible(true);
+            luogoDiRitiro.setVisible(true);
+            confermaLuogoDiRitiroButton.setVisible(true);
+        } else {
+            codiceClienteInRegistrazioneLabel.setVisible(true);
+            codiceClienteInRegistrazione.setVisible(true);
+            venditaButton.setVisible(true);
+        }
+    }
+
+    private List<Corriere> getCorrieriDisponibili(){
+        return gestoreCommerciante.getCorrieriDisponibili();
+    }
+
+    private void getNegoziDisponibili(){
+        puntiDiRitiroDisponibili.getItems().clear();
+        puntiDiRitiroDisponibili.getItems().addAll(gestoreCommerciante.getNegoziDisponibili());
+    }
+
+    @FXML
+    void confermaTipoRitiroButtonEvent(ActionEvent event) {
+        selectTipoRitiroVendita(tipoRitiro.getSelectionModel().getSelectedItem());
+    }
+
+    private void selectLuogoDiRitiro(LuogoDiRitiro ldr){
+        if(ldr.equals(LuogoDiRitiro.NEGOZIO)){
+            getNegoziDisponibili();
+            puntiDiRitiroDisponibili.setVisible(true);
+            prLabel.setVisible(true);
+        } else {
+            indirizzoLabel.setVisible(true);
+            indirizzoRitiro.setVisible(true);
+        }
+        codiceClienteInRegistrazioneLabel.setVisible(true);
+        codiceClienteInRegistrazione.setVisible(true);
+        venditaButton.setVisible(true);
+    }
+
+    @FXML
+    void confermaLuogoDiRitiroButtonEvent(ActionEvent event) {
+        selectLuogoDiRitiro(luogoDiRitiro.getSelectionModel().getSelectedItem());
+    }
+
+    private void registraAcquistoCliente(long cc, Negozio pdr, String indirizzo , Corriere corriere){
+        gestoreCommerciante.registraAcquistoCliente(cc,pdr,indirizzo, corriere);
+    }
+
+    private void registraAcquistoCliente(long cc){
+        gestoreCommerciante.registraAcquistoCliente(cc);
+    }
+
+    @FXML
+    void venditaButtonEvent(ActionEvent event) {
+        if(tipoRitiro.getSelectionModel().getSelectedItem().equals(TipoDiRitiro.CORRIERE)){
+            registraAcquistoCliente(Long.parseLong(codiceClienteInRegistrazione.getText()),puntiDiRitiroDisponibili.getSelectionModel().getSelectedItem(),indirizzoRitiro.getText(),corrieriDisponibili.getSelectionModel().getSelectedItem());
+        } else {
+            registraAcquistoCliente(Long.parseLong(codiceClienteInRegistrazione.getText()));
+        }
     }
 
     /***********************Assegnazione Carta****************************/
 
     public void initAssegnazioneCartaField(){
         inviaCodiceAlCheckoutButton.setVisible(false);
+        inviaCodiceAllaRegistrazioneButton.setVisible(false);
         tscAC.getItems().addAll(TipoScontoCliente.values());
     }
 
@@ -427,6 +754,14 @@ public class ICommerciante {
     void inviaCodiceAlCheckoutButtonEvent(ActionEvent event) {
         codiceCarta.setText(codiceCartaAC.getText());
         tabPaneCommerciante.getSelectionModel().select(tabCheckout);
+    }
+
+    @FXML
+    void inviaCodiceAllaRegistrazioneButtonEvent(ActionEvent event){
+        tabRegistraVendita.setDisable(false);
+        initRegistrazioneVenditaField();
+        codiceClienteInRegistrazione.setText(codiceCartaAC.getText());
+        tabPaneCommerciante.getSelectionModel().select(tabRegistraVendita);
     }
 
     /******************Interfaccia Consulta Inventario*********************/

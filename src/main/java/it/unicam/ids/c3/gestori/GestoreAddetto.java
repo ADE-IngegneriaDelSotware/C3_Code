@@ -234,10 +234,11 @@ public class GestoreAddetto {
         Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
         while (negozioIterator.hasNext()){
             Negozio negozio = negozioIterator.next();
-            if(negozio.getDisponibilitaRitiro()){
+            if(negozio.getDisponibilitaRitiro()  && getNegozio().getId()!=negozio.getId()){
                 puntiDiRitiriDisponibiliList.add(negozio);
             }
         }
+        puntiDiRitiriDisponibiliList.remove(getNegozio());
         return puntiDiRitiriDisponibiliList;
     }
 

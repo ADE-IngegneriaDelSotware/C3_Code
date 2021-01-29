@@ -8,7 +8,6 @@ public class VenditaSpedita extends Vendita{
 
     @Enumerated(value = EnumType.STRING)
     private StatoConsegna statoConsegna;
-    private String codiceRitiro;
     @Enumerated(value = EnumType.STRING)
     private LuogoDiRitiro luogoDiRitiro;
     private String indirizzoDiDomicilio;
@@ -38,14 +37,6 @@ public class VenditaSpedita extends Vendita{
 
     public void setStatoConsegna(StatoConsegna statoConsegna) {
         this.statoConsegna = statoConsegna;
-    }
-
-    public String getCodiceRitiro() {
-        return codiceRitiro;
-    }
-
-    public void setCodiceRitiro(String codiceRitiro) {
-        this.codiceRitiro = codiceRitiro;
     }
 
     public LuogoDiRitiro getLuogoDiRitiro() {
