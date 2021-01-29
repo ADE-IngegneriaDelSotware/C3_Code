@@ -1,6 +1,8 @@
 package it.unicam.ids.c3.merce;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class MerceAlPubblico {
@@ -16,19 +18,21 @@ public class MerceAlPubblico {
     private double sconto;
 
     //TODO forse c'è da cambiare in ALL
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "promozione_fk", referencedColumnName = "id")
     private Promozione promozione;
 
     public MerceAlPubblico(double prezzo, Merce merce) {
         this.prezzo = prezzo;
         this.merce = merce;
+        this.promozione = new Promozione(false);
     }
 
     public MerceAlPubblico(double prezzo, Merce merce, int sconto) {
         this.prezzo = prezzo;
         this.merce = merce;
         this.sconto = sconto;
+        this.promozione = new Promozione(false);
     }
 
     public MerceAlPubblico() {
@@ -43,7 +47,26 @@ public class MerceAlPubblico {
         this.promozione = promozione;
     }
 
+    public void setPromozione(LocalDate di, LocalDate df, double pp){
+        this.promozione.setDisponibile(true);
+        this.promozione.setDataInizio(di);
+        this.promozione.setDataFine(df);
+        this.promozione.setPercentualeSconto(pp);
+    }
+
+    public void setPromozione(LocalDate di, LocalDate df, double pp, double prezzo){
+        this.promozione.setDisponibile(true);
+        this.promozione.setDataInizio(di);
+        this.promozione.setDataFine(df);
+        this.promozione.setPercentualeSconto(pp);
+        this.promozione.setPrezzoPromozione(prezzo);
+    }
+
     public double getPrezzo() {
+        if(getPromozione().isDisponibile()){
+            if(LocalDate.now().isAfter(getPromozione().getDataInizio()) && LocalDate.now().isBefore(getPromozione().getDataFine()))
+                return promozione.getPrezzoPromozione();
+        }
         return prezzo;
     }
 

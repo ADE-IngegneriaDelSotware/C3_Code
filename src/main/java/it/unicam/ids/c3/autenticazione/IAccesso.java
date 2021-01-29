@@ -232,6 +232,8 @@ public class IAccesso implements Initializable{
         im.getIcm().initAssegnazioneCartaField();
         im.getIcm().initRichiestaCartField();
         im.getIcm().getInventario();
+        im.getIcm().initFieldPromozioni();
+        im.getIcm().getCorrieri();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia commerciante");
         stage.setScene(new Scene(root1));

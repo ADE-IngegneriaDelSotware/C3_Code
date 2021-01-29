@@ -90,7 +90,7 @@
                   <Blend />
                </effect>
             </Label>
-            <TextField fx:id="emailAccesso" text="davidezeppilli@gmail.com" GridPane.columnIndex="1">
+            <TextField fx:id="emailAccesso" text="stefanotosetto@gmail.com" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" right="10.0" />
                </GridPane.margin>
@@ -116,7 +116,7 @@
                   <Font size="17.0" />
                </font>
             </Button>
-            <PasswordField fx:id="passwordAccesso" text="yag" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <PasswordField fx:id="passwordAccesso" text="geova" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" right="10.0" />
                </GridPane.margin>

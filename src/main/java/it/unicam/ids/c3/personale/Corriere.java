@@ -17,7 +17,8 @@ public class Corriere extends Ruolo{
     private String nomeDitta;
     private String indirizzo;
     private String p_iva;
-    private boolean disponiblita;
+    private boolean disponiblitaRitiro;
+    private boolean disponibilitaAssociazione;
 
     @OneToMany(cascade = CascadeType.MERGE)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -34,6 +35,8 @@ public class Corriere extends Ruolo{
         this.p_iva = p_iva;
         this.vendite = new ArrayList<>();
         this.negozi = new ArrayList<>();
+        this.disponiblitaRitiro = true;
+        disponibilitaAssociazione = true;
     }
 
     public Corriere (){}
@@ -62,8 +65,16 @@ public class Corriere extends Ruolo{
         return p_iva;
     }
 
-    public boolean isDisponiblita() {
-        return disponiblita;
+    public boolean isDisponiblitaRitiro() {
+        return disponiblitaRitiro;
+    }
+
+    public boolean isDisponibilitaAssociazione() {
+        return disponibilitaAssociazione;
+    }
+
+    public void setDisponibilitaAssociazione(boolean disponibilitaAssociazione) {
+        this.disponibilitaAssociazione = disponibilitaAssociazione;
     }
 
     public List<VenditaSpedita> getVendite() {
@@ -86,10 +97,14 @@ public class Corriere extends Ruolo{
         return venditePerTipo;
     }
 
-    public void setDisponiblita(boolean disponiblita){
-        this.disponiblita = disponiblita;
+    public void setDisponiblitaRitiro(boolean disponiblita){
+        this.disponiblitaRitiro = disponiblita;
     }
 
-
-
+    @Override
+    public String toString() {
+        return nomeDitta + '\'' +
+                ", " + indirizzo + '\'' +
+                ", " + p_iva;
+    }
 }

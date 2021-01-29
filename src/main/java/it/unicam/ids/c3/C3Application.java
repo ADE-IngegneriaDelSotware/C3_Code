@@ -72,7 +72,10 @@ public class C3Application{
 
 			Corriere corriere1 = new Corriere(RuoloSistema.CORRIERE, "Fulmine Corriere", "Via del Sale", "543883");
 			cliente5.setRuolo(corriere1);
-			ruoloRepository.saveAll(List.of(corriere,commerciante,admin,addettoNegozio,corriere1));
+
+			Corriere corriere2 = new Corriere(RuoloSistema.CORRIERE, "Impresa Fast", "Via della transumanza", "435253443");
+			cliente6.setRuolo(corriere2);
+			ruoloRepository.saveAll(List.of(corriere,commerciante,admin,addettoNegozio,corriere1, corriere2));
 			clienteRepository.saveAll(List.of(cliente1,cliente2,cliente3,cliente4,cliente5,cliente6,cliente7,cliente8,cliente9));
 
 			/*********************Parte Merce********************/
@@ -84,15 +87,21 @@ public class C3Application{
 			merceRepository.saveAll(List.of(merce, merce1, merce2, merce3, merce4));
 			MerceAlPubblico merceAlPubblico = new MerceAlPubblico(23, merce, 2);
 			MerceAlPubblico merceAlPubblico1 = new MerceAlPubblico(3, merce1);
-			Promozione promozione = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
-			Promozione promozione1 = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 20);
-			promozioneRepository.saveAll(List.of(promozione, promozione1));
-			merceAlPubblico.setPromozione(promozione);
-			merceAlPubblico1.setPromozione(promozione1);
-			merceAlPubblicoRepository.saveAll(List.of(merceAlPubblico, merceAlPubblico1));
+			MerceAlPubblico merceAlPubblico2 = new MerceAlPubblico(10, merce2);
+			merceAlPubblico.setPromozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
+			merceAlPubblico1.setPromozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
+//
+//
+//			Promozione promozione = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 10);
+//			Promozione promozione1 = new Promozione(LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(1), 20);
+//			promozioneRepository.saveAll(List.of(promozione, promozione1));
+//			merceAlPubblico.setPromozione(promozione);
+//			merceAlPubblico1.setPromozione(promozione1);
+			merceAlPubblicoRepository.saveAll(List.of(merceAlPubblico, merceAlPubblico1, merceAlPubblico2));
 			MerceInventarioNegozio merceInventarioNegozio = new MerceInventarioNegozio(3.3, merceAlPubblico);
 			MerceInventarioNegozio merceInventarioNegozio1 = new MerceInventarioNegozio(3, merceAlPubblico1);
-			merceInventarioNegozioRepository.saveAll(List.of(merceInventarioNegozio, merceInventarioNegozio1));
+			MerceInventarioNegozio merceInventarioNegozio2 = new MerceInventarioNegozio(6, merceAlPubblico2);
+			merceInventarioNegozioRepository.saveAll(List.of(merceInventarioNegozio, merceInventarioNegozio1, merceInventarioNegozio2));
 
 			/***********************Parte Vendita**********************/
 			MerceVendita merceVendita = new MerceVendita(12.3, 2, merceAlPubblico);
@@ -134,9 +143,9 @@ public class C3Application{
 			negozio.addMerceInventarioNegozio(merceInventarioNegozio);
 			negozio1.addAddettoNegozio(commerciante);
 			negozio1.addMerceInventarioNegozio(merceInventarioNegozio1);
-			negozio.addCorriere(corriere);
-			negozio.addCorriere(corriere1);
-			negozio1.addCorriere(corriere);
+			negozio1.addMerceInventarioNegozio(merceInventarioNegozio2);
+			negozioRepository.save(negozio1);
+
 			negozio.addCarta(carta);
 			negozio.addCarta(carta1);
 			negozio1.addCarta(carta2);
@@ -160,6 +169,12 @@ public class C3Application{
 			cliente7.addAcquisto(venditaSpedita);
 			cliente6.addAcquisto(venditaSpedita1);
 			clienteRepository.saveAll(List.of(cliente6,cliente7));
+
+			negozio.addCorriere(corriere);
+			negozio.addCorriere(corriere1);
+
+			negozio1.addCorriere(corriere);
+			negozio1.addCorriere(corriere2);
 			negozioRepository.save(negozio);
 			negozioRepository.save(negozio1);
 		};

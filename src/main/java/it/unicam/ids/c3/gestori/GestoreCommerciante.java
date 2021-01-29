@@ -1,23 +1,21 @@
 package it.unicam.ids.c3.gestori;
 
 
-import it.unicam.ids.c3.merce.Categoria;
-import it.unicam.ids.c3.merce.Merce;
-import it.unicam.ids.c3.merce.MerceAlPubblico;
-import it.unicam.ids.c3.merce.MerceInventarioNegozio;
+import it.unicam.ids.c3.merce.*;
 import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
-import it.unicam.ids.c3.persistenza.ClienteRepository;
-import it.unicam.ids.c3.persistenza.VenditaSpeditaRepository;
+import it.unicam.ids.c3.persistenza.*;
 import it.unicam.ids.c3.personale.Cliente;
 import it.unicam.ids.c3.personale.Commerciante;
+import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.StatoConsegna;
 import it.unicam.ids.c3.vendita.Vendita;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,10 +30,18 @@ public class GestoreCommerciante {
     private Negozio negozio;
     private ClienteRepository clienteRepository;
     private VenditaSpeditaRepository venditaSpeditaRepository;
+    private MerceInventarioNegozioRepository merceInventarioNegozioRepository;
+    private MerceAlPubblicoRepository merceAlPubblicoRepository;
+    private CorriereRepository corriereRepository;
+    private NegozioRepository negozioRepository;
 
-    public GestoreCommerciante(ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository) {
+    public GestoreCommerciante(ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, CorriereRepository corriereRepository, NegozioRepository negozioRepository) {
         this.clienteRepository = clienteRepository;
         this.venditaSpeditaRepository = venditaSpeditaRepository;
+        this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
+        this.merceAlPubblicoRepository = merceAlPubblicoRepository;
+        this.corriereRepository = corriereRepository;
+        this.negozioRepository = negozioRepository;
     }
 
     /*****************Assegnazione Carta***************/
@@ -145,6 +151,77 @@ public class GestoreCommerciante {
         for(MerceInventarioNegozio min : list){
             min.setQuantita(min.getQuantita() - quantita);
         }
+    }
+
+    /*****************GestionePromozioni*****************/
+
+    public List<MerceInventarioNegozio> getPromozioniAttive() {
+        List<MerceInventarioNegozio> list = new ArrayList<>();
+        if(!getNegozio().getMerceInventarioNegozio().isEmpty()){
+            Iterator<MerceInventarioNegozio> iterator = getNegozio().getMerceInventarioNegozio().iterator();
+            while (iterator.hasNext()){
+                MerceInventarioNegozio min = iterator.next();
+                MerceAlPubblico map = min.getMerceAlPubblico();
+                if(map.getPromozione().isDisponibile()){
+                    list.add(min);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<MerceInventarioNegozio> getPromozioniPossibili() {
+        List<MerceInventarioNegozio> list = new ArrayList<>();
+        if(!getNegozio().getMerceInventarioNegozio().isEmpty()){
+            Iterator<MerceInventarioNegozio> iterator = getNegozio().getMerceInventarioNegozio().iterator();
+            while (iterator.hasNext()){
+                MerceInventarioNegozio min = iterator.next();
+                if(!min.getMerceAlPubblico().getPromozione().isDisponibile()){
+                    list.add(min);
+                }
+            }
+        }
+        return list;
+    }
+
+    public void addPromozione(MerceInventarioNegozio miv, LocalDate di, LocalDate df, double pp) {
+        MerceAlPubblico map = miv.getMerceAlPubblico();
+        double prezzo = (miv.getMerceAlPubblico().getPrezzo() - ((pp/100)*map.getPrezzo()));
+        map.setPromozione(di,df,pp, prezzo);
+        merceAlPubblicoRepository.save(map);
+    }
+
+    public void rimuoviPromozione(List<MerceInventarioNegozio> lista) {
+        for(MerceInventarioNegozio miv : lista){
+            miv.getMerceAlPubblico().getPromozione().setDisponibile(false);
+        }
+    }
+
+    /****************Gestione corrieri*******************/
+
+    public List<Corriere> getCorrieri() {
+        List<Corriere> lc=new ArrayList<>();
+        List<Corriere> listaCorretta = new ArrayList<>();
+        lc.addAll(corriereRepository.findAll());
+        Iterator<Corriere> corriereIterator = getNegozio().getCorrieri().iterator();
+        while (corriereIterator.hasNext()){
+            Corriere corriere = corriereIterator.next();
+            Optional<Corriere> corriereOptional = corriereRepository.findById(corriere.getId());
+            if(corriereOptional.isPresent()){
+                listaCorretta.add(corriereOptional.get());
+            }
+        }
+        lc.removeAll(listaCorretta);
+        return lc;
+    }
+
+    public void addCorrieri(List<Corriere> corrieriDaAggiungere) {
+        Iterator<Corriere> corriereIterator = corrieriDaAggiungere.iterator();
+        while(corriereIterator.hasNext()){
+            Corriere corriere = corriereIterator.next();
+            getNegozio().addCorriere(corriere);
+        }
+        negozioRepository.save(negozio);
     }
 
     public Negozio getNegozio() {

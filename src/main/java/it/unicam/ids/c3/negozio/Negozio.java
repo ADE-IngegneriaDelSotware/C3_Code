@@ -33,6 +33,7 @@ public class Negozio {
     private List<AddettoNegozio> addettiNegozio;
 
     @ManyToMany(cascade = CascadeType.MERGE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "negozio_corriere", joinColumns = @JoinColumn(name = "negozio_id"),inverseJoinColumns = @JoinColumn(name = "corriere_id"))
     private List<Corriere> corrieri;
 

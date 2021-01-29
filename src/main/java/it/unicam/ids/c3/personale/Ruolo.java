@@ -24,6 +24,10 @@ public abstract class Ruolo{
     public Ruolo() {
     }
 
+    public long getId() {
+        return id;
+    }
+
     public RuoloSistema getRuoloSistema(){
         return ruolo;
     }

@@ -3,9 +3,11 @@ package it.unicam.ids.c3.view;
 import it.unicam.ids.c3.gestori.GestoreCommerciante;
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
+import it.unicam.ids.c3.merce.Promozione;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.persistenza.VenditaRepository;
 import it.unicam.ids.c3.personale.Cliente;
+import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -181,7 +184,7 @@ public class ICommerciante {
     private Button confermaAssunzioneAddettoButton;
 
     @FXML
-    private TextField codiceFiscaleAA;
+    private TextField emailAA;
 
     @FXML
     private ListView<?> clientiFiltratiAA;
@@ -190,7 +193,7 @@ public class ICommerciante {
     private Button cercaClienteAAButton;
 
     @FXML
-    private ListView<?> listaPromozioni;
+    private ListView<MerceInventarioNegozio> listaPromozioni;
 
     @FXML
     private Button aggiungiPromozioneButton;
@@ -199,7 +202,7 @@ public class ICommerciante {
     private Button rimuoviPromozioneButton;
 
     @FXML
-    private ListView<?> listaPromozioniPossibili;
+    private ListView<MerceInventarioNegozio> listaPromozioniPossibili;
 
     @FXML
     private DatePicker dataI;
@@ -214,7 +217,7 @@ public class ICommerciante {
     private Button aggiuntaPromozione;
 
     @FXML
-    private ListView<?> corrieriDaAggiungere;
+    private ListView<Corriere> corrieriDaAggiungere;
 
     @FXML
     private Button confermAggiuntaCorriereButton;
@@ -276,6 +279,15 @@ public class ICommerciante {
     @FXML
     private Button confermaRimozioneMerceButton;
 
+    @FXML
+    private Label dataInizioPromozione;
+
+    @FXML
+    private Label dataFinePromozione;
+
+    @FXML
+    private Label scontoPromozione;
+
 
     public void initRichiestaCartField() {
         siCartaDisponibile.setVisible(false);
@@ -306,17 +318,7 @@ public class ICommerciante {
     }
 
     @FXML
-    void addPromozioneButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void aggiungiButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void aggiungiPromozioneButtonEvent(ActionEvent event) {
 
     }
 
@@ -347,11 +349,6 @@ public class ICommerciante {
 
     @FXML
     void checkoutCompletedButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confermAggiuntaCorriereButtonEvent(ActionEvent event) {
 
     }
 
@@ -402,11 +399,6 @@ public class ICommerciante {
 
     @FXML
     void rimuoviMerceButtonEvent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void rimuoviPromozioneButtonEvent(ActionEvent event) {
 
     }
 
@@ -490,6 +482,88 @@ public class ICommerciante {
         confermaConsegnaVenditaAssegnata(listaVenditeDaConsegnare.getSelectionModel().getSelectedItems());
         getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
     }
+
+    /******************Interfaccia GestionePromozioni***************/
+
+    public void getPromozioniAttive(){
+        listaPromozioni.getItems().clear();
+        listaPromozioni.getItems().addAll(gestoreCommerciante.getPromozioniAttive());
+    }
+
+    public void getMerciDoveApplicarePromozioni(){
+        listaPromozioniPossibili.getItems().clear();
+        listaPromozioniPossibili.getItems().addAll(gestoreCommerciante.getPromozioniPossibili());
+    }
+
+    @FXML
+    void aggiungiPromozioneButtonEvent(ActionEvent event) {
+        listaPromozioniPossibili.setVisible(true);
+        dataF.setVisible(true);
+        dataI.setVisible(true);
+        percentualePromozione.setVisible(true);
+        aggiungiPromozioneButton.setVisible(true);
+        aggiuntaPromozione.setVisible(true);
+        dataInizioPromozione.setVisible(true);
+        dataFinePromozione.setVisible(true);
+        scontoPromozione.setVisible(true);
+        getMerciDoveApplicarePromozioni();
+    }
+
+    public void addPromozione(MerceInventarioNegozio miv, LocalDate di, LocalDate df, double pp){
+        gestoreCommerciante.addPromozione(miv,di,df,pp);
+    }
+
+    @FXML
+    void addPromozioneButtonEvent(ActionEvent event){
+        addPromozione(listaPromozioniPossibili.getSelectionModel().getSelectedItem(),dataI.getValue(), dataF.getValue(),Double.parseDouble(percentualePromozione.getText()));
+        getPromozioniAttive();
+        initFieldPromozioni();
+    }
+
+    public void rimuoviPromozione(List<MerceInventarioNegozio> lista){
+        gestoreCommerciante.rimuoviPromozione(lista);
+    }
+    @FXML
+    void rimuoviPromozioneButtonEvent(ActionEvent event) {
+        listaPromozioniPossibili.setVisible(false);
+        dataF.setVisible(false);
+        dataI.setVisible(false);
+        percentualePromozione.setVisible(false);
+        aggiuntaPromozione.setVisible(false);
+        rimuoviPromozione(listaPromozioni.getSelectionModel().getSelectedItems());
+        getPromozioniAttive();
+    }
+
+    public void initFieldPromozioni(){
+        listaPromozioni.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listaPromozioniPossibili.setVisible(false);
+        dataF.setVisible(false);
+        dataI.setVisible(false);
+        percentualePromozione.setVisible(false);
+        aggiuntaPromozione.setVisible(false);
+        dataInizioPromozione.setVisible(false);
+        dataFinePromozione.setVisible(false);
+        scontoPromozione.setVisible(false);
+        getPromozioniAttive();
+    }
+
+    /******************Interfaccia Gestione Corriere***************/
+
+    public void getCorrieri() {
+        corrieriDaAggiungere.getItems().clear();
+        corrieriDaAggiungere.getItems().addAll(gestoreCommerciante.getCorrieri());
+    }
+
+    public void addCorrieri(List<Corriere> corrieriDaAggiungere) {
+        gestoreCommerciante.addCorrieri(corrieriDaAggiungere);
+    }
+
+    @FXML
+    void confermAggiuntaCorriereButtonEvent(ActionEvent event) {
+        addCorrieri(corrieriDaAggiungere.getSelectionModel().getSelectedItems());
+        getCorrieri();
+    }
+
 
     public void setGestoreCommerciante(GestoreCommerciante gestoreCommerciante) {
         this.gestoreCommerciante = gestoreCommerciante;

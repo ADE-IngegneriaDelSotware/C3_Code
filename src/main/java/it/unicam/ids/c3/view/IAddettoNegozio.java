@@ -21,7 +21,6 @@ public class IAddettoNegozio {
     @Autowired
     private GestoreAddetto gestoreAddetto;
 
-
     @FXML
     private TabPane tabPaneAddetto;
 
