@@ -1,8 +1,6 @@
 package it.unicam.ids.c3.negozio;
 
 import it.unicam.ids.c3.personale.Cliente;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 

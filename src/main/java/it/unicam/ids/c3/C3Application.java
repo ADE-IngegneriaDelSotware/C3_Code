@@ -1,14 +1,13 @@
 package it.unicam.ids.c3;
 
+import it.unicam.ids.c3.persistenza.CartaRepository;
+import it.unicam.ids.c3.persistenza.NegozioRepository;
 import it.unicam.ids.c3.persistenza.*;
 import it.unicam.ids.c3.javafx.JavaFxApplication;
 import it.unicam.ids.c3.merce.*;
-import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
-import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.personale.*;
 import it.unicam.ids.c3.vendita.MerceVendita;
-import it.unicam.ids.c3.vendita.StatoConsegna;
 import it.unicam.ids.c3.vendita.Vendita;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
 import javafx.application.Application;
@@ -16,7 +15,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,6 +179,12 @@ public class C3Application{
 			negozio1.addCorriere(corriere2);
 			negozioRepository.save(negozio);
 			negozioRepository.save(negozio1);
+
+
+			VenditaSpedita vs = new VenditaSpedita(34, listaMerciVendita, "Via morelle 4");
+			venditaSpeditaRepository.save(vs);
+			corriere.addMerceDaSpedire(vs);
+			ruoloRepository.save(corriere);
 		};
 	}
 }
