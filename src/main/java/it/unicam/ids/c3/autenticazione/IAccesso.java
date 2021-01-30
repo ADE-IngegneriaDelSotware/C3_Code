@@ -71,14 +71,11 @@ public class IAccesso implements Initializable{
             e.printStackTrace();
         }
         IIscrizione iscrizione = fxmlLoader.getController();
-        iscrizione.setController(ci);
-        iscrizione.setControllerAccesso(ca);
+        iscrizione.setControllerIscrizione(ci);
         Stage stage = new Stage();
         stage.setTitle("Interfaccia di iscrizione");
         stage.setScene(new Scene(root1));
         stage.show();
-        Stage stage1 = (Stage) registrazioneButton.getScene().getWindow();
-        stage1.close();
     }
 
     private void visibilitaRuolo(boolean flag){
