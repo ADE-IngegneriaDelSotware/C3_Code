@@ -8,6 +8,7 @@ import it.unicam.ids.c3.merce.*;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.personale.*;
 import it.unicam.ids.c3.vendita.MerceVendita;
+import it.unicam.ids.c3.vendita.StatoConsegna;
 import it.unicam.ids.c3.vendita.Vendita;
 import it.unicam.ids.c3.vendita.VenditaSpedita;
 import javafx.application.Application;
@@ -175,16 +176,24 @@ public class C3Application{
 			negozio.addCorriere(corriere);
 			negozio.addCorriere(corriere1);
 
+
+//			VenditaSpedita vs = new VenditaSpedita(34,"Via morelle 4", listaMerciVendita );
+//			vs.setStatoConsegna(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
+//			venditaSpeditaRepository.save(vs);
+//			corriere.addMerceDaSpedire(vs);
+//			ruoloRepository.save(corriere);
+//			cliente7.getAcquisti().add(vs);
+//			clienteRepository.save(cliente7);
+//			negozio.addVendita(vs);
+//			negozio1.addVenditaInNegozioRitiro(vs);
+
 			negozio1.addCorriere(corriere);
 			negozio1.addCorriere(corriere2);
 			negozioRepository.save(negozio);
 			negozioRepository.save(negozio1);
 
 
-			VenditaSpedita vs = new VenditaSpedita(34, listaMerciVendita, "Via morelle 4");
-			venditaSpeditaRepository.save(vs);
-			corriere.addMerceDaSpedire(vs);
-			ruoloRepository.save(corriere);
+
 		};
 	}
 }

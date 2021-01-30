@@ -1,21 +1,15 @@
 package it.unicam.ids.c3.gestori;
 
-import it.unicam.ids.c3.merce.Merce;
-import it.unicam.ids.c3.merce.MerceAlPubblico;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
-import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.persistenza.*;
-import it.unicam.ids.c3.personale.AddettoNegozio;
 import it.unicam.ids.c3.personale.Cliente;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,15 +19,17 @@ public class GestoreAddetto {
 
     private Negozio negozio;
     private ClienteRepository clienteRepository;
-    private VenditaSpeditaRepository venditaSpeditaRepository;
-    private CartaRepository cartaRepository;
     private GestoreCheckout gestoreCheckout;
+    private GestoreCarte gestoreCarte;
+    private GestoreVendite gestoreVendite;
+    private GestoreMerci gestoreMerci;
 
-    public GestoreAddetto(NegozioRepository negozioRepository, ClienteRepository clienteRepository, VenditaSpeditaRepository venditaSpeditaRepository, MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceVenditaRepository merceVenditaRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, CartaRepository cartaRepository, RuoloRepository ruoloRepository, VenditaRepository venditaRepository, GestoreCheckout gestoreCheckout) {
+    public GestoreAddetto(ClienteRepository clienteRepository, GestoreCheckout gestoreCheckout, GestoreCarte gestoreCarte, GestoreVendite gestoreVendite, GestoreMerci gestoreMerci) {
         this.clienteRepository = clienteRepository;
-        this.venditaSpeditaRepository = venditaSpeditaRepository;
-        this.cartaRepository = cartaRepository;
         this.gestoreCheckout = gestoreCheckout;
+        this.gestoreCarte = gestoreCarte;
+        this.gestoreVendite = gestoreVendite;
+        this.gestoreMerci = gestoreMerci;
     }
 
     public Negozio getNegozio(){
@@ -42,24 +38,8 @@ public class GestoreAddetto {
 
     /********** Checkout Merce *********/
 
-    public List<MerceVendita> getMerciCarrello() {
-        return gestoreCheckout.getMerciCarrello();
-    }
-
-    public void addMerceCarrello(MerceVendita mv) {
-        gestoreCheckout.addMerceCarrello(mv);
-    }
-
-    public double getPrezzoCarrello(){
-        return gestoreCheckout.getPrezzoCarrello();
-    }
-
     public void startCarrello(){
         gestoreCheckout.startCarrello();
-    }
-
-    public void svuotaCarrello() {
-        gestoreCheckout.svuotaCarrello();
     }
 
     public double getPrezzo(long id, double quantita) {
@@ -84,6 +64,14 @@ public class GestoreAddetto {
 
     public void annullaCheckout() {
         gestoreCheckout.annullaCheckout(getNegozio());
+    }
+
+    public double applyScontoCarta(long cc) {
+        return gestoreCheckout.applyScontoCarta(cc, getNegozio());
+    }
+
+    public void addVenditaInventario() {
+        gestoreCheckout.addVenditaInventario(getNegozio());
     }
 
     /****************Richiesta Carta*******************/
@@ -115,9 +103,6 @@ public class GestoreAddetto {
         gestoreCheckout.registraAcquistoCliente(cc, getNegozio());
     }
 
-
-    /***********Fine registra vendita***********/
-
     /*****************Assegnazione Carta***************/
 
     public Cliente getCliente(String email){
@@ -129,32 +114,7 @@ public class GestoreAddetto {
     }
 
     public long assegnaCarta(Cliente cliente, TipoScontoCliente tsc){
-        Carta carta= new Carta(cliente,tsc);
-        generateCodCarta(carta);
-        cartaRepository.save(carta);
-        getNegozio().addCarta(carta);
-        return carta.getCodice();
-    }
-
-    public void generateCodCarta(Carta carta){
-        long rand = carta.createCodice();
-        Iterator<Carta> carte = getNegozio().getCarte().iterator();
-        while(carte.hasNext()){
-            if(carte.next().getCodice() == rand){
-                generateCodCarta(carta);
-            }
-        }
-        carta.setCodice(rand);
-    }
-
-    /***************Fine Assegnazione Carta*******************/
-
-    public double applyScontoCarta(long cc) {
-        return gestoreCheckout.applyScontoCarta(cc, getNegozio());
-    }
-
-    public void addVenditaInventario() {
-        gestoreCheckout.addVenditaInventario(getNegozio());
+        return gestoreCarte.assegnaCarta(cliente,tsc, getNegozio());
     }
 
     /*********Consulta Inventario****************/
@@ -164,64 +124,20 @@ public class GestoreAddetto {
     }
 
     public String getInfoMerce(MerceInventarioNegozio min) {
-        String promozione;
-        if(min.getMerceAlPubblico().getPromozione().isDisponibile()){
-            promozione = ", si trova in promozione";
-        } else {
-            promozione = ", non si trova in promozione";
-        }
-        return "Nome: " + min.getMerceAlPubblico().getMerce().getNome() + ", ID: " +
-                min.getMerceAlPubblico().getMerce().getID() + ", categoria: " + min.getMerceAlPubblico().getMerce().getCategoria() +
-                ", in quantita: " + min.getQuantita() + ", con uno sconto: " + min.getMerceAlPubblico().getSconto()
-                + promozione;
+        return gestoreMerci.getInfoMerce(min);
     }
-
-    /******************* Fine consulta Inventario **************************/
 
     /************Consegna Vendita Assegnata******************/
 
     public List<VenditaSpedita> getAcquistiClienteDaRitirare(String email) {
-        List<VenditaSpedita> list = new ArrayList<>();
-        Optional<Cliente> cliente = clienteRepository.findByEmail(email);
-        if(cliente.isPresent()){
-            if(!cliente.get().getAcquisti().isEmpty()){
-                Iterator<VenditaSpedita> venditeNegozio = getNegozio().getVenditeNegozioRitiro().iterator();
-                while(venditeNegozio.hasNext()){
-                    VenditaSpedita vs = venditeNegozio.next();
-                    if(vs.getStatoConsegna().equals(StatoConsegna.CONSEGNATO_AL_NEGOZIO)){
-                        Iterator<Vendita> venditaIterator = cliente.get().getAcquisti().iterator();
-                        while(venditaIterator.hasNext()){
-                            Vendita vendita = venditaIterator.next();
-                            if(vendita.getId() == vs.getId()){
-                                list.add(vs);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return list;
+        return gestoreVendite.getAcquistiClienteDaRitirare(email, getNegozio());
     }
 
     public void confermaConsegnaVenditaAssegnata(List<VenditaSpedita> vendite) {
-        aggiornaStatoVendita(vendite,StatoConsegna.CONSEGNATO_AL_CLIENTE);
-        venditaSpeditaRepository.saveAll(vendite);
-        //TODO: forse c'è da rimettere le due righe sotto
-        //getNegozio().removeVenditeInNegozioRitiro(vendite);
-        //negozioRepository.save(getNegozio());
+        gestoreVendite.confermaConsegnaVenditaAssegnata(vendite);
     }
 
-    public void aggiornaStatoVendita(List<VenditaSpedita> list, StatoConsegna sc) {
-        Iterator<VenditaSpedita> iterator = list.iterator();
-        while (iterator.hasNext()){
-            iterator.next().setStatoConsegna(sc);
-        }
-    }
     /************************ Fine Consegna Vendita Assegnata**********************/
-
-//    public void setAddettoNegozio(AddettoNegozio addettoNegozio){
-//        this.addettoNegozio = addettoNegozio;
-//    }
 
     public void setNegozio(Negozio negozio){
         this.negozio = negozio;

@@ -524,7 +524,6 @@ public class IAddettoNegozio {
         indirizzoLabel.setVisible(false);
         indirizzoRitiro.setVisible(false);
         puntiDiRitiroDisponibili.setVisible(false);
-//        codiceClienteInRegistrazione.setText(String.valueOf(gestoreAddetto.getCc()));
         codiceClienteInRegistrazioneLabel.setVisible(false);
         codiceClienteInRegistrazione.setVisible(false);
         venditaButton.setVisible(false);

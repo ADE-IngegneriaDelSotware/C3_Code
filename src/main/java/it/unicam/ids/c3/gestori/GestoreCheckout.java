@@ -32,8 +32,9 @@ public class GestoreCheckout {
     private VenditaSpeditaRepository venditaSpeditaRepository;
     private NegozioRepository negozioRepository;
     private RuoloRepository ruoloRepository;
+    private GestoreCarte gestoreCarte;
 
-    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, RuoloRepository ruoloRepository) {
+    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, RuoloRepository ruoloRepository, GestoreCarte gestoreCarte) {
         this.merceRepository = merceRepository;
         this.merceAlPubblicoRepository = merceAlPubblicoRepository;
         this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
@@ -42,6 +43,7 @@ public class GestoreCheckout {
         this.venditaSpeditaRepository = venditaSpeditaRepository;
         this.negozioRepository = negozioRepository;
         this.ruoloRepository = ruoloRepository;
+        this.gestoreCarte = gestoreCarte;
         merciCarrello = new ArrayList<>();
         prezzoCarrello = 0;
     }
@@ -172,29 +174,11 @@ public class GestoreCheckout {
     }
 
     public boolean verificaCodiceCarta(long cc, Negozio negozio){
-        if(!negozio.getCarte().isEmpty()) {
-            Iterator<Carta> it = negozio.getCarte().iterator();
-            while (it.hasNext()) {
-                Carta c = it.next();
-                if (c.getCodice() == cc) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return gestoreCarte.verificaCodiceCarta(cc, negozio);
     }
 
     public long searchCodiceCartaFromEmail(String email, Negozio negozio){
-        if(!negozio.getCarte().isEmpty()) {
-            Iterator<Carta> it = negozio.getCarte().iterator();
-            while (it.hasNext()) {
-                Carta c = it.next();
-                if (c.getCliente().getEmail().equals(email)) {
-                    return c.getCodice();
-                }
-            }
-        }
-        return 0;
+        return gestoreCarte.searchCodiceCartaFromEmail(email, negozio);
     }
 
     public List<Corriere> getCorrieriDisponibili(Negozio negozio) {
@@ -251,16 +235,7 @@ public class GestoreCheckout {
     }
 
     public Carta searchCarta(long cc, Negozio negozio) {
-        if(!negozio.getCarte().isEmpty()){
-            Iterator<Carta> carte = negozio.getCarte().iterator();
-            while(carte.hasNext()){
-                Carta carta = carte.next();
-                if(carta.getCodice() == cc){
-                    return carta;
-                }
-            }
-        }
-        return null;
+        return gestoreCarte.searchCarta(cc, negozio);
     }
 
     public double applyScontoCarta(long cc, Negozio negozio) {
@@ -271,16 +246,7 @@ public class GestoreCheckout {
     }
 
     public double calcolaScontoCarta(long cc, Negozio negozio) {
-        if(!negozio.getCarte().isEmpty()){
-            Iterator<Carta> carte = negozio.getCarte().iterator();
-            while(carte.hasNext()){
-                Carta carta = carte.next();
-                if(carta.getCodice() == cc){
-                    return carta.getSconto();
-                }
-            }
-        }
-        return 0;
+        return gestoreCarte.calcolaScontoCarta(cc, negozio);
     }
 
     public void addVenditaInventario(Negozio negozio) {
