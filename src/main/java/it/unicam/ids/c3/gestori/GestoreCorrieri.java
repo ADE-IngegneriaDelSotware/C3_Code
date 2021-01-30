@@ -1,5 +1,7 @@
 package it.unicam.ids.c3.gestori;
 
+import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.persistenza.CorriereRepository;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.LuogoDiRitiro;
 import it.unicam.ids.c3.vendita.StatoConsegna;
@@ -7,8 +9,10 @@ import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -16,9 +20,11 @@ public class GestoreCorrieri {
 
     private Corriere corriere;
     private GestoreVendite gestoreVendite;
+    private CorriereRepository corriereRepository;
 
-    public GestoreCorrieri(GestoreVendite gestoreVendite) {
+    public GestoreCorrieri(GestoreVendite gestoreVendite, CorriereRepository corriereRepository) {
         this.gestoreVendite = gestoreVendite;
+        this.corriereRepository = corriereRepository;
     }
 
     public void setCorriere(Corriere corriere){

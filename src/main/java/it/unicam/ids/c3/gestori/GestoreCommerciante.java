@@ -21,32 +21,27 @@ import java.util.Optional;
 @Transactional
 public class GestoreCommerciante {
 
+
+    private Negozio negozio;
+    private RuoloRepository ruoloRepository;
+    private ClienteRepository clienteRepository;
+    private NegozioRepository negozioRepository;
+    private CorriereRepository corriereRepository;
+
     private GestoreCheckout gestoreCheckout;
     private GestoreCarte gestoreCarte;
     private GestoreVendite gestoreVendite;
     private GestoreMerci gestoreMerci;
-    private Negozio negozio;
-    private RuoloRepository ruoloRepository;
-    private ClienteRepository clienteRepository;
-    private MerceInventarioNegozioRepository merceInventarioNegozioRepository;
-    private MerceAlPubblicoRepository merceAlPubblicoRepository;
-    private CorriereRepository corriereRepository;
-    private NegozioRepository negozioRepository;
-    private MerceRepository merceRepository;
 
-
-    public GestoreCommerciante(GestoreCheckout gestoreCheckout, GestoreCarte gestoreCarte, GestoreVendite gestoreVendite, GestoreMerci gestoreMerci, RuoloRepository ruoloRepository, ClienteRepository clienteRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, CorriereRepository corriereRepository, NegozioRepository negozioRepository, MerceRepository merceRepository) {
+    public GestoreCommerciante(GestoreCheckout gestoreCheckout, GestoreCarte gestoreCarte, GestoreVendite gestoreVendite, GestoreMerci gestoreMerci, RuoloRepository ruoloRepository, ClienteRepository clienteRepository, NegozioRepository negozioRepository, CorriereRepository corriereRepository) {
         this.gestoreCheckout = gestoreCheckout;
         this.gestoreCarte = gestoreCarte;
         this.gestoreVendite = gestoreVendite;
         this.gestoreMerci = gestoreMerci;
         this.ruoloRepository = ruoloRepository;
         this.clienteRepository = clienteRepository;
-        this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
-        this.merceAlPubblicoRepository = merceAlPubblicoRepository;
         this.corriereRepository = corriereRepository;
         this.negozioRepository = negozioRepository;
-        this.merceRepository = merceRepository;
     }
 
     /********** Checkout Merce *********/
@@ -150,45 +145,19 @@ public class GestoreCommerciante {
     /*****************GestionePromozioni*****************/
 
     public List<MerceInventarioNegozio> getPromozioniAttive() {
-        List<MerceInventarioNegozio> list = new ArrayList<>();
-        if(!getNegozio().getMerceInventarioNegozio().isEmpty()){
-            Iterator<MerceInventarioNegozio> iterator = getNegozio().getMerceInventarioNegozio().iterator();
-            while (iterator.hasNext()){
-                MerceInventarioNegozio min = iterator.next();
-                MerceAlPubblico map = min.getMerceAlPubblico();
-                if(map.getPromozione().isDisponibile()){
-                    list.add(min);
-                }
-            }
-        }
-        return list;
+        return gestoreMerci.getPromozioniAttive(getNegozio());
     }
 
     public List<MerceInventarioNegozio> getPromozioniPossibili() {
-        List<MerceInventarioNegozio> list = new ArrayList<>();
-        if(!getNegozio().getMerceInventarioNegozio().isEmpty()){
-            Iterator<MerceInventarioNegozio> iterator = getNegozio().getMerceInventarioNegozio().iterator();
-            while (iterator.hasNext()){
-                MerceInventarioNegozio min = iterator.next();
-                if(!min.getMerceAlPubblico().getPromozione().isDisponibile()){
-                    list.add(min);
-                }
-            }
-        }
-        return list;
+        return gestoreMerci.getPromozioniPossibili(getNegozio());
     }
 
     public void addPromozione(MerceInventarioNegozio miv, LocalDate di, LocalDate df, double pp) {
-        MerceAlPubblico map = miv.getMerceAlPubblico();
-        double prezzo = (miv.getMerceAlPubblico().getPrezzo() - ((pp/100)*map.getPrezzo()));
-        map.setPromozione(di,df,pp, prezzo);
-        merceAlPubblicoRepository.save(map);
+        gestoreMerci.addPromozione(miv, di, df, pp);
     }
 
     public void rimuoviPromozione(List<MerceInventarioNegozio> lista) {
-        for(MerceInventarioNegozio miv : lista){
-            miv.getMerceAlPubblico().getPromozione().setDisponibile(false);
-        }
+        gestoreMerci.rimuoviPromozione(lista);
     }
 
     /****************Gestione corrieri*******************/
@@ -197,7 +166,7 @@ public class GestoreCommerciante {
         List<Corriere> lc=new ArrayList<>();
         List<Corriere> listaCorretta = new ArrayList<>();
         lc.addAll(corriereRepository.findAll());
-        Iterator<Corriere> corriereIterator = getNegozio().getCorrieri().iterator();
+        Iterator<Corriere> corriereIterator = negozio.getCorrieri().iterator();
         while (corriereIterator.hasNext()){
             Corriere corriere = corriereIterator.next();
             Optional<Corriere> corriereOptional = corriereRepository.findById(corriere.getId());
@@ -213,7 +182,7 @@ public class GestoreCommerciante {
         Iterator<Corriere> corriereIterator = corrieriDaAggiungere.iterator();
         while(corriereIterator.hasNext()){
             Corriere corriere = corriereIterator.next();
-            getNegozio().addCorriere(corriere);
+            negozio.addCorriere(corriere);
         }
         negozioRepository.save(negozio);
     }
@@ -232,39 +201,18 @@ public class GestoreCommerciante {
     /***************Gestione Inventario********************/
 
     public void addMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto) {
-        Merce merce = new Merce(nome,categoria,descrizione);
-        merceRepository.save(merce);
-        MerceAlPubblico mp = new MerceAlPubblico(prezzo,merce,sconto);
-        merceAlPubblicoRepository.save(mp);
-        MerceInventarioNegozio min = new MerceInventarioNegozio(quantita,mp);
-        merceInventarioNegozioRepository.save(min);
-        getNegozio().addMerceInventarioNegozio(min);
-        negozioRepository.save(getNegozio());
+        gestoreMerci.addMerce(nome,descrizione, categoria, quantita, prezzo , sconto , getNegozio());
     }
 
     public void removeMerce(List<MerceInventarioNegozio> list, double quantita){
-        Iterator<MerceInventarioNegozio> minIterator=getNegozio().getMerceInventarioNegozio().iterator();
-        while (minIterator.hasNext()) {
-            MerceInventarioNegozio min=minIterator.next();
-            Iterator<MerceInventarioNegozio> daRimuovere = list.iterator();
-            while(daRimuovere.hasNext()) {
-                MerceInventarioNegozio minDaRimuovere= daRimuovere.next();
-                if(min.equals(minDaRimuovere)) {
-                    double nuovaQuantita=min.getQuantita()-quantita;
-                    min.setQuantita(nuovaQuantita);
-                }
-            }
-        }
-        negozioRepository.save(negozio);
+        gestoreMerci.removeMerce(list, quantita, getNegozio());
     }
 
     public List<MerceInventarioNegozio> getMerciInventarioNegozio() {
         return getNegozio().getMerceInventarioNegozio();
     }
 
-    /************************** Fine gestione inventario ******************************/
-
-
+    /************************** Metodi Accessori ******************************/
 
     public Negozio getNegozio() {
         return this.negozio;

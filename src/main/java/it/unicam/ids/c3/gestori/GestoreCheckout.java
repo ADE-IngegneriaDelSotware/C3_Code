@@ -33,8 +33,9 @@ public class GestoreCheckout {
     private NegozioRepository negozioRepository;
     private RuoloRepository ruoloRepository;
     private GestoreCarte gestoreCarte;
+    private GestoreMerci gestoreMerci;
 
-    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, RuoloRepository ruoloRepository, GestoreCarte gestoreCarte) {
+    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, RuoloRepository ruoloRepository, GestoreCarte gestoreCarte, GestoreMerci gestoreMerci) {
         this.merceRepository = merceRepository;
         this.merceAlPubblicoRepository = merceAlPubblicoRepository;
         this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
@@ -44,6 +45,7 @@ public class GestoreCheckout {
         this.negozioRepository = negozioRepository;
         this.ruoloRepository = ruoloRepository;
         this.gestoreCarte = gestoreCarte;
+        this.gestoreMerci = gestoreMerci;
         merciCarrello = new ArrayList<>();
         prezzoCarrello = 0;
     }
@@ -71,31 +73,15 @@ public class GestoreCheckout {
     }
 
     public double getPrezzo(long id, double quantita, Negozio negozio){
-        return searchPrezzo(id, negozio)*quantita;
+        return searchPrezzo(id, negozio, quantita)*quantita;
     }
 
-    public double searchPrezzo(long id, Negozio negozio) {
-        Iterator<MerceInventarioNegozio> min = negozio.getMerceInventarioNegozio().iterator();
-        while(min.hasNext()){
-            MerceInventarioNegozio m = min.next();
-            MerceAlPubblico map = m.getMerceAlPubblico();
-            Merce merce = map.getMerce();
-            if(merce.getID() == id){
-                return map.getPrezzo();
-            }
-        }
-        return 0;
+    public double searchPrezzo(long id, Negozio negozio, double quantita) {
+        return gestoreMerci.searchPrezzo(id, negozio, quantita);
     }
 
     public double getSconto(long id, Negozio negozio) {
-        Iterator<MerceInventarioNegozio> it = negozio.getMerceInventarioNegozio().iterator();
-        while (it.hasNext()){
-            MerceInventarioNegozio min = it.next();
-            if(min.getMerceAlPubblico().getMerce().getID()==id){
-                return min.getMerceAlPubblico().getSconto();
-            }
-        }
-        return 0;
+        return gestoreMerci.getSconto(id,negozio);
     }
 
     public double calcolaPrezzoMerce(double prezzo, double sconto){
@@ -108,12 +94,7 @@ public class GestoreCheckout {
     }
 
     public void scaloQuantita(MerceAlPubblico mp , double quantita, Negozio negozio){
-        for(MerceInventarioNegozio min : negozio.getMerceInventarioNegozio()){
-            if(min.getMerceAlPubblico().equals(mp)){
-                min.setQuantita(min.getQuantita()-quantita);
-                merceInventarioNegozioRepository.save(min);
-            }
-        }
+        gestoreMerci.scaloQuantita(mp,quantita,negozio);
     }
 
     public double aggiuntaMerceNelCarrello(double prezzo, double sconto, long id, double quantita, Negozio negozio) {
@@ -157,13 +138,7 @@ public class GestoreCheckout {
     }
 
     public void reinserimentoQuantita(Negozio negozio){
-        for(MerceVendita mv : getMerciCarrello()){
-            for(MerceInventarioNegozio min : negozio.getMerceInventarioNegozio()){
-                if(mv.getMerceAlPubblico().equals(min.getMerceAlPubblico())){
-                    min.setQuantita(min.getQuantita()+mv.getQuantitaVenduta());
-                }
-            }
-        }
+        gestoreMerci.reinserimentoQuantita(negozio, getMerciCarrello());
     }
 
     public void annullaCheckout(Negozio negozio) {

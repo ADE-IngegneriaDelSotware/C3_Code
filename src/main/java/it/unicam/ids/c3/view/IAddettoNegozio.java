@@ -286,7 +286,6 @@ public class IAddettoNegozio {
         iscrizioneClienteCheckout.setVisible(false);
         codiceCartaLabel.setVisible(false);
         codiceFiscaleLabel.setVisible(false);
-        //codiceCarta.setText("0");
         applyScontoCartaButton.setVisible(false);
         answerRegistraVenditaLabel.setVisible(false);
         siRegistraVendita.setVisible(false);
@@ -300,6 +299,15 @@ public class IAddettoNegozio {
         restoLabel.setVisible(false);
         checkoutCompletedButton.setVisible(false);
         annullaCheckoutButton.setVisible(false);
+        idMerce.clear();
+        quantitaMerce.clear();
+        prezzoMerce.clear();
+        prezzoCarrello.clear();
+        prezzoTotale.clear();
+        codiceFiscale.clear();
+        codiceCarta.clear();
+        denaroRicevuto.clear();
+        resto.clear();
     }
 
     /********************Richiesta Carta******************/
@@ -487,6 +495,7 @@ public class IAddettoNegozio {
         checkoutCompletato();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Vendita andata a buon fine",ButtonType.FINISH);
         alert.show();
+        initRichiestaCartField();
     }
 
     public void annullaCheckout(){
@@ -513,6 +522,11 @@ public class IAddettoNegozio {
     /***********************Interfaccia registrazione vendita************************/
 
     private void initRegistrazioneVenditaField() {
+        corrieriDisponibili.getItems().clear();
+        puntiDiRitiroDisponibili.getItems().clear();
+        luogoDiRitiro.getItems().clear();
+        tipoRitiro.getItems().clear();
+        indirizzoRitiro.clear();
         tipoRitiro.getItems().addAll(TipoDiRitiro.values());
         luogoDiRitiro.getItems().addAll(LuogoDiRitiro.values());
         prLabel.setVisible(false);
@@ -559,6 +573,10 @@ public class IAddettoNegozio {
     }
 
     private void selectLuogoDiRitiro(LuogoDiRitiro ldr){
+        puntiDiRitiroDisponibili.setVisible(false);
+        prLabel.setVisible(false);
+        indirizzoLabel.setVisible(false);
+        indirizzoRitiro.setVisible(false);
         if(ldr.equals(LuogoDiRitiro.NEGOZIO)){
             getNegoziDisponibili();
             puntiDiRitiroDisponibili.setVisible(true);
@@ -592,13 +610,21 @@ public class IAddettoNegozio {
         } else {
             registraAcquistoCliente(Long.parseLong(codiceClienteInRegistrazione.getText()));
         }
+        codiceCarta.setText(codiceClienteInRegistrazione.getText());
+        initRegistrazioneVenditaField();
+        tabPaneAddetto.getSelectionModel().select(tabCheckout);
+        tabRegistraVendita.setDisable(true);
     }
 
     /***********************Assegnazione Carta****************************/
 
     public void initAssegnazioneCartaField(){
+        emailAC.clear();
+        clientiFiltratiAC.getItems().clear();
+        codiceCartaAC.clear();
         inviaCodiceAlCheckoutButton.setVisible(false);
         inviaCodiceAllaRegistrazioneButton.setVisible(false);
+        tscAC.getItems().clear();
         tscAC.getItems().addAll(TipoScontoCliente.values());
     }
 
@@ -625,6 +651,7 @@ public class IAddettoNegozio {
     void inviaCodiceAlCheckoutButtonEvent(ActionEvent event) {
         codiceCarta.setText(codiceCartaAC.getText());
         tabPaneAddetto.getSelectionModel().select(tabCheckout);
+        initAssegnazioneCartaField();
     }
 
     @FXML
@@ -633,6 +660,7 @@ public class IAddettoNegozio {
         initRegistrazioneVenditaField();
         codiceClienteInRegistrazione.setText(codiceCartaAC.getText());
         tabPaneAddetto.getSelectionModel().select(tabRegistraVendita);
+        initAssegnazioneCartaField();
     }
 
     /******************Interfaccia Consulta Inventario*********************/
@@ -673,31 +701,6 @@ public class IAddettoNegozio {
         confermaConsegnaVenditaAssegnata(listaVenditeDaConsegnare.getSelectionModel().getSelectedItems());
         getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void setGestoreAddetto(GestoreAddetto gestoreAddetto) {
         this.gestoreAddetto = gestoreAddetto;

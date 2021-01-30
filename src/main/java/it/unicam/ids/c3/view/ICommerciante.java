@@ -426,6 +426,15 @@ public class ICommerciante {
         restoLabel.setVisible(false);
         checkoutCompletedButton.setVisible(false);
         annullaCheckoutButton.setVisible(false);
+        idMerce.clear();
+        quantitaMerce.clear();
+        prezzoMerce.clear();
+        prezzoCarrello.clear();
+        prezzoTotale.clear();
+        codiceFiscale.clear();
+        codiceCarta.clear();
+        denaroRicevuto.clear();
+        resto.clear();
     }
 
     /********************Richiesta Carta******************/
@@ -639,6 +648,11 @@ public class ICommerciante {
     /***********************Interfaccia registrazione vendita************************/
 
     private void initRegistrazioneVenditaField() {
+        corrieriDisponibili.getItems().clear();
+        puntiDiRitiroDisponibili.getItems().clear();
+        luogoDiRitiro.getItems().clear();
+        tipoRitiro.getItems().clear();
+        indirizzoRitiro.clear();
         tipoRitiro.getItems().addAll(TipoDiRitiro.values());
         luogoDiRitiro.getItems().addAll(LuogoDiRitiro.values());
         prLabel.setVisible(false);
@@ -650,7 +664,6 @@ public class ICommerciante {
         indirizzoLabel.setVisible(false);
         indirizzoRitiro.setVisible(false);
         puntiDiRitiroDisponibili.setVisible(false);
-//        codiceClienteInRegistrazione.setText(String.valueOf(gestoreAddetto.getCc()));
         codiceClienteInRegistrazioneLabel.setVisible(false);
         codiceClienteInRegistrazione.setVisible(false);
         venditaButton.setVisible(false);
@@ -686,6 +699,10 @@ public class ICommerciante {
     }
 
     private void selectLuogoDiRitiro(LuogoDiRitiro ldr){
+        puntiDiRitiroDisponibili.setVisible(false);
+        prLabel.setVisible(false);
+        indirizzoLabel.setVisible(false);
+        indirizzoRitiro.setVisible(false);
         if(ldr.equals(LuogoDiRitiro.NEGOZIO)){
             getNegoziDisponibili();
             puntiDiRitiroDisponibili.setVisible(true);
@@ -719,13 +736,21 @@ public class ICommerciante {
         } else {
             registraAcquistoCliente(Long.parseLong(codiceClienteInRegistrazione.getText()));
         }
+        codiceCarta.setText(codiceClienteInRegistrazione.getText());
+        initRegistrazioneVenditaField();
+        tabPaneCommerciante.getSelectionModel().select(tabCheckout);
+        tabRegistraVendita.setDisable(true);
     }
 
     /***********************Assegnazione Carta****************************/
 
     public void initAssegnazioneCartaField(){
+        emailAC.clear();
+        clientiFiltratiAC.getItems().clear();
+        codiceCartaAC.clear();
         inviaCodiceAlCheckoutButton.setVisible(false);
         inviaCodiceAllaRegistrazioneButton.setVisible(false);
+        tscAC.getItems().clear();
         tscAC.getItems().addAll(TipoScontoCliente.values());
     }
 
@@ -752,6 +777,7 @@ public class ICommerciante {
     void inviaCodiceAlCheckoutButtonEvent(ActionEvent event) {
         codiceCarta.setText(codiceCartaAC.getText());
         tabPaneCommerciante.getSelectionModel().select(tabCheckout);
+        initAssegnazioneCartaField();
     }
 
     @FXML
@@ -760,6 +786,7 @@ public class ICommerciante {
         initRegistrazioneVenditaField();
         codiceClienteInRegistrazione.setText(codiceCartaAC.getText());
         tabPaneCommerciante.getSelectionModel().select(tabRegistraVendita);
+        initAssegnazioneCartaField();
     }
 
     /******************Interfaccia Consulta Inventario*********************/

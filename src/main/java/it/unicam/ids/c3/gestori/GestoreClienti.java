@@ -3,6 +3,7 @@ package it.unicam.ids.c3.gestori;
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
 import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.persistenza.ClienteRepository;
 import it.unicam.ids.c3.persistenza.NegozioRepository;
 import it.unicam.ids.c3.personale.Cliente;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,13 @@ public class GestoreClienti {
 
     private Cliente cliente;
     private NegozioRepository negozioRepository;
+    private ClienteRepository clienteRepository;
+    private GestoreMerci gestoreMerci;
 
-    public GestoreClienti(NegozioRepository negozioRepository) {
+    public GestoreClienti(NegozioRepository negozioRepository, ClienteRepository clienteRepository, GestoreMerci gestoreMerci) {
         this.negozioRepository = negozioRepository;
+        this.clienteRepository = clienteRepository;
+        this.gestoreMerci = gestoreMerci;
     }
 
     /*****************Ricerca Prodotto******************/
@@ -43,19 +48,11 @@ public class GestoreClienti {
 
     /*****************Consulta Promozioni******************/
     public List<MerceInventarioNegozio> getPromozioni() {
-        List<MerceInventarioNegozio> minList = new ArrayList<>();
-        Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
-        while (negozioIterator.hasNext()) {
-            Negozio negozio = negozioIterator.next();
-            Iterator<MerceInventarioNegozio> merceInventarioNegozioIterator = negozio.getMerceInventarioNegozio().iterator();
-            while (merceInventarioNegozioIterator.hasNext()) {
-                MerceInventarioNegozio min = merceInventarioNegozioIterator.next();
-                if (min.getMerceAlPubblico().getPromozione().isDisponibile()) {
-                    minList.add(min);
-                }
-            }
+        List<MerceInventarioNegozio> min = new ArrayList<>();
+        for(Negozio negozio : negozioRepository.findAll()){
+            min.addAll(gestoreMerci.getPromozioniPossibili(negozio));
         }
-        return minList;
+        return min;
     }
 
     public List<MerceInventarioNegozio> filtraPromozioniPerCategoria(Categoria categoria) {
