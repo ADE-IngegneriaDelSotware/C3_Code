@@ -2,16 +2,13 @@ package it.unicam.ids.c3.personale;
 
 
 import it.unicam.ids.c3.negozio.Carta;
-import it.unicam.ids.c3.vendita.StatoConsegna;
 import it.unicam.ids.c3.vendita.Vendita;
-import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 @Entity
 public class Cliente{
@@ -28,7 +25,7 @@ public class Cliente{
     @JoinColumn(name = "ruolo_fk", referencedColumnName = "id")
     private Ruolo ruolo;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Carta> carte;
 

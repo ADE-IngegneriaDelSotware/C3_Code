@@ -1,7 +1,5 @@
 package it.unicam.ids.c3.personale;
 
-import it.unicam.ids.c3.negozio.Negozio;
-
 import javax.persistence.*;
 
 @Entity

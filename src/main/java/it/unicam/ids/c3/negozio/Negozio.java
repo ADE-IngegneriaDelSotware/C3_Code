@@ -2,6 +2,7 @@ package it.unicam.ids.c3.negozio;
 
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
+import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.personale.AddettoNegozio;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.Vendita;
@@ -44,7 +45,7 @@ public class Negozio {
 
     @OneToMany(targetEntity = VenditaSpedita.class, cascade = CascadeType.MERGE )
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
+    @JoinColumn(name = "negozio_ritiro_fk", referencedColumnName = "id")
     private List<VenditaSpedita> venditePuntiDiRitiro;
 
     @OneToMany(targetEntity = MerceInventarioNegozio.class, cascade = CascadeType.MERGE)

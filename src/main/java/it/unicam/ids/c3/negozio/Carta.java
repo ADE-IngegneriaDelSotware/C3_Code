@@ -1,8 +1,6 @@
 package it.unicam.ids.c3.negozio;
 
 import it.unicam.ids.c3.personale.Cliente;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 
@@ -13,7 +11,7 @@ public class Carta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "cliente_fk", referencedColumnName = "id")
     private Cliente cliente;
 
