@@ -74,6 +74,7 @@ public class GestoreMerci {
             for(MerceInventarioNegozio min : negozio.getMerceInventarioNegozio()){
                 if(mv.getMerceAlPubblico().equals(min.getMerceAlPubblico())){
                     min.setQuantita(min.getQuantita()+mv.getQuantitaVenduta());
+                    merceInventarioNegozioRepository.save(min);
                 }
             }
         }
@@ -113,6 +114,7 @@ public class GestoreMerci {
                 if(min.equals(minDaRimuovere)) {
                     double nuovaQuantita=min.getQuantita()-quantita;
                     min.setQuantita(nuovaQuantita);
+                    merceInventarioNegozioRepository.save(min);
                 }
             }
         }
@@ -140,7 +142,7 @@ public class GestoreMerci {
             Iterator<MerceInventarioNegozio> iterator = negozio.getMerceInventarioNegozio().iterator();
             while (iterator.hasNext()){
                 MerceInventarioNegozio min = iterator.next();
-                if(min.getMerceAlPubblico().getPromozione().isDisponibile()){
+                if(!min.getMerceAlPubblico().getPromozione().isDisponibile()){
                     list.add(min);
                 }
             }
@@ -158,6 +160,7 @@ public class GestoreMerci {
     public void rimuoviPromozione(List<MerceInventarioNegozio> lista) {
         for(MerceInventarioNegozio miv : lista){
             miv.getMerceAlPubblico().getPromozione().setDisponibile(false);
+            merceAlPubblicoRepository.save(miv.getMerceAlPubblico());
         }
     }
 
