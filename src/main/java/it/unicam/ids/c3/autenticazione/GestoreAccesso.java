@@ -52,18 +52,6 @@ public class GestoreAccesso {
                             gestoreAmministratore.setAmministratore((Amministratore) cliente.get().getRuolo());
                             return "AMMINISTRATORE";
                         case ADDETTONEGOZIO:
-//                            gestoreAddetto.setAddettoNegozio((AddettoNegozio) cliente.get().getRuolo());
-//                            Iterator<Negozio> negozioIterator = negozioRepository.findAll().iterator();
-//                            while (negozioIterator.hasNext()){
-//                                Negozio negozio = negozioIterator.next();
-//                                Iterator<AddettoNegozio> addettoNegozioIterator = negozio.getAddetti().iterator();
-//                                while (addettoNegozioIterator.hasNext()){
-//                                    AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
-//                                    if(addettoNegozio.equals(cliente.get().getRuolo())){
-//                                        gestoreAddetto.setNegozio(negozio);
-//                                    }
-//                                }
-//                            }
                             setNegozioAddetto(cliente.get());
                             return "ADDETTONEGOZIO";
 
@@ -72,10 +60,11 @@ public class GestoreAccesso {
                             return "COMMERCIANTE";
                     }
                 }
+                gestoreClienti.setCliente(cliente.get());
+                return "CLIENTE";
             }
         }
-        gestoreClienti.setCliente(cliente.get());
-        return "CLIENTE";
+        throw new IllegalStateException("CREDENZIALI ACCESSO ERRATE");
     }
 
     private void setNegozioAddetto(Cliente cliente){

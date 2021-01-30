@@ -50,7 +50,7 @@ public class GestoreClienti {
     public List<MerceInventarioNegozio> getPromozioni() {
         List<MerceInventarioNegozio> min = new ArrayList<>();
         for(Negozio negozio : negozioRepository.findAll()){
-            min.addAll(gestoreMerci.getPromozioniPossibili(negozio));
+            min.addAll(gestoreMerci.getPromozioniAttive(negozio));
         }
         return min;
     }
