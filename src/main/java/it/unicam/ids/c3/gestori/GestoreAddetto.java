@@ -23,13 +23,15 @@ public class GestoreAddetto {
     private GestoreCarte gestoreCarte;
     private GestoreVendite gestoreVendite;
     private GestoreMerci gestoreMerci;
+    private NegozioRepository negozioRepository;
 
-    public GestoreAddetto(ClienteRepository clienteRepository, GestoreCheckout gestoreCheckout, GestoreCarte gestoreCarte, GestoreVendite gestoreVendite, GestoreMerci gestoreMerci) {
+    public GestoreAddetto(ClienteRepository clienteRepository, GestoreCheckout gestoreCheckout, GestoreCarte gestoreCarte, GestoreVendite gestoreVendite, GestoreMerci gestoreMerci, NegozioRepository negozioRepository) {
         this.clienteRepository = clienteRepository;
         this.gestoreCheckout = gestoreCheckout;
         this.gestoreCarte = gestoreCarte;
         this.gestoreVendite = gestoreVendite;
         this.gestoreMerci = gestoreMerci;
+        this.negozioRepository = negozioRepository;
     }
 
     public Negozio getNegozio(){
@@ -114,7 +116,9 @@ public class GestoreAddetto {
     }
 
     public long assegnaCarta(Cliente cliente, TipoScontoCliente tsc){
-        return gestoreCarte.assegnaCarta(cliente,tsc, getNegozio());
+        long cc = gestoreCarte.assegnaCarta(cliente,tsc, getNegozio());
+        negozioRepository.save(getNegozio());
+        return cc;
     }
 
     /*********Consulta Inventario****************/

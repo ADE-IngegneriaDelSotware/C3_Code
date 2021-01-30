@@ -93,6 +93,7 @@ public class IAccesso implements Initializable{
 
     @FXML
     void accessoButtonEvent(ActionEvent event) {
+        ruolo.getItems().clear();
         String ruoloAccesso = accesso(emailAccesso.getText(), passwordAccesso.getText());
         if(ruoloAccesso.equals("CLIENTE")){
             openCliente();

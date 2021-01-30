@@ -25,7 +25,7 @@ public class Cliente{
     @JoinColumn(name = "ruolo_fk", referencedColumnName = "id")
     private Ruolo ruolo;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Carta> carte;
 

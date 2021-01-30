@@ -1,7 +1,7 @@
 package it.unicam.ids.c3.gestori;
 
-import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.persistenza.CorriereRepository;
+import it.unicam.ids.c3.persistenza.VenditaSpeditaRepository;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.LuogoDiRitiro;
 import it.unicam.ids.c3.vendita.StatoConsegna;
@@ -9,10 +9,8 @@ import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,11 +18,11 @@ public class GestoreCorrieri {
 
     private Corriere corriere;
     private GestoreVendite gestoreVendite;
-    private CorriereRepository corriereRepository;
+    private VenditaSpeditaRepository venditaSpeditarepository;
 
-    public GestoreCorrieri(GestoreVendite gestoreVendite, CorriereRepository corriereRepository) {
+    public GestoreCorrieri(GestoreVendite gestoreVendite, VenditaSpeditaRepository venditaSpeditarepository) {
         this.gestoreVendite = gestoreVendite;
-        this.corriereRepository = corriereRepository;
+        this.venditaSpeditarepository = venditaSpeditarepository;
     }
 
     public void setCorriere(Corriere corriere){
@@ -63,13 +61,14 @@ public class GestoreCorrieri {
             } else if(vs.getLuogoDiRitiro().equals(LuogoDiRitiro.DOMICILIO)) {
                 aggiornaStatoVendita(list,StatoConsegna.CONSEGNATO_AL_CLIENTE);
             }
-
+            venditaSpeditarepository.save(vs);
         }
     }
 
     /************Preleva Vendita********************/
     public void prelevaVendita(List<VenditaSpedita> list) {
         gestoreVendite.aggiornaStatoVendita(list,StatoConsegna.RITIRATO, getCorriere());
+        venditaSpeditarepository.saveAll(list);
     }
 
 

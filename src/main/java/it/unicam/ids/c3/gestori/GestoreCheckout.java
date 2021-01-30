@@ -187,16 +187,18 @@ public class GestoreCheckout {
         VenditaSpedita vs;
         if(indirizzo.isEmpty()){
             vs = new VenditaSpedita(getPrezzoCarrello(), pdr.getIndirizzo(), getMerciCarrello());
+            venditaSpeditaRepository.save(vs);
+            pdr.addVenditaInNegozioRitiro(vs);
+            negozioRepository.save(pdr);
         } else {
             vs = new VenditaSpedita(getPrezzoCarrello(),getMerciCarrello(),indirizzo);
+            venditaSpeditaRepository.save(vs);
         }
         venditaSpeditaRepository.save(vs);
         carta.getCliente().getAcquisti().add(vs);
         negozio.addVendita(vs);
         cr.addMerceDaSpedire(vs);
-        pdr.addVenditaInNegozioRitiro(vs);
         negozioRepository.save(negozio);
-        negozioRepository.save(pdr);
         ruoloRepository.save(cr);
     }
 

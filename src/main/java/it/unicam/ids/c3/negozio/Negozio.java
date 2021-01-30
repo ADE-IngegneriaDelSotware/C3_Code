@@ -45,7 +45,7 @@ public class Negozio {
 
     @OneToMany(targetEntity = VenditaSpedita.class, cascade = CascadeType.MERGE )
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "negozio_fk", referencedColumnName = "id")
+    @JoinColumn(name = "negozio_ritiro_fk", referencedColumnName = "id")
     private List<VenditaSpedita> venditePuntiDiRitiro;
 
     @OneToMany(targetEntity = MerceInventarioNegozio.class, cascade = CascadeType.MERGE)

@@ -126,7 +126,7 @@
                                           <TextField fx:id="codiceFiscale" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Button fx:id="verificaCodice" mnemonicParsing="false" onAction="#verificaCodiceCartaButton" style="-fx-background-color: #444959;" text="Verifica" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                           <Button fx:id="iscrizioneClienteCheckout" mnemonicParsing="false" onAction="#iscrizioneClienteCheckoutButtonEvent" style="-fx-background-color: #444959;" text="AssegnaCarta" textFill="WHITE" GridPane.columnIndex="2" />
-                                          <Label fx:id="codiceFiscaleLabel" text="Codice Fiscale" textFill="WHITE" GridPane.rowIndex="3">
+                                          <Label fx:id="codiceFiscaleLabel" text="Email" textFill="WHITE" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets left="10.0" />
                                              </GridPane.margin>
@@ -300,8 +300,8 @@
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Button fx:id="ccoButton" mnemonicParsing="false" onAction="#ccoButtonEvent" prefHeight="26.0" prefWidth="109.0" style="-fx-background-color: #444959;" text="submit" textFill="#fffdfd" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ListView fx:id="listaVenditeDaConsegnare" prefHeight="96.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <Button fx:id="confermaClienteConsegnaOrdine" mnemonicParsing="false" onAction="#confermaClienteConsegnaOrdineButton" prefHeight="26.0" prefWidth="109.0" style="-fx-background-color: #444959;" text="submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ListView fx:id="listaVenditeDaConsegnare" prefHeight="96.0" prefWidth="300.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>

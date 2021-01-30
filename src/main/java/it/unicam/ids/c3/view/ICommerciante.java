@@ -173,7 +173,7 @@ public class ICommerciante {
     private TextField emailConsegnaOrdine;
 
     @FXML
-    private Button ccoButton;
+    private Button confermaClienteConsegnaOrdine;
 
     @FXML
     private ListView<VenditaSpedita> listaVenditeDaConsegnare;
@@ -255,9 +255,6 @@ public class ICommerciante {
 
     @FXML
     private TextArea descrizioneMerceGI;
-
-    @FXML
-    private TextField idMerceGI;
 
     @FXML
     private TextField nomeMerceGI;
@@ -818,7 +815,7 @@ public class ICommerciante {
     }
 
     @FXML
-    void ccoButtonEvent(ActionEvent event) {
+    void confermaClienteConsegnaOrdineButton(ActionEvent event) {
         getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
     }
 

@@ -11,7 +11,7 @@ public class Carta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "cliente_fk", referencedColumnName = "id")
     private Cliente cliente;
 
