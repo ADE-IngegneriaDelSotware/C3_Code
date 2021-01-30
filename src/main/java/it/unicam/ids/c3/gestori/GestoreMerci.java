@@ -164,4 +164,16 @@ public class GestoreMerci {
         }
     }
 
+    public List<MerceInventarioNegozio> filtraPromozioniPerCategoria(Categoria categoria, List<MerceInventarioNegozio> promozioni) {
+        List<MerceInventarioNegozio> minList=new ArrayList<>();
+        Iterator<MerceInventarioNegozio> minAll = promozioni.iterator();
+        while(minAll.hasNext()) {
+            MerceInventarioNegozio min= minAll.next();
+            if(min.getMerceAlPubblico().getMerce().getCategoria().equals(categoria)){
+                minList.add(min);
+            }
+        }
+        return minList;
+    }
+
 }

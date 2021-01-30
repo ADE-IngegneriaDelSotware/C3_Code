@@ -3,7 +3,6 @@ package it.unicam.ids.c3.gestori;
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
 import it.unicam.ids.c3.negozio.Negozio;
-import it.unicam.ids.c3.persistenza.ClienteRepository;
 import it.unicam.ids.c3.persistenza.NegozioRepository;
 import it.unicam.ids.c3.personale.Cliente;
 import org.springframework.stereotype.Service;
@@ -19,12 +18,10 @@ public class GestoreClienti {
 
     private Cliente cliente;
     private NegozioRepository negozioRepository;
-    private ClienteRepository clienteRepository;
     private GestoreMerci gestoreMerci;
 
-    public GestoreClienti(NegozioRepository negozioRepository, ClienteRepository clienteRepository, GestoreMerci gestoreMerci) {
+    public GestoreClienti(NegozioRepository negozioRepository, GestoreMerci gestoreMerci) {
         this.negozioRepository = negozioRepository;
-        this.clienteRepository = clienteRepository;
         this.gestoreMerci = gestoreMerci;
     }
 
@@ -47,24 +44,17 @@ public class GestoreClienti {
     }
 
     /*****************Consulta Promozioni******************/
+
     public List<MerceInventarioNegozio> getPromozioni() {
         List<MerceInventarioNegozio> min = new ArrayList<>();
         for(Negozio negozio : negozioRepository.findAll()){
-            min.addAll(gestoreMerci.getPromozioniPossibili(negozio));
+            min.addAll(gestoreMerci.getPromozioniAttive(negozio));
         }
         return min;
     }
 
     public List<MerceInventarioNegozio> filtraPromozioniPerCategoria(Categoria categoria) {
-        List<MerceInventarioNegozio> minList=new ArrayList<>();
-        Iterator<MerceInventarioNegozio> minAll = getPromozioni().iterator();
-        while(minAll.hasNext()) {
-            MerceInventarioNegozio min= minAll.next();
-            if(min.getMerceAlPubblico().getMerce().getCategoria().equals(categoria)){
-                minList.add(min);
-            }
-        }
-        return minList;
+        return gestoreMerci.filtraPromozioniPerCategoria(categoria, getPromozioni());
     }
 
 

@@ -48,7 +48,9 @@ public class ICliente {
         categoriePromozioni.getItems().addAll(Categoria.values());
     }
     /*****************Consulta Promozioni******************/
+
     private void getPromozioni(){
+        listViewPromozioni.getItems().clear();
         listViewPromozioni.getItems().addAll(gestoreClienti.getPromozioni());
         categoriePromozioni.getItems().addAll(Categoria.values());
     }
@@ -70,7 +72,6 @@ public class ICliente {
         listaNegoziContenentiProdotto.getItems().clear();
         listaNegoziContenentiProdotto.getItems().addAll(ricercaProdotto(nomeProdottoRicerca.getText()));
     }
-
 
     public void setGestoreClienti(GestoreClienti gestoreClienti) {
         this.gestoreClienti = gestoreClienti;
