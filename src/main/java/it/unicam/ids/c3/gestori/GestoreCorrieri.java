@@ -33,10 +33,6 @@ public class GestoreCorrieri {
         return corriere;
     }
 
-    public void aggiornaStatoVendita(List<VenditaSpedita> list, StatoConsegna sc){
-        gestoreVendite.aggiornaStatoVendita(list, sc, getCorriere());
-    }
-
     /************Consulta Inventario********************/
     public List<VenditaSpedita> getVenditeDaRitirare() {
         return gestoreVendite.getVenditeDaRitirare(getCorriere());
@@ -59,7 +55,7 @@ public class GestoreCorrieri {
             if (vs.getLuogoDiRitiro().equals(LuogoDiRitiro.NEGOZIO)) {
                 gestoreVendite.aggiornaStatoVendita(list,StatoConsegna.CONSEGNATO_AL_NEGOZIO, getCorriere());
             } else if(vs.getLuogoDiRitiro().equals(LuogoDiRitiro.DOMICILIO)) {
-                aggiornaStatoVendita(list,StatoConsegna.CONSEGNATO_AL_CLIENTE);
+                gestoreVendite.aggiornaStatoVendita(list,StatoConsegna.CONSEGNATO_AL_CLIENTE,getCorriere());
             }
             venditaSpeditarepository.save(vs);
         }
