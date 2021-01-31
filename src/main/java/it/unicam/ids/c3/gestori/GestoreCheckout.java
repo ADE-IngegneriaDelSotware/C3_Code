@@ -191,13 +191,9 @@ public class GestoreCheckout {
 
     public double applyScontoCarta(long cc, Negozio negozio) {
         if(cc!=0){
-            this.prezzoCarrello = prezzoCarrello-((calcolaScontoCarta(cc, negozio)/100) * prezzoCarrello);
+            this.prezzoCarrello = prezzoCarrello-((gestoreCarte.calcolaScontoCarta(cc, negozio)/100) * prezzoCarrello);
         }
         return prezzoCarrello;
-    }
-
-    public double calcolaScontoCarta(long cc, Negozio negozio) {
-        return gestoreCarte.calcolaScontoCarta(cc, negozio);
     }
 
     public void addVenditaInventario(Negozio negozio) {
