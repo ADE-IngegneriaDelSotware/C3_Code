@@ -46,20 +46,6 @@ public class IIscrizione {
     @FXML
     void iscrizioneButtonEvent(ActionEvent event) {
         iscrizione(nomeIscrizione.getText(),cognomeIscrizione.getText(),emailIscrizione.getText(), passwordIscrizione.getText());
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/Accesso.fxml"));
-//        Parent root1 = null;
-//        try {
-//            root1 = (Parent) fxmlLoader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        ICliente icl = fxmlLoader.getController();
-//        icl.setGestoreClienti(gestoreClienti);
-//        icl.init();
-//        Stage stage = new Stage();
-//        stage.setTitle("Interfaccia di accesso");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
         Stage stage1 = (Stage) iscrizioneButton.getScene().getWindow();
         stage1.close();
     }

@@ -92,40 +92,14 @@ public class GestoreCheckout {
     public double calcolaPrezzoTotale(double prezzo,double sconto) {
         return prezzoCarrello + calcolaPrezzoMerce(prezzo,sconto);
     }
-
-    public void scaloQuantita(MerceAlPubblico mp , double quantita, Negozio negozio){
-        gestoreMerci.scaloQuantita(mp,quantita,negozio);
-    }
-
     public double aggiuntaMerceNelCarrello(double prezzo, double sconto, long id, double quantita, Negozio negozio) {
-        MerceAlPubblico mp = getMerce(id,prezzo,quantita, negozio);
-        scaloQuantita(mp,quantita, negozio);
+        MerceAlPubblico mp = gestoreMerci.getMerce(id,prezzo,quantita, negozio);
+        gestoreMerci.scaloQuantita(mp,quantita, negozio);
         this.prezzoCarrello = calcolaPrezzoTotale(prezzo,sconto);
         MerceVendita mv = new MerceVendita(prezzo - ((sconto/100)*prezzo),quantita,mp);
         merceVenditaRepository.save(mv);
         addMerceCarrello(mv);
         return this.prezzoCarrello;
-    }
-
-    public MerceAlPubblico getMerce(long id, double prezzo, double quantita, Negozio negozio) {
-        Iterator<MerceInventarioNegozio> it = negozio.getMerceInventarioNegozio().iterator();
-        while (it.hasNext()){
-            MerceInventarioNegozio min = it.next();
-            if(min.getMerceAlPubblico().getMerce().getID()==id){
-                return min.getMerceAlPubblico();
-            }
-        }
-        MerceAlPubblico ma;
-        Optional<Merce> merceOptional = merceRepository.findById(id);
-        if(merceOptional.isPresent()){
-            ma = new MerceAlPubblico((prezzo/quantita),merceOptional.get());
-        } else {
-            Merce merce1 = new Merce();
-            merceRepository.save(merce1);
-            ma = new MerceAlPubblico((prezzo/quantita),merce1);
-        }
-        merceAlPubblicoRepository.save(ma);
-        return ma;
     }
 
     public double calcoraResto(double denaro) {

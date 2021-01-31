@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -120,6 +121,28 @@ public class GestoreMerci {
         }
         negozioRepository.save(negozio);
     }
+
+    public MerceAlPubblico getMerce(long id, double prezzo, double quantita, Negozio negozio) {
+        Iterator<MerceInventarioNegozio> it = negozio.getMerceInventarioNegozio().iterator();
+        while (it.hasNext()){
+            MerceInventarioNegozio min = it.next();
+            if(min.getMerceAlPubblico().getMerce().getID()==id){
+                return min.getMerceAlPubblico();
+            }
+        }
+        MerceAlPubblico ma;
+        Optional<Merce> merceOptional = merceRepository.findById(id);
+        if(merceOptional.isPresent()){
+            ma = new MerceAlPubblico((prezzo/quantita),merceOptional.get());
+        } else {
+            Merce merce1 = new Merce();
+            merceRepository.save(merce1);
+            ma = new MerceAlPubblico((prezzo/quantita),merce1);
+        }
+        merceAlPubblicoRepository.save(ma);
+        return ma;
+    }
+
 
     public List<MerceInventarioNegozio> getPromozioniAttive(Negozio negozio) {
         List<MerceInventarioNegozio> list = new ArrayList<>();
