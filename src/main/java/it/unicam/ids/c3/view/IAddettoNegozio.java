@@ -717,7 +717,6 @@ public class IAddettoNegozio {
         getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
     }
 
-
     public void setGestoreAddetto(GestoreAddetto gestoreAddetto) {
         this.gestoreAddetto = gestoreAddetto;
     }

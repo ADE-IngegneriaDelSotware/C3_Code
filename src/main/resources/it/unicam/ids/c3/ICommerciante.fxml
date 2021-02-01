@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -22,311 +21,19 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.ids.c3.view.ICommerciante">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.ids.c3.view.ICommerciante">
    <center>
       <TabPane fx:id="tabPaneCommerciante" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-            <Tab fx:id="tabCheckout" text="Checkout">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="4000.0" prefWidth="100.0" style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <HBox prefHeight="4000.0" prefWidth="200.0" style="-fx-background-color: #272A33;">
-                                 <children>
-                                    <GridPane prefHeight="4000.0" prefWidth="800.0" style="-fx-background-color: #272A33;">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label text="IDMerce" textFill="WHITE" />
-                                          <TextField fx:id="idMerce" GridPane.columnIndex="1" />
-                                          <Label text="Quantita" textFill="WHITE" GridPane.rowIndex="1" />
-                                          <TextField fx:id="quantitaMerce" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label text="Sconto" textFill="WHITE" GridPane.rowIndex="4" />
-                                          <TextField fx:id="scontoMerce" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <Button fx:id="inserisciButton" mnemonicParsing="false" onAction="#inserisciButtonEvent" prefHeight="26.0" prefWidth="130.0" style="-fx-background-color: #444959;" text="Inserisci " textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <TextField fx:id="prezzoMerce" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Label text="Prezzo" textFill="WHITE" GridPane.rowIndex="3" />
-                                          <Button fx:id="trovaPrezzoEScontoButton" mnemonicParsing="false" onAction="#trovaPrezzoEScontoButtonEvent" style="-fx-background-color: #444959;" text="Trova Prezzo e Sconto" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label text="PrezzoCarrello" textFill="WHITE" GridPane.rowIndex="6" />
-                                          <TextField fx:id="prezzoCarrello" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <Label text="PrezzoTotale" textFill="WHITE" GridPane.rowIndex="7" />
-                                          <TextField fx:id="prezzoTotale" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                       </children>
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </GridPane>
-                                    <GridPane prefHeight="4000.0" prefWidth="1000.0" style="-fx-background-color: #272A33;">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.4000244140625" minWidth="10.0" prefWidth="151.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.8" minWidth="10.0" prefWidth="238.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.7999755859375" minWidth="10.0" prefWidth="108.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="36.599981689453124" minHeight="10.0" prefHeight="36.599981689453124" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="43.999999999999986" minHeight="10.0" prefHeight="43.200012207031236" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="40.00000610351563" minHeight="10.0" prefHeight="36.800024414062506" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="60.80002441406248" minHeight="10.0" prefHeight="35.800012207031244" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="60.800006103515614" minHeight="10.0" prefHeight="35.99999694824217" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="83.20001220703125" minHeight="10.0" prefHeight="40.79997558593749" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="109.40003967285156" minHeight="10.0" prefHeight="60.000024414062466" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="62.0" text="Ha la carta" textFill="WHITE">
-                                             <GridPane.margin>
-                                                <Insets left="10.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <CheckBox fx:id="siCarta" mnemonicParsing="false" text="Si" textFill="WHITE" GridPane.columnIndex="1" />
-                                          <CheckBox fx:id="noCarta" mnemonicParsing="false" text="No" textFill="WHITE" GridPane.columnIndex="1">
-                                             <GridPane.margin>
-                                                <Insets left="50.0" />
-                                             </GridPane.margin>
-                                          </CheckBox>
-                                          <Button fx:id="possessoCartaButton" mnemonicParsing="false" onAction="#possessoCartaButtonEvent" style="-fx-background-color: #444959;" text="Conferma" textFill="WHITE" GridPane.columnIndex="1">
-                                             <GridPane.margin>
-                                                <Insets left="120.0" top="3.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                          <CheckBox fx:id="siCartaDisponibile" mnemonicParsing="false" text="Si" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="noCartaDisponibile" mnemonicParsing="false" text="No" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <GridPane.margin>
-                                                <Insets left="50.0" />
-                                             </GridPane.margin>
-                                          </CheckBox>
-                                          <Label fx:id="cdLabel" text="Carta Disponibile" textFill="WHITE" GridPane.rowIndex="2">
-                                             <GridPane.margin>
-                                                <Insets left="10.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Button fx:id="cartaDisponibileButton" mnemonicParsing="false" onAction="#cartaDisponibileButton" style="-fx-background-color: #444959;" text="Conferma" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <GridPane.margin>
-                                                <Insets left="120.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                          <Button fx:id="confermaCF" mnemonicParsing="false" onAction="#confermaCFButton" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #444959;" text="Conferma" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <TextField fx:id="codiceCarta" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <TextField fx:id="codiceFiscale" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Button fx:id="verificaCodice" mnemonicParsing="false" onAction="#verificaCodiceCartaButton" style="-fx-background-color: #444959;" text="Verifica" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                          <Button fx:id="iscrizioneClienteCheckout" mnemonicParsing="false" onAction="#iscrizioneClienteCheckoutButtonEvent" style="-fx-background-color: #444959;" text="AssegnaCarta" textFill="WHITE" GridPane.columnIndex="2" />
-                                          <Label fx:id="codiceFiscaleLabel" text="Email" textFill="WHITE" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets left="10.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Label fx:id="codiceCartaLabel" text="Codice Carta" textFill="WHITE" GridPane.rowIndex="4">
-                                             <GridPane.margin>
-                                                <Insets left="10.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Button fx:id="applyScontoCartaButton" mnemonicParsing="false" onAction="#applyScontoCartaButtonEvent" style="-fx-background-color: #444959;" text="Applica Sconto Carta" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label fx:id="answerRegistraVenditaLabel" text="Vuoi registrare la vendita?" textFill="WHITE" GridPane.rowIndex="6">
-                                             <GridPane.margin>
-                                                <Insets left="10.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <CheckBox fx:id="siRegistraVendita" mnemonicParsing="false" text="si" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <CheckBox fx:id="noRegistraVendita" mnemonicParsing="false" text="no" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                             <GridPane.margin>
-                                                <Insets left="50.0" />
-                                             </GridPane.margin>
-                                          </CheckBox>
-                                          <Button fx:id="registraVenditaButton" mnemonicParsing="false" onAction="#registraVenditaButtonEvent" style="-fx-background-color: #444959;" text="Conferma" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                             <GridPane.margin>
-                                                <Insets left="120.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                          <Label fx:id="denaroRicevutoLabel" text="Denaro Ricevuto" textFill="WHITE" GridPane.rowIndex="7">
-                                             <GridPane.margin>
-                                                <Insets left="10.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <TextField fx:id="denaroRicevuto" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                          <Label fx:id="restoLabel" text="Resto" textFill="WHITE" GridPane.rowIndex="8">
-                                             <GridPane.margin>
-                                                <Insets left="10.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <TextField fx:id="resto" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                          <Button fx:id="calcolaRestoButton" mnemonicParsing="false" onAction="#calcolaRestoButtonEvent" style="-fx-background-color: #444959;" text="Calcola Resto" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                                          <Button fx:id="noScontoCartaButton" mnemonicParsing="false" onAction="#noScontoCartaButtonEvent" style="-fx-background-color: #444959;" text="No Sconto Carta" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                             <GridPane.margin>
-                                                <Insets left="130.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                       </children>
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </GridPane>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #272A33;">
-                                 <children>
-                                    <Button fx:id="checkoutCompletedButton" mnemonicParsing="false" onAction="#checkoutCompletedButtonEvent" prefWidth="5000.0" style="-fx-background-color: #444959;" text="Completa Checkout" textFill="WHITE" />
-                                    <Button fx:id="annullaCheckoutButton" mnemonicParsing="false" onAction="#annullaCheckoutButtonEvent" prefWidth="5000.0" style="-fx-background-color: #444959;" text="Annulla Checkout" textFill="WHITE" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab fx:id="tabAssegnazioneCarta" text="Assegnazione carta">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="2000.0" style="-fx-background-color: #272A33;">
-                     <children>
-                        <GridPane style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0" prefWidth="79.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" prefWidth="377.4" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" prefWidth="152.60003662109375" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="122.59998168945313" minHeight="0.0" prefHeight="46.600017356872556" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="254.8" minHeight="10.0" prefHeight="100.60001220703127" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="226.40000000000003" minHeight="9.199993896484372" prefHeight="45.199993896484386" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="226.40000000000003" minHeight="10.0" prefHeight="97.20000610351559" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Label text="Email" textAlignment="CENTER" textFill="WHITE" />
-                              <TextField fx:id="emailAC" GridPane.columnIndex="1" />
-                              <Button fx:id="cercaClienteACButton" mnemonicParsing="false" onAction="#cercaClienteACButtonEvent" prefHeight="26.0" prefWidth="92.0" style="-fx-background-color: #444959;" text="Cerca" textFill="WHITE" GridPane.columnIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <ListView fx:id="clientiFiltratiAC" prefHeight="148.0" prefWidth="375.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Tipo Sconto Cliente" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="2" />
-                              <ChoiceBox fx:id="tscAC" prefHeight="26.0" prefWidth="378.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Button fx:id="assegnaCartaButton" mnemonicParsing="false" onAction="#assegnaCartaButtonEvent" style="-fx-background-color: #444959;" text="Assegna Carta" textFill="#f2f2f2" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Label text="Codice Carta Generato" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="3" />
-                              <TextField fx:id="codiceCartaAC" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Button fx:id="inviaCodiceAlCheckoutButton" mnemonicParsing="false" onAction="#inviaCodiceAlCheckoutButtonEvent" style="-fx-background-color: #444959;" text="Invia Codice al Checkout" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets left="20.0" top="30.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="inviaCodiceAllaRegistrazioneButton" mnemonicParsing="false" onAction="#inviaCodiceAllaRegistrazioneButtonEvent" style="-fx-background-color: #444959;" text="Invia codice alla registrazione" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets bottom="30.0" left="20.0" />
-                                 </GridPane.margin>
-                              </Button>
-                           </children>
-                           <effect>
-                              <Blend />
-                           </effect>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab fx:id="tabConsultaInventario" text="Consulta inventario">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <ListView fx:id="listViewConsultaInventario" prefHeight="380.0" prefWidth="1000.0" style="-fx-background-color: #444959;" />
-                              <VBox prefHeight="380.0" prefWidth="1000.0">
-                                 <children>
-                                    <Button fx:id="confermaConsultaInventarioButton" mnemonicParsing="false" onAction="#confermaConsultaInventarioEvent" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #444959;" text="Conferma" textFill="WHITE">
-                                       <VBox.margin>
-                                          <Insets left="100.0" top="50.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                    <Label prefHeight="60.0" prefWidth="300.0" text="Informazioni merce" textFill="#f8f8f8">
-                                       <VBox.margin>
-                                          <Insets left="100.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <TextArea fx:id="infoMerceConsultaInventario" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: black;" />
-                                 </children>
-                                 <effect>
-                                    <Blend />
-                                 </effect>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab fx:id="tavConsegnaVendita" text="Consegna vendita assegnata">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <GridPane style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.39996337890625" minWidth="10.0" prefWidth="192.79998779296875" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.2000122070312" minWidth="10.0" prefWidth="607.2000122070312" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="92.0" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="199.0" minHeight="10.0" prefHeight="199.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <TextField fx:id="emailConsegnaOrdine" GridPane.columnIndex="1">
-                                 <GridPane.margin>
-                                    <Insets right="5.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Label text="Email" textFill="WHITE">
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Button fx:id="confermaClienteConsegnaOrdine" mnemonicParsing="false" onAction="#confermaClienteConsegnaOrdineButton" prefHeight="26.0" prefWidth="109.0" style="-fx-background-color: #444959;" text="submit" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ListView fx:id="listaVenditeDaConsegnare" prefHeight="96.0" prefWidth="300.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets right="5.0" />
-                                 </GridPane.margin>
-                              </ListView>
-                              <Button fx:id="confermaConsegnaOrdine" mnemonicParsing="false" onAction="#confermaConsegnaOrdineButton" prefHeight="26.0" prefWidth="109.0" style="-fx-background-color: #444959;" text="conferma" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label text="Merce cliente" textFill="WHITE" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Label>
-                           </children>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
             <Tab fx:id="tabAssunzioneAddetto" text="Assunzione addetto">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #272A33;">
                      <children>
                         <GridPane layoutY="22.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="346.4" minWidth="10.0" prefWidth="83.19997253417966" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="697.5999870300293" minWidth="10.0" prefWidth="584.0000244140624" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.20001220703125" minWidth="10.0" prefWidth="280.5999755859375" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="346.4" minWidth="10.0" prefWidth="117.40001220703125" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="697.5999870300293" minWidth="10.0" prefWidth="508.59992675781245" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.20001220703125" minWidth="10.0" prefWidth="191.00007324218757" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints maxHeight="127.79999389648438" minHeight="10.0" prefHeight="49.6000244140625" vgrow="SOMETIMES" />
@@ -365,17 +72,17 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <ListView fx:id="listaPromozioni" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #444959;" />
-                              <VBox prefHeight="380.0" prefWidth="103.0">
+                              <ListView fx:id="listaPromozioni" prefHeight="380.0" prefWidth="200.0" style="-fx-background-color: #444959;" />
+                              <VBox prefHeight="380.0" prefWidth="100.0">
                                  <children>
-                                    <Button fx:id="aggiungiPromozioneButton" mnemonicParsing="false" onAction="#aggiungiPromozioneButtonEvent" prefHeight="800.0" prefWidth="200.0" style="-fx-background-color: #272A33;" text="Aggiungi" textFill="WHITE" />
-                                    <Button fx:id="rimuoviPromozioneButton" mnemonicParsing="false" onAction="#rimuoviPromozioneButtonEvent" prefHeight="800.0" prefWidth="200.0" style="-fx-background-color: #272A33;" text="Rimuovi" textFill="WHITE" />
+                                    <Button fx:id="aggiungiPromozioneButton" mnemonicParsing="false" onAction="#aggiungiPromozioneButtonEvent" prefHeight="108.0" prefWidth="100.0" style="-fx-background-color: #272A33;" text="Aggiungi" textFill="WHITE" />
+                                    <Button fx:id="rimuoviPromozioneButton" mnemonicParsing="false" onAction="#rimuoviPromozioneButtonEvent" prefHeight="355.0" prefWidth="100.0" style="-fx-background-color: #272A33;" text="Rimuovi" textFill="WHITE" />
                                  </children>
                               </VBox>
-                              <ListView fx:id="listaPromozioniPossibili" prefHeight="380.0" prefWidth="300.0" style="-fx-background-color: #444959;" />
-                              <VBox prefHeight="380.0" prefWidth="467.0">
+                              <ListView fx:id="listaPromozioniPossibili" prefHeight="380.0" prefWidth="200.0" style="-fx-background-color: #444959;" />
+                              <VBox prefHeight="380.0" prefWidth="350.0">
                                  <children>
-                                    <GridPane prefHeight="9000.0">
+                                    <GridPane prefHeight="380.0" prefWidth="314.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                        </columnConstraints>
@@ -577,97 +284,6 @@
                               </GridPane>
                            </children>
                         </HBox>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab fx:id="tabRegistraVendita" text="Registra Vendita">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <GridPane style="-fx-background-color: #272A33;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.39996337890625" minWidth="10.0" prefWidth="371.199951171875" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="753.6000518798828" minWidth="10.0" prefWidth="628.800048828125" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints maxHeight="62.99997825622559" minHeight="10.0" prefHeight="62.99997825622559" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="209.60001831054686" minHeight="60.0" prefHeight="120.59999542236328" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="208.8" minHeight="0.0" prefHeight="46.599999999999994" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="305.6000061035156" minHeight="10.0" prefHeight="109.39997558593751" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="305.6000061035156" minHeight="10.0" prefHeight="55.00002441406252" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Label text="Tipo di ritiro" textFill="WHITE">
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </Label>
-                                    <ChoiceBox fx:id="tipoRitiro" prefWidth="150.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" />
-                                    <Label fx:id="corrieriDisponibiliLabel" text="Corrieri disponibili" textFill="WHITE" GridPane.rowIndex="1">
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </Label>
-                                    <ListView fx:id="corrieriDisponibili" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label fx:id="trcLabel" text="Luogo Di Ritiro" textFill="WHITE" GridPane.rowIndex="2">
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </Label>
-                                    <ChoiceBox fx:id="luogoDiRitiro" prefWidth="150.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <ListView fx:id="puntiDiRitiroDisponibili" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #444959;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label fx:id="prLabel" text="Punti di ritiro disponibili" textFill="WHITE" GridPane.rowIndex="3">
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </Label>
-                                    <Label fx:id="indirizzoLabel" prefHeight="47.0" prefWidth="62.0" text="Indirizzo" textFill="WHITE" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin>
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </Label>
-                                    <TextField fx:id="indirizzoRitiro" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Button fx:id="venditaButton" mnemonicParsing="false" onAction="#venditaButtonEvent" prefHeight="58.0" prefWidth="90.0" style="-fx-background-color: #444959;" text="Inserisci" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets left="430.0" />
-                                       </GridPane.margin>
-                                    </Button>
-                                    <Button fx:id="confermaTipoRitiroButton" mnemonicParsing="false" onAction="#confermaTipoRitiroButtonEvent" style="-fx-background-color: #444959;" text="conferma" textFill="WHITE" GridPane.columnIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="200.0" />
-                                       </GridPane.margin>
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </Button>
-                                    <Button fx:id="confermaLuogoDiRitiroButton" mnemonicParsing="false" onAction="#confermaLuogoDiRitiroButtonEvent" style="-fx-background-color: #444959;" text="conferma" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets left="200.0" />
-                                       </GridPane.margin>
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </Button>
-                                    <TextField fx:id="codiceClienteInRegistrazione" prefHeight="26.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets right="400.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                    <Label fx:id="codiceClienteInRegistrazioneLabel" text="Codice cliente" textFill="WHITE" GridPane.rowIndex="4">
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                    </Label>
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
                      </children>
                   </AnchorPane>
               </content>

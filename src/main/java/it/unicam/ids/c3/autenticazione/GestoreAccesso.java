@@ -54,8 +54,8 @@ public class GestoreAccesso {
                         case ADDETTONEGOZIO:
                             setNegozioAddetto(cliente.get());
                             return "ADDETTONEGOZIO";
-
                         case COMMERCIANTE:
+                            setNegozioAddetto(cliente.get());
                             setNegozioCommerciante(cliente.get());
                             return "COMMERCIANTE";
                     }
@@ -75,6 +75,7 @@ public class GestoreAccesso {
             while (addettoNegozioIterator.hasNext()){
                 AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
                 if(addettoNegozio.equals(cliente.getRuolo())){
+//                    System.out.println(addettoNegozio.getCliente());
                     gestoreAddetto.setNegozio(negozio);
                 }
             }
