@@ -47,7 +47,7 @@ public class C3Application{
 
 			/*********Parte del personale********************/
 
-/*			Cliente cliente1 = new Cliente("Andrea", "Marsili", "andreamarsili@gmail.com", "magliano");
+			Cliente cliente1 = new Cliente("Andrea", "Marsili", "andreamarsili@gmail.com", "magliano");
 			Cliente cliente2 = new Cliente("Davide", "Zeppilli", "davidezeppilli@gmail.com", "yag");
 			Cliente cliente3 = new Cliente("Stefano", "Tosetto",  "stefanotosetto@gmail.com","geova");
 			Cliente cliente4 = new Cliente("Chiara","Antifora", "chiaraantifora@gmail.com","vecchia");
@@ -79,7 +79,7 @@ public class C3Application{
 			clienteRepository.saveAll(List.of(cliente1,cliente2,cliente3,cliente4,cliente5,cliente6,cliente7,cliente8,cliente9));
 
 			/*********************Parte Merce********************/
-/*			Merce merce = new Merce("jeans", Categoria.ABBIGLIAMENTO, "jeans slavati");
+			Merce merce = new Merce("jeans", Categoria.ABBIGLIAMENTO, "jeans slavati");
 			Merce merce1 = new Merce("felpa", Categoria.ABBIGLIAMENTO, "felpa aperta");
 			Merce merce2 = new Merce("iphone 12", Categoria.TECNOLOGIA, "256 GB , 8 GB di RAM");
 			Merce merce3 = new Merce("pane casereccio", Categoria.ALIMENTI, "pane con farina 00");
@@ -101,14 +101,14 @@ public class C3Application{
 			merceInventarioNegozioRepository.saveAll(List.of(merceInventarioNegozio, merceInventarioNegozio1, merceInventarioNegozio2));
 
 			/***********************Parte Vendita**********************/
-/*			MerceVendita merceVendita = new MerceVendita(12.3, 2, merceAlPubblico);
-			MerceVendita merceVendita1 = new MerceVendita(3, 3, merceAlPubblico1);
-			MerceVendita merceVendita2 = new MerceVendita(10, 1, merceAlPubblico);
-			MerceVendita merceVendita3 = new MerceVendita(3, 1, merceAlPubblico1);
-			merceVenditaRepository.saveAll(List.of(merceVendita, merceVendita1, merceVendita2, merceVendita3));
-			List<MerceVendita> listaMerciVendita = new ArrayList<>();
-			listaMerciVendita.add(merceVendita);
-			listaMerciVendita.add(merceVendita1);
+//			MerceVendita merceVendita = new MerceVendita(12.3, 2, merceAlPubblico);
+//			MerceVendita merceVendita1 = new MerceVendita(3, 3, merceAlPubblico1);
+//			MerceVendita merceVendita2 = new MerceVendita(10, 1, merceAlPubblico);
+//			MerceVendita merceVendita3 = new MerceVendita(3, 1, merceAlPubblico1);
+//			merceVenditaRepository.saveAll(List.of(merceVendita, merceVendita1, merceVendita2, merceVendita3));
+//			List<MerceVendita> listaMerciVendita = new ArrayList<>();
+//			listaMerciVendita.add(merceVendita);
+//			listaMerciVendita.add(merceVendita1);
 //			Vendita vendita = new Vendita(32.5, listaMerciVendita);
 //			venditaRepository.save(vendita);
 //			List<MerceVendita> lista = new ArrayList<>();
@@ -131,16 +131,16 @@ public class C3Application{
 //			Carta carta3 = new Carta(cliente8, TipoScontoCliente.STUDENTE);
 //			cartaRepository.saveAll(List.of(carta,carta1,carta2,carta3));
 
-/*			List<Categoria> categoryList = new ArrayList<>();
+			List<Categoria> categoryList = new ArrayList<>();
 			categoryList.addAll(List.of(Categoria.TECNOLOGIA, Categoria.GIOCHI));
 			Negozio negozio = new Negozio("MadStore","Via Palmiro Togliatti", "2141234314", categoryList);
 			Negozio negozio1 = new Negozio("SamsungStore","Via Enrico Mattei", "4643524", categoryList);
 
-			Vendita vendita = new Vendita(46.7, listaMerciVendita);
-			venditaRepository.save(vendita);
-			cliente7.addAcquisto(vendita);
-			clienteRepository.save(cliente7);
-			negozio.addVendita(vendita);
+//			Vendita vendita = new Vendita(46.7, listaMerciVendita);
+//			venditaRepository.save(vendita);
+//			cliente7.addAcquisto(vendita);
+//			clienteRepository.save(cliente7);
+//			negozio.addVendita(vendita);
 
 			negozio.addAddettoNegozio(addettoNegozio);
 			negozio.addMerceInventarioNegozio(merceInventarioNegozio);
@@ -193,7 +193,7 @@ public class C3Application{
 			negozioRepository.save(negozio1);
 
 
-*/
+
 		};
 	}
 }

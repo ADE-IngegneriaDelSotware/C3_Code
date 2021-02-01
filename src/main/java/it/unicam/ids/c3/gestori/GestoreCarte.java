@@ -4,6 +4,7 @@ import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.persistenza.CartaRepository;
+import it.unicam.ids.c3.persistenza.NegozioRepository;
 import it.unicam.ids.c3.personale.Cliente;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Iterator;
 public class GestoreCarte {
 
     private CartaRepository cartaRepository;
+
 
     public GestoreCarte(CartaRepository cartaRepository) {
         this.cartaRepository = cartaRepository;

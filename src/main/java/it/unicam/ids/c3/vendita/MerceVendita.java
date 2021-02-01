@@ -13,7 +13,7 @@ public class MerceVendita {
     private double prezzoTotaleVendita;
     private double quantitaVenduta;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne()
     @JoinColumn(name = "merceAlPubblico_fk", referencedColumnName = "id")
     private MerceAlPubblico merceAlPubblico;
 

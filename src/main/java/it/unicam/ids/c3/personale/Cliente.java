@@ -27,10 +27,6 @@ public class Cliente{
 
     @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Carta> carte;
-
-    @OneToMany(cascade = CascadeType.MERGE)
-    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "cliente_fk", referencedColumnName = "id")
     private List<Vendita> acquisti;
 
@@ -78,10 +74,6 @@ public class Cliente{
 
     public void setRuolo(Ruolo ruolo) {
         this.ruolo = ruolo;
-    }
-
-    public List<Carta> getCarte() {
-        return carte;
     }
 
     public List<Vendita> getAcquisti() {

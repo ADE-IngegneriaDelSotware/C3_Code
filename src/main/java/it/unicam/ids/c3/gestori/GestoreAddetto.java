@@ -117,7 +117,7 @@ public class GestoreAddetto {
 
     public long assegnaCarta(Cliente cliente, TipoScontoCliente tsc){
         long cc = gestoreCarte.assegnaCarta(cliente,tsc, getNegozio());
-        negozioRepository.save(getNegozio());
+        negozioRepository.save(negozio);
         return cc;
     }
 

@@ -42,16 +42,16 @@ public class MerceAlPubblico {
         return promozione;
     }
 
-    public void setPromozione(Promozione promozione) {
-        this.promozione = promozione;
-    }
-
-    public void setPromozione(LocalDate di, LocalDate df, double pp){
-        this.promozione.setDisponibile(true);
-        this.promozione.setDataInizio(di);
-        this.promozione.setDataFine(df);
-        this.promozione.setPercentualeSconto(pp);
-    }
+//    public void setPromozione(Promozione promozione) {
+//        this.promozione = promozione;
+//    }
+//
+//    public void setPromozione(LocalDate di, LocalDate df, double pp){
+//        this.promozione.setDisponibile(true);
+//        this.promozione.setDataInizio(di);
+//        this.promozione.setDataFine(df);
+//        this.promozione.setPercentualeSconto(pp);
+//    }
 
     public void setPromozione(LocalDate di, LocalDate df, double pp, double prezzo){
         this.promozione.setDisponibile(true);

@@ -1,8 +1,6 @@
 package it.unicam.ids.c3.gestori;
 
-import it.unicam.ids.c3.merce.Merce;
 import it.unicam.ids.c3.merce.MerceAlPubblico;
-import it.unicam.ids.c3.merce.MerceInventarioNegozio;
 import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.persistenza.*;
@@ -16,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -31,11 +28,12 @@ public class GestoreCheckout {
     private VenditaRepository venditaRepository;
     private VenditaSpeditaRepository venditaSpeditaRepository;
     private NegozioRepository negozioRepository;
+    private ClienteRepository clienteRepository;
     private RuoloRepository ruoloRepository;
     private GestoreCarte gestoreCarte;
     private GestoreMerci gestoreMerci;
 
-    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, RuoloRepository ruoloRepository, GestoreCarte gestoreCarte, GestoreMerci gestoreMerci) {
+    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, ClienteRepository clienteRepository, RuoloRepository ruoloRepository, GestoreCarte gestoreCarte, GestoreMerci gestoreMerci) {
         this.merceRepository = merceRepository;
         this.merceAlPubblicoRepository = merceAlPubblicoRepository;
         this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
@@ -43,6 +41,7 @@ public class GestoreCheckout {
         this.venditaRepository = venditaRepository;
         this.venditaSpeditaRepository = venditaSpeditaRepository;
         this.negozioRepository = negozioRepository;
+        this.clienteRepository = clienteRepository;
         this.ruoloRepository = ruoloRepository;
         this.gestoreCarte = gestoreCarte;
         this.gestoreMerci = gestoreMerci;
@@ -73,7 +72,7 @@ public class GestoreCheckout {
     }
 
     public double getPrezzo(long id, double quantita, Negozio negozio){
-        return searchPrezzo(id, negozio, quantita)*quantita;
+        return Math.round((searchPrezzo(id, negozio, quantita)*quantita)*100.000)/100.000;
     }
 
     public double searchPrezzo(long id, Negozio negozio, double quantita) {
@@ -170,6 +169,7 @@ public class GestoreCheckout {
         }
         venditaSpeditaRepository.save(vs);
         carta.getCliente().getAcquisti().add(vs);
+        clienteRepository.save(carta.getCliente());
         negozio.addVendita(vs);
         cr.addMerceDaSpedire(vs);
         negozioRepository.save(negozio);
@@ -180,6 +180,7 @@ public class GestoreCheckout {
         Carta carta = searchCarta(cc, negozio);
         Vendita v = new Vendita(getPrezzoCarrello(), getMerciCarrello());
         carta.getCliente().getAcquisti().add(v);
+        clienteRepository.save(carta.getCliente());
         negozio.addVendita(v);
         venditaRepository.save(v);
         negozioRepository.save(negozio);
