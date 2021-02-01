@@ -365,7 +365,12 @@ public class ICommerciante {
 
     @FXML
     void trovaPrezzoEScontoButtonEvent(ActionEvent event) {
-        prezzoMerce.setText(String.valueOf(getPrezzo(Long.parseLong(idMerce.getText()), Double.parseDouble(quantitaMerce.getText()))));
+        try{
+            prezzoMerce.setText(String.valueOf(getPrezzo(Long.parseLong(idMerce.getText()), Double.parseDouble(quantitaMerce.getText()))));
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Inserire quantita", ButtonType.OK);
+            alert.show();
+        }
         if(prezzoMerce.getText()=="0"){
             Alert alert = new Alert(Alert.AlertType.ERROR,"Merce inserita non presente, inserire il prezzo manualmente", ButtonType.OK);
             alert.show();
@@ -409,7 +414,6 @@ public class ICommerciante {
         iscrizioneClienteCheckout.setVisible(false);
         codiceCartaLabel.setVisible(false);
         codiceFiscaleLabel.setVisible(false);
-        //codiceCarta.setText("0");
         applyScontoCartaButton.setVisible(false);
         answerRegistraVenditaLabel.setVisible(false);
         siRegistraVendita.setVisible(false);
@@ -728,15 +732,20 @@ public class ICommerciante {
 
     @FXML
     void venditaButtonEvent(ActionEvent event) {
-        if(tipoRitiro.getSelectionModel().getSelectedItem().equals(TipoDiRitiro.CORRIERE)){
-            registraAcquistoCliente(Long.parseLong(codiceClienteInRegistrazione.getText()),puntiDiRitiroDisponibili.getSelectionModel().getSelectedItem(),indirizzoRitiro.getText(),corrieriDisponibili.getSelectionModel().getSelectedItem());
-        } else {
-            registraAcquistoCliente(Long.parseLong(codiceClienteInRegistrazione.getText()));
+        try{
+            if(tipoRitiro.getSelectionModel().getSelectedItem().equals(TipoDiRitiro.CORRIERE)){
+                registraAcquistoCliente(Long.parseLong(codiceClienteInRegistrazione.getText()),puntiDiRitiroDisponibili.getSelectionModel().getSelectedItem(),indirizzoRitiro.getText(),corrieriDisponibili.getSelectionModel().getSelectedItem());
+            } else {
+                registraAcquistoCliente(Long.parseLong(codiceClienteInRegistrazione.getText()));
+            }
+            codiceCarta.setText(codiceClienteInRegistrazione.getText());
+            initRegistrazioneVenditaField();
+            tabPaneCommerciante.getSelectionModel().select(tabCheckout);
+            tabRegistraVendita.setDisable(true);
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Campi mancanti", ButtonType.OK);
+            alert.show();
         }
-        codiceCarta.setText(codiceClienteInRegistrazione.getText());
-        initRegistrazioneVenditaField();
-        tabPaneCommerciante.getSelectionModel().select(tabCheckout);
-        tabRegistraVendita.setDisable(true);
     }
 
     /***********************Assegnazione Carta****************************/
@@ -762,7 +771,12 @@ public class ICommerciante {
 
     @FXML
     void cercaClienteACButtonEvent(ActionEvent event) {
-        getClientiFiltered(emailAC.getText());
+        try {
+            getClientiFiltered(emailAC.getText());
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "L'email inserita non corrisponde a nessun cliente nel sistema", ButtonType.OK);
+            alert.show();
+        }
     }
 
     @FXML

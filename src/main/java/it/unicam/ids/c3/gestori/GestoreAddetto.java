@@ -7,6 +7,8 @@ import it.unicam.ids.c3.persistenza.*;
 import it.unicam.ids.c3.personale.Cliente;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

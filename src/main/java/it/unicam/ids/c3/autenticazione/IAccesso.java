@@ -91,29 +91,34 @@ public class IAccesso implements Initializable{
     @FXML
     void accessoButtonEvent(ActionEvent event) {
         ruolo.getItems().clear();
-        String ruoloAccesso = accesso(emailAccesso.getText(), passwordAccesso.getText());
-        if(ruoloAccesso.equals("CLIENTE")){
-            openCliente();
-        } else {
-            visibilitaRuolo(true);
-            switch (ruoloAccesso){
-              case "AMMINISTRATORE":
-                  ruolo.getItems().add("AMMINISTRATORE");
-                  ruolo.getItems().add("CLIENTE");
-                  break;
-              case "CORRIERE":
-                  ruolo.getItems().add("CORRIERE");
-                  ruolo.getItems().add("CLIENTE");
-                   break;
-              case "ADDETTONEGOZIO":
-                  ruolo.getItems().add("ADDETTO");
-                  ruolo.getItems().add("CLIENTE");
-                  break;
-              case "COMMERCIANTE":
-                  ruolo.getItems().add("COMMERCIANTE");
-                  ruolo.getItems().add("CLIENTE");
-                  break;
+        try{
+            String ruoloAccesso = accesso(emailAccesso.getText(), passwordAccesso.getText());
+            if(ruoloAccesso.equals("CLIENTE")){
+                openCliente();
+            } else {
+                visibilitaRuolo(true);
+                switch (ruoloAccesso){
+                    case "AMMINISTRATORE":
+                        ruolo.getItems().add("AMMINISTRATORE");
+                        ruolo.getItems().add("CLIENTE");
+                        break;
+                    case "CORRIERE":
+                        ruolo.getItems().add("CORRIERE");
+                        ruolo.getItems().add("CLIENTE");
+                        break;
+                    case "ADDETTONEGOZIO":
+                        ruolo.getItems().add("ADDETTO");
+                        ruolo.getItems().add("CLIENTE");
+                        break;
+                    case "COMMERCIANTE":
+                        ruolo.getItems().add("COMMERCIANTE");
+                        ruolo.getItems().add("CLIENTE");
+                        break;
+                }
             }
+        } catch (IllegalStateException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Credenziali di accesso errate", ButtonType.OK);
+            alert.show();
         }
     }
 
