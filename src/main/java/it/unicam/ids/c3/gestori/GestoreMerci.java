@@ -35,6 +35,13 @@ public class GestoreMerci {
         this.negozioRepository = negozioRepository;
     }
 
+    /**
+     * il metodo ricerca il prezzo dell'id merce inserito,se non viene trovata nessuna merce con quel id
+     * @param id l'id della merce da ricercare
+     * @param negozio il negozio in cui cercare
+     * @param quantita verifica che la quantita sia opportuna
+     * @return il prezzo,zero altrimenti
+     */
     public double searchPrezzo(long id, Negozio negozio, double quantita) {
         Iterator<MerceInventarioNegozio> min = negozio.getMerceInventarioNegozio().iterator();
         while(min.hasNext()){
@@ -50,6 +57,12 @@ public class GestoreMerci {
         return 0;
     }
 
+    /**
+     * il metodo serve per ottenere lo sconto di una merce con l'id indicato
+     * @param id della merce in questione
+     * @param negozio dove si trova la merce
+     * @return lo sconto,zero altrimenti
+     */
     public double getSconto(long id, Negozio negozio) {
         Iterator<MerceInventarioNegozio> it = negozio.getMerceInventarioNegozio().iterator();
         while (it.hasNext()){
@@ -61,6 +74,12 @@ public class GestoreMerci {
         return 0;
     }
 
+    /**
+     * il metodo serve per ridurre la quantita di un merce nell'inventario dell'ammontare che sta per essere venduto
+     * @param mp merce a cui scalare la quantita
+     * @param quantita da scalare
+     * @param negozio dove si trova la merce
+     */
     public void scaloQuantita(MerceAlPubblico mp , double quantita, Negozio negozio){
         for(MerceInventarioNegozio min : negozio.getMerceInventarioNegozio()){
             if(min.getMerceAlPubblico().equals(mp)){
@@ -70,6 +89,11 @@ public class GestoreMerci {
         }
     }
 
+    /**
+     * il metodo reinserisce la quantita che stava per essere venduta nell'inventario
+     * @param negozio dove stava avvenendo la vendita
+     * @param merciCarrello le merci che necessitano del reinserimento nell'inventario
+     */
     public void reinserimentoQuantita(Negozio negozio, List<MerceVendita> merciCarrello){
         for(MerceVendita mv : merciCarrello){
             for(MerceInventarioNegozio min : negozio.getMerceInventarioNegozio()){
@@ -81,6 +105,11 @@ public class GestoreMerci {
         }
     }
 
+    /**
+     * il metodo restituisce le info di una merce
+     * @param min la merce di cui ottenere le info
+     * @return le info dell merce
+     */
     public String getInfoMerce(MerceInventarioNegozio min) {
         String promozione;
         if(min.getMerceAlPubblico().getPromozione().isDisponibile()){
@@ -94,6 +123,16 @@ public class GestoreMerci {
                 + promozione;
     }
 
+    /**
+     * il metodo serve ad agggiungere una nuova merce in un megozio
+     * @param nome della merce da inserire
+     * @param descrizione della merce da inserire
+     * @param categoria della merce da inserire
+     * @param quantita della merce da inserire
+     * @param prezzo della merce da inserire
+     * @param sconto della merce da inserire
+     * @param negozio dove inserire la merce
+     */
     public void addMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto, Negozio negozio) {
         Merce merce = new Merce(nome,categoria,descrizione);
         merceRepository.save(merce);
@@ -105,6 +144,12 @@ public class GestoreMerci {
         negozioRepository.save(negozio);
     }
 
+    /**
+     * il metodo serve a rimuovere dall'inventario del negozio specificato una determinata quantita di una lista di merci
+     * @param list delle merce da rimuove
+     * @param quantita da rimuovere
+     * @param negozio dove si trovano le merci
+     */
     public void removeMerce(List<MerceInventarioNegozio> list, double quantita, Negozio negozio){
         Iterator<MerceInventarioNegozio> minIterator = negozio.getMerceInventarioNegozio().iterator();
         while (minIterator.hasNext()) {
@@ -122,6 +167,14 @@ public class GestoreMerci {
         negozioRepository.save(negozio);
     }
 
+    /**
+     * il metodo serve ad ottenere una merce con l'id specificato e se quest'ultima non vien etrovata,viene creata
+     * @param id della merce desiderata
+     * @param prezzo della merce
+     * @param quantita della merce
+     * @param negozio dove si trova la merce
+     * @return la merce
+     */
     public MerceAlPubblico getMerce(long id, double prezzo, double quantita, Negozio negozio) {
         Iterator<MerceInventarioNegozio> it = negozio.getMerceInventarioNegozio().iterator();
         while (it.hasNext()){
@@ -143,7 +196,11 @@ public class GestoreMerci {
         return ma;
     }
 
-
+    /**
+     * il metodo serve ad ottenere le promozioni attive nel negozio
+     * @param negozio dove ricercare le promozioni
+     * @return lista merci con promozioni attive
+     */
     public List<MerceInventarioNegozio> getPromozioniAttive(Negozio negozio) {
         List<MerceInventarioNegozio> list = new ArrayList<>();
         if(!negozio.getMerceInventarioNegozio().isEmpty()){
@@ -159,6 +216,11 @@ public class GestoreMerci {
         return list;
     }
 
+    /**
+     * il metodo serve ad ottenere le merci sulle quali è possibile applicare una promozione
+     * @param negozio delle merci dove applicare una promozione
+     * @return merci
+     */
     public List<MerceInventarioNegozio> getPromozioniPossibili(Negozio negozio) {
         List<MerceInventarioNegozio> list = new ArrayList<>();
         if(!negozio.getMerceInventarioNegozio().isEmpty()){
@@ -173,6 +235,13 @@ public class GestoreMerci {
         return list;
     }
 
+    /**
+     * il metodo serve per aggiungere una promozione alla merce specificata
+     * @param miv la merce dove applicare la promozione
+     * @param di data di inizio della promozione
+     * @param df data di fine della promozione
+     * @param pp percentuale sconto della promozione
+     */
     public void addPromozione(MerceInventarioNegozio miv, LocalDate di, LocalDate df, double pp) {
         MerceAlPubblico map = miv.getMerceAlPubblico();
         double prezzo = (miv.getMerceAlPubblico().getPrezzo() - ((pp/100)*map.getPrezzo()));
@@ -180,6 +249,10 @@ public class GestoreMerci {
         merceAlPubblicoRepository.save(map);
     }
 
+    /**
+     * il metodo serve per disattivare la promozione sulle specificate
+     * @param lista delle merci su cui disattivare la promozione
+     */
     public void rimuoviPromozione(List<MerceInventarioNegozio> lista) {
         for(MerceInventarioNegozio miv : lista){
             miv.getMerceAlPubblico().getPromozione().setDisponibile(false);
@@ -187,6 +260,12 @@ public class GestoreMerci {
         }
     }
 
+    /**
+     * il metodo serve per ottenere la lista delle promozioni attive filtrate per categoria
+     * @param categoria delle promozioni
+     * @param promozioni merci su cui è attiva una promozione
+     * @return merci su cui è attiva una promozione della categoria specificata
+     */
     public List<MerceInventarioNegozio> filtraPromozioniPerCategoria(Categoria categoria, List<MerceInventarioNegozio> promozioni) {
         List<MerceInventarioNegozio> minList=new ArrayList<>();
         Iterator<MerceInventarioNegozio> minAll = promozioni.iterator();

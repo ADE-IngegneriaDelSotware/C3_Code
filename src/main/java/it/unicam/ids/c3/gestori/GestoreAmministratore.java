@@ -33,17 +33,41 @@ public class GestoreAmministratore {
         this.amministratore = amministratore;
     }
 
+    /**
+     * Il metodo serve per cercare un cliente tramite email
+     *
+     * @param email del cliente da cercare
+     * @return cliente
+     */
     public Cliente ricercaCliente(String email) {
         Optional<Cliente> cliente=clienteRepository.findByEmail(email);
         return cliente.orElse(null);
     }
 
+    /**
+     * Il metodo serve registrare un corriere all'interno della piattaforma insieme alla sua attivita
+     *
+     * @param cliente registrato nella piattaforma a cui verrà assegnato il ruolo di corriere
+     * @param nomeDitta del nuovo corriere
+     * @param piva del nuovo corriere
+     * @param indirizzo del nuovo corriere
+     */
     public void registraCorriere(Cliente cliente,String nomeDitta,String piva,String indirizzo) {
         Corriere corriere = new Corriere(RuoloSistema.CORRIERE,nomeDitta,indirizzo,piva);
         cliente.setRuolo(corriere);
         ruoloRepository.save(corriere);
         clienteRepository.save(cliente);
     }
+
+    /**
+     * Il metodo serve per registrare un negozio all'interno della piattaforma insieme al suo commerciante.
+     *
+     * @param categorie in cui opererà il negozio
+     * @param cliente registrato nella piattaforma a cui verrà assegnato il ruolo di commerciante
+     * @param nome del nuovo negozio
+     * @param piva del nuovo negozio
+     * @param indirizzo del nuovo negozio
+     */
     public void registraNegozio(List<Categoria> categorie, Cliente cliente, String nome, String piva, String indirizzo) {
         Negozio negozio=new Negozio(nome,indirizzo,piva,categorie);
         Commerciante commerciante=new Commerciante(RuoloSistema.COMMERCIANTE);

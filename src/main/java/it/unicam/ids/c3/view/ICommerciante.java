@@ -951,7 +951,7 @@ public class ICommerciante {
 
     public void getMerciInventario() {
         merciInventario.getItems().clear();
-        merciInventario.getItems().addAll(gestoreCommerciante.getMerciInventarioNegozio());
+        merciInventario.getItems().addAll(gestoreCommerciante.getInventario());
     }
     public void rimuoviMerce(List<MerceInventarioNegozio> min,double quantita) {
         gestoreCommerciante.removeMerce(min,quantita);
@@ -1000,9 +1000,6 @@ public class ICommerciante {
         quantitaMerceGI.setVisible(true);
         confermaRimozioneMerceButton.setVisible(true);
     }
-
-
-
 
     public void setGestoreCommerciante(GestoreCommerciante gestoreCommerciante) {
         this.gestoreCommerciante = gestoreCommerciante;

@@ -48,6 +48,11 @@ public class GestoreCorrieri {
 
     /************Consegna Vendita********************/
 
+    /**
+     * Il metodo serve per aggiornare lo stato della vendita da RITIRATO a CONSEGNATO_AL_NEGOZIO oppure CONSEGNATO_AL_CLIENTE
+     *
+     * @param list lista delle vendite alle quali verrà aggiornato lo stato
+     */
     public void consegnaVendita(List<VenditaSpedita> list) {
         Iterator<VenditaSpedita> iterator = list.iterator();
         while (iterator.hasNext()) {
@@ -62,6 +67,12 @@ public class GestoreCorrieri {
     }
 
     /************Preleva Vendita********************/
+
+    /**
+     * Il metodo serve per aggiornare lo stato della vendita da IN_ATTESA_DI_RITIRO a RITIRATO
+     *
+     * @param list lista delle merci che che verranno prelevate
+     */
     public void prelevaVendita(List<VenditaSpedita> list) {
         gestoreVendite.aggiornaStatoVendita(list,StatoConsegna.RITIRATO, getCorriere());
         venditaSpeditarepository.saveAll(list);

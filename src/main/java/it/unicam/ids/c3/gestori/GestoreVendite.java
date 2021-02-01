@@ -28,6 +28,13 @@ public class GestoreVendite {
         this.venditaSpeditaRepository = venditaSpeditaRepository;
     }
 
+    /**
+     * Il metodo serve per settare lo stato delle vendite spedite presenti nella lista
+     *
+     * @param list lista delle vendite
+     * @param sc stato consegna che verrà settato
+     * @param corriere corriere a cui è assegnata la lista di vendite
+     */
     public void aggiornaStatoVendita(List<VenditaSpedita> list, StatoConsegna sc, Corriere corriere) {
         List<VenditaSpedita> lista = list;
         for(VenditaSpedita vs : lista){
@@ -41,14 +48,32 @@ public class GestoreVendite {
         }
     }
 
+    /**
+     * Il metodo restituisce la lista delle vendite presenti nel negozio che devono essere ritirate
+     *
+     * @param corriere corriere che deve ritirare la merce
+     * @return list delle vendite da ritirare
+     */
     public List<VenditaSpedita> getVenditeDaRitirare(Corriere corriere){
         return corriere.getVenditePerStato(StatoConsegna.IN_ATTESA_DI_RITIRO);
     }
 
+    /**
+     * restituisce le lista contenente le vendite ritirate
+     *
+     * @param corriere corriere che deve ritirare la merce dal corriere
+     * @return list delle vendite ritirate
+     */
     public List<VenditaSpedita> getVenditeRitirate(Corriere corriere){
         return corriere.getVenditePerStato(StatoConsegna.RITIRATO);
     }
 
+    /**
+     * Il metodo restituisce la lista contente le vendite consegnate dal corriere
+     *
+     * @param corriere corriere che deve ritirare la merce
+     * @return list delle vendite consegnate
+     */
     public List<VenditaSpedita> getVenditeConsegnate(Corriere corriere){
         List<VenditaSpedita> cac = corriere.getVenditePerStato(StatoConsegna.CONSEGNATO_AL_CLIENTE);
         List<VenditaSpedita> caldr = corriere.getVenditePerStato(StatoConsegna.CONSEGNATO_AL_NEGOZIO);
@@ -58,6 +83,13 @@ public class GestoreVendite {
         return tot;
     }
 
+    /**
+     * Il metodo restituisce gli acquisti che il cliente deve ritirare in un determinato negozio
+     *
+     * @param email email del cliente
+     * @param negozio negozio dove sono presenti gli acquisti
+     * @return list degli acquisti da ritirare di un determinato cliente
+     */
     public List<VenditaSpedita> getAcquistiClienteDaRitirare(String email, Negozio negozio) {
         List<VenditaSpedita> list = new ArrayList<>();
         Optional<Cliente> cliente = clienteRepository.findByEmail(email);
@@ -81,11 +113,22 @@ public class GestoreVendite {
         return list;
     }
 
+    /**
+     * Il metodo serve per confermare e aggiornare lo stato della vendita da IN_ATTESA_DI_RITIRO a CONSEGNATO_AL_CLIENTE
+     *
+     * @param vendite lista delle vendite a cui verrà aggiornato lo stato consegna
+     */
     public void confermaConsegnaVenditaAssegnata(List<VenditaSpedita> vendite) {
         aggiornaStatoVendita(vendite,StatoConsegna.CONSEGNATO_AL_CLIENTE);
         venditaSpeditaRepository.saveAll(vendite);
     }
 
+    /**
+     * Il metodo serve per settare lo stato delle vendite presenti nella lista
+     *
+     * @param list lista delle vendite spedite a cui verrà settato lo stato consegna
+     * @param sc stato consegna che verrà settato
+     */
     public void aggiornaStatoVendita(List<VenditaSpedita> list, StatoConsegna sc) {
         Iterator<VenditaSpedita> iterator = list.iterator();
         while (iterator.hasNext()){

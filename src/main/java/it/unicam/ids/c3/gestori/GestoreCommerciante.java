@@ -124,6 +124,10 @@ public class GestoreCommerciante {
 
     /*********Consulta Inventario****************/
 
+    /**
+     * il metodo serve ad ottenere l'inventario del negozio corente
+     * @return la lista delle merci dell'inventario
+     */
     public List<MerceInventarioNegozio> getInventario() {
         return negozio.getMerceInventarioNegozio();
     }
@@ -162,6 +166,10 @@ public class GestoreCommerciante {
 
     /****************Gestione corrieri*******************/
 
+    /**
+     * il metodo serve ad ottenere i corrieri non ancora affiliati col negozio corrente
+     * @return la lista dei corrieri disponibili all'aggiunta
+     */
     public List<Corriere> getCorrieri() {
         List<Corriere> lc=new ArrayList<>();
         List<Corriere> listaCorretta = new ArrayList<>();
@@ -178,6 +186,10 @@ public class GestoreCommerciante {
         return lc;
     }
 
+    /**
+     * il metodo serve per affiliare al negozio la lista di corrieri specificata
+     * @param corrieriDaAggiungere al negozio
+     */
     public void addCorrieri(List<Corriere> corrieriDaAggiungere) {
         Iterator<Corriere> corriereIterator = corrieriDaAggiungere.iterator();
         while(corriereIterator.hasNext()){
@@ -189,6 +201,10 @@ public class GestoreCommerciante {
 
     /****************Assunzione Addetto*******************/
 
+    /**
+     * il metodo permette al commerciante di assumere un nuovo addetto per il negozio
+     * @param cliente che diventerà  addetto
+     */
     public void assunzioneAddetto(Cliente cliente){
         AddettoNegozio addettoNegozio = new AddettoNegozio(RuoloSistema.ADDETTONEGOZIO);
         cliente.setRuolo(addettoNegozio);
@@ -206,10 +222,6 @@ public class GestoreCommerciante {
 
     public void removeMerce(List<MerceInventarioNegozio> list, double quantita){
         gestoreMerci.removeMerce(list, quantita, getNegozio());
-    }
-
-    public List<MerceInventarioNegozio> getMerciInventarioNegozio() {
-        return getNegozio().getMerceInventarioNegozio();
     }
 
     /************************** Metodi Accessori ******************************/
