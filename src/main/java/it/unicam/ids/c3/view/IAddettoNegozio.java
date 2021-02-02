@@ -21,7 +21,6 @@ import java.util.List;
 @Component
 public class IAddettoNegozio {
 
-    @Autowired
     private GestoreAddetti gestoreAddetti;
 
     @FXML

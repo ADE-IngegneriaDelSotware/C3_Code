@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class IAmministratore {
 
-    @Autowired
+
     private GestoreAmministratori gestoreAmministratori;
 
     @FXML

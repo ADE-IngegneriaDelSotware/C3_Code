@@ -15,7 +15,6 @@ import java.util.List;
 @Component
 public class ICorriere {
 
-    @Autowired
     private GestoreCorrieri gestore;
 
     /************Interfaccia Consulta Inventario********************/

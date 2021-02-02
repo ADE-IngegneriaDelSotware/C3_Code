@@ -17,7 +17,6 @@ import java.util.List;
 @Component
 public class ICommerciante {
 
-    @Autowired
     private GestoreCommercianti gestoreCommercianti;
 
     @FXML

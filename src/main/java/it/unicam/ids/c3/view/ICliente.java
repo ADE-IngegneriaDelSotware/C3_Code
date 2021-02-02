@@ -19,7 +19,6 @@ import java.util.List;
 @Component
 public class ICliente {
 
-    @Autowired
     private GestoreClienti gestoreClienti;
 
     @FXML
