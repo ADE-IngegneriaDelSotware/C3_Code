@@ -1,7 +1,7 @@
 package it.unicam.ids.c3.gestori;
 
 import it.unicam.ids.c3.merce.Categoria;
-import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.Negozio;
 import it.unicam.ids.c3.persistenza.ClienteRepository;
 import it.unicam.ids.c3.persistenza.NegozioRepository;
 import it.unicam.ids.c3.persistenza.RuoloRepository;
@@ -41,7 +41,11 @@ public class GestoreAmministratori {
      */
     public Cliente ricercaCliente(String email) {
         Optional<Cliente> cliente=clienteRepository.findByEmail(email);
-        return cliente.orElse(null);
+        if(cliente.isPresent()){
+            return cliente.get();
+        } else {
+            throw new IllegalStateException("cliente non presente");
+        }
     }
 
     /**

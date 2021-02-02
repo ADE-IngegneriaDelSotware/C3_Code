@@ -143,6 +143,12 @@ public class IAccesso implements Initializable{
         }
     }
 
+    private void clearFields() {
+        emailAccesso.clear();
+        passwordAccesso.clear();
+        ruolo.getItems().clear();
+    }
+
     private void openCorriere(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/ICorriere.fxml"));
         Parent root1 = null;
@@ -158,7 +164,10 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia Accesso Corriere");
         stage.setScene(new Scene(root1));
         stage.show();
+        clearFields();
     }
+
+
 
     private void openCliente(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/unicam/ids/c3/ICliente.fxml"));
@@ -175,8 +184,7 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia accesso cliente");
         stage.setScene(new Scene(root1));
         stage.show();
-        Stage stage1 = (Stage) accessoButton.getScene().getWindow();
-        stage1.close();
+        clearFields();
     }
 
     private void openAmministratore(){
@@ -194,6 +202,7 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia Accesso Amministratore");
         stage.setScene(new Scene(root1));
         stage.show();
+        clearFields();
     }
 
     private void openAddetto(){
@@ -214,6 +223,7 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia commesso");
         stage.setScene(new Scene(root1));
         stage.show();
+        clearFields();
     }
 
     private void openCommerciante() {
@@ -233,6 +243,7 @@ public class IAccesso implements Initializable{
         stage.setTitle("Interfaccia commerciante");
         stage.setScene(new Scene(root1));
         stage.show();
+        clearFields();
     }
 
     public void setController(GestoreAccesso ca) {

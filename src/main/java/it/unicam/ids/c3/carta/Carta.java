@@ -1,4 +1,4 @@
-package it.unicam.ids.c3.negozio;
+package it.unicam.ids.c3.carta;
 
 import it.unicam.ids.c3.personale.Cliente;
 

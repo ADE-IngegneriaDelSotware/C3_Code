@@ -1,14 +1,12 @@
 package it.unicam.ids.c3.gestori;
 
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
-import it.unicam.ids.c3.negozio.Negozio;
-import it.unicam.ids.c3.negozio.TipoScontoCliente;
+import it.unicam.ids.c3.Negozio;
+import it.unicam.ids.c3.carta.TipoScontoCliente;
 import it.unicam.ids.c3.persistenza.*;
 import it.unicam.ids.c3.personale.Cliente;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.*;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

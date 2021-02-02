@@ -1,7 +1,6 @@
 package it.unicam.ids.c3.personale;
 
 
-import it.unicam.ids.c3.negozio.Carta;
 import it.unicam.ids.c3.vendita.Vendita;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;

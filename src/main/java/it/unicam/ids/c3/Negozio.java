@@ -1,8 +1,8 @@
-package it.unicam.ids.c3.negozio;
+package it.unicam.ids.c3;
 
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
-import it.unicam.ids.c3.negozio.Carta;
+import it.unicam.ids.c3.carta.Carta;
 import it.unicam.ids.c3.personale.AddettoNegozio;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.Vendita;

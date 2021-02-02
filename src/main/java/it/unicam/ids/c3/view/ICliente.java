@@ -3,7 +3,7 @@ package it.unicam.ids.c3.view;
 import it.unicam.ids.c3.gestori.GestoreClienti;
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
-import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.Negozio;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

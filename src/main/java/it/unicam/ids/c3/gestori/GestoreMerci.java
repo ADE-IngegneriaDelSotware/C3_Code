@@ -4,7 +4,7 @@ import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.Merce;
 import it.unicam.ids.c3.merce.MerceAlPubblico;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
-import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.Negozio;
 import it.unicam.ids.c3.persistenza.MerceAlPubblicoRepository;
 import it.unicam.ids.c3.persistenza.MerceInventarioNegozioRepository;
 import it.unicam.ids.c3.persistenza.MerceRepository;

@@ -1,6 +1,6 @@
 package it.unicam.ids.c3.persistenza;
 
-import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.Negozio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -2,7 +2,7 @@ package it.unicam.ids.c3.gestori;
 
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
-import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.Negozio;
 import it.unicam.ids.c3.persistenza.NegozioRepository;
 import it.unicam.ids.c3.personale.Cliente;
 import org.springframework.stereotype.Service;

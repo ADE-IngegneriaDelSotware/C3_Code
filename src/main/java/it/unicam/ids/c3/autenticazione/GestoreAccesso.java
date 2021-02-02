@@ -1,7 +1,7 @@
 package it.unicam.ids.c3.autenticazione;
 
 import it.unicam.ids.c3.gestori.*;
-import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.Negozio;
 import it.unicam.ids.c3.persistenza.NegozioRepository;
 import it.unicam.ids.c3.persistenza.RuoloRepository;
 import it.unicam.ids.c3.personale.*;

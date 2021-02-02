@@ -2,11 +2,9 @@ package it.unicam.ids.c3.gestori;
 
 
 import it.unicam.ids.c3.merce.*;
-import it.unicam.ids.c3.negozio.Negozio;
-import it.unicam.ids.c3.negozio.TipoScontoCliente;
+import it.unicam.ids.c3.Negozio;
 import it.unicam.ids.c3.persistenza.*;
 import it.unicam.ids.c3.personale.*;
-import it.unicam.ids.c3.vendita.VenditaSpedita;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

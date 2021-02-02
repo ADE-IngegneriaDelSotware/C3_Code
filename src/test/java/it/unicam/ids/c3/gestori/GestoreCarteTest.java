@@ -1,9 +1,9 @@
 package it.unicam.ids.c3.gestori;
 
 import it.unicam.ids.c3.merce.Categoria;
-import it.unicam.ids.c3.negozio.Carta;
-import it.unicam.ids.c3.negozio.Negozio;
-import it.unicam.ids.c3.negozio.TipoScontoCliente;
+import it.unicam.ids.c3.carta.Carta;
+import it.unicam.ids.c3.Negozio;
+import it.unicam.ids.c3.carta.TipoScontoCliente;
 import it.unicam.ids.c3.personale.Cliente;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

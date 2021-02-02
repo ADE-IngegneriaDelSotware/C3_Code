@@ -1,8 +1,8 @@
 package it.unicam.ids.c3.gestori;
 
 import it.unicam.ids.c3.merce.MerceAlPubblico;
-import it.unicam.ids.c3.negozio.Carta;
-import it.unicam.ids.c3.negozio.Negozio;
+import it.unicam.ids.c3.carta.Carta;
+import it.unicam.ids.c3.Negozio;
 import it.unicam.ids.c3.persistenza.*;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.MerceVendita;

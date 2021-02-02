@@ -1,5 +1,8 @@
 package it.unicam.ids.c3.negozio;
 
+import it.unicam.ids.c3.Negozio;
+import it.unicam.ids.c3.carta.Carta;
+import it.unicam.ids.c3.carta.TipoScontoCliente;
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.Merce;
 import it.unicam.ids.c3.merce.MerceAlPubblico;

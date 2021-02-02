@@ -5,10 +5,7 @@ import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.personale.Cliente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -72,6 +69,7 @@ public class IAmministratore {
     public Cliente ricercaCliente(String email) {
         return gestoreAmministratori.ricercaCliente(email);
     }
+
     public void registraCorriere(Cliente cliente,String nomeDitta,String piva,String indirizzoRegistrazione) {
         gestoreAmministratori.registraCorriere(cliente,nomeDitta,piva,indirizzoRegistrazione);
     }
@@ -90,7 +88,13 @@ public class IAmministratore {
 
     @FXML
     void ricercaEmailClienteButtonEvent(ActionEvent event) {
-        clientiList.getItems().add(ricercaCliente(emailClienteRicerca.getText()));
+        clientiList.getItems().clear();
+        try{
+            clientiList.getItems().add(ricercaCliente(emailClienteRicerca.getText()));
+        } catch (IllegalStateException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Email non corrisponde a nessun cliente nel sistema", ButtonType.OK);
+            alert.show();
+        }
     }
 
     @FXML
