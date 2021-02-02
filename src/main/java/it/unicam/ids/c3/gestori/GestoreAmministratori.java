@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class GestoreAmministratore {
+public class GestoreAmministratori {
 
     private Amministratore amministratore;
     private final ClienteRepository clienteRepository;
@@ -23,7 +23,7 @@ public class GestoreAmministratore {
     private final NegozioRepository negozioRepository;
 
     @Autowired
-    public GestoreAmministratore(ClienteRepository clienteRepository, RuoloRepository ruoloRepository, NegozioRepository negozioRepository) {
+    public GestoreAmministratori(ClienteRepository clienteRepository, RuoloRepository ruoloRepository, NegozioRepository negozioRepository) {
         this.clienteRepository = clienteRepository;
         this.ruoloRepository = ruoloRepository;
         this.negozioRepository = negozioRepository;

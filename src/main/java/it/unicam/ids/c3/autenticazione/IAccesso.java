@@ -30,11 +30,11 @@ public class IAccesso implements Initializable{
     @Autowired
     private GestoreCorrieri gestoreCorrieri;
     @Autowired
-    private GestoreAddetto gestoreAddetto;
+    private GestoreAddetti gestoreAddetti;
     @Autowired
-    private GestoreAmministratore gestoreAmministratore;
+    private GestoreAmministratori gestoreAmministratori;
     @Autowired
-    private GestoreCommerciante gestoreCommerciante;
+    private GestoreCommercianti gestoreCommercianti;
 
     /*******************Accesso cliente********************/
 
@@ -188,7 +188,7 @@ public class IAccesso implements Initializable{
             e.printStackTrace();
         }
         im.setIam(fxmlLoader.getController());
-        im.getIam().setGestoreAmministratore(gestoreAmministratore);
+        im.getIam().setGestoreAmministratore(gestoreAmministratori);
         im.getIam().init();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia Accesso Amministratore");
@@ -205,7 +205,7 @@ public class IAccesso implements Initializable{
             e.printStackTrace();
         }
         im.setIa(fxmlLoader.getController());
-        im.getIa().setGestoreAddetto(gestoreAddetto);
+        im.getIa().setGestoreAddetto(gestoreAddetti);
         im.getIa().initAssegnazioneCartaField();
         im.getIa().initRichiestaCartField();
         im.getIa().getInventario();
@@ -225,7 +225,7 @@ public class IAccesso implements Initializable{
             e.printStackTrace();
         }
         im.setIcm(fxmlLoader.getController());
-        im.getIcm().setGestoreCommerciante(gestoreCommerciante);
+        im.getIcm().setGestoreCommerciante(gestoreCommercianti);
         im.getIcm().initFieldPromozioni();
         im.getIcm().getCorrieri();
         im.getIcm().initGestioneInventario();

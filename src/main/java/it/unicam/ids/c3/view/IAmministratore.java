@@ -1,6 +1,6 @@
 package it.unicam.ids.c3.view;
 
-import it.unicam.ids.c3.gestori.GestoreAmministratore;
+import it.unicam.ids.c3.gestori.GestoreAmministratori;
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.personale.Cliente;
 import javafx.event.ActionEvent;
@@ -18,7 +18,7 @@ import java.util.List;
 public class IAmministratore {
 
     @Autowired
-    private GestoreAmministratore gestoreAmministratore;
+    private GestoreAmministratori gestoreAmministratori;
 
     @FXML
     public TextField emailClienteRicerca;
@@ -70,13 +70,13 @@ public class IAmministratore {
         settoriList.getItems().addAll(Categoria.values());
     }
     public Cliente ricercaCliente(String email) {
-        return gestoreAmministratore.ricercaCliente(email);
+        return gestoreAmministratori.ricercaCliente(email);
     }
     public void registraCorriere(Cliente cliente,String nomeDitta,String piva,String indirizzoRegistrazione) {
-        gestoreAmministratore.registraCorriere(cliente,nomeDitta,piva,indirizzoRegistrazione);
+        gestoreAmministratori.registraCorriere(cliente,nomeDitta,piva,indirizzoRegistrazione);
     }
     public void registraNegozio(List<Categoria> categorie, Cliente cliente, String nomeDitta, String piva, String indirizzoRegistrazione) {
-        gestoreAmministratore.registraNegozio(categorie,cliente,nomeDitta,piva,indirizzoRegistrazione);
+        gestoreAmministratori.registraNegozio(categorie,cliente,nomeDitta,piva,indirizzoRegistrazione);
     }
     @FXML
     void confermaRegistraCorriereEvent(ActionEvent event) {
@@ -98,8 +98,8 @@ public class IAmministratore {
         listClientiRegistrazioneCorriere.getItems().add(ricercaCliente(emailRegistrazioneCorriere.getText()));
     }
 
-    public void setGestoreAmministratore(GestoreAmministratore gestoreAmministratore) {
-        this.gestoreAmministratore = gestoreAmministratore;
+    public void setGestoreAmministratore(GestoreAmministratori gestoreAmministratori) {
+        this.gestoreAmministratori = gestoreAmministratori;
     }
 
 }

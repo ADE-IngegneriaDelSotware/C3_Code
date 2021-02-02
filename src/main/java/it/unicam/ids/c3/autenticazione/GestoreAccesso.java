@@ -22,20 +22,20 @@ public class GestoreAccesso {
     private final NegozioRepository negozioRepository;
     private final GestoreCorrieri gestoreCorrieri;
     private final GestoreClienti gestoreClienti;
-    private final GestoreAddetto gestoreAddetto;
-    private final GestoreCommerciante gestoreCommerciante;
-    private final GestoreAmministratore gestoreAmministratore;
+    private final GestoreAddetti gestoreAddetti;
+    private final GestoreCommercianti gestoreCommercianti;
+    private final GestoreAmministratori gestoreAmministratori;
 
     @Autowired
-    public GestoreAccesso(ClienteRepository clienteRepository, RuoloRepository ruoloRepository, NegozioRepository negozioRepository, GestoreCorrieri gestoreCorrieri, GestoreClienti gestoreClienti, GestoreAddetto gestoreAddetto, GestoreCommerciante gestoreCommerciante, GestoreAmministratore gestoreAmministratore) {
+    public GestoreAccesso(ClienteRepository clienteRepository, RuoloRepository ruoloRepository, NegozioRepository negozioRepository, GestoreCorrieri gestoreCorrieri, GestoreClienti gestoreClienti, GestoreAddetti gestoreAddetti, GestoreCommercianti gestoreCommercianti, GestoreAmministratori gestoreAmministratori) {
         this.clienteRepository = clienteRepository;
         this.ruoloRepository = ruoloRepository;
         this.negozioRepository = negozioRepository;
         this.gestoreCorrieri = gestoreCorrieri;
         this.gestoreClienti = gestoreClienti;
-        this.gestoreAddetto = gestoreAddetto;
-        this.gestoreCommerciante = gestoreCommerciante;
-        this.gestoreAmministratore = gestoreAmministratore;
+        this.gestoreAddetti = gestoreAddetti;
+        this.gestoreCommercianti = gestoreCommercianti;
+        this.gestoreAmministratori = gestoreAmministratori;
     }
 
 
@@ -49,7 +49,7 @@ public class GestoreAccesso {
                             gestoreCorrieri.setCorriere((Corriere) cliente.get().getRuolo());
                             return "CORRIERE";
                         case AMMINISTRATORE:
-                            gestoreAmministratore.setAmministratore((Amministratore) cliente.get().getRuolo());
+                            gestoreAmministratori.setAmministratore((Amministratore) cliente.get().getRuolo());
                             return "AMMINISTRATORE";
                         case ADDETTONEGOZIO:
                             setNegozioAddetto(cliente.get());
@@ -76,7 +76,7 @@ public class GestoreAccesso {
                 AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
                 if(addettoNegozio.equals(cliente.getRuolo())){
 //                    System.out.println(addettoNegozio.getCliente());
-                    gestoreAddetto.setNegozio(negozio);
+                    gestoreAddetti.setNegozio(negozio);
                 }
             }
         }
@@ -90,7 +90,7 @@ public class GestoreAccesso {
             while (addettoNegozioIterator.hasNext()){
                 AddettoNegozio addettoNegozio = addettoNegozioIterator.next();
                 if(addettoNegozio.equals(cliente.getRuolo())){
-                    gestoreCommerciante.setNegozio(negozio);
+                    gestoreCommercianti.setNegozio(negozio);
                 }
             }
         }

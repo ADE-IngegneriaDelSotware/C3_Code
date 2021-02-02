@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class GestoreCommerciante {
+public class GestoreCommercianti {
 
 
     private Negozio negozio;
@@ -29,7 +29,7 @@ public class GestoreCommerciante {
     private CorriereRepository corriereRepository;
     private GestoreMerci gestoreMerci;
 
-    public GestoreCommerciante(GestoreMerci gestoreMerci, RuoloRepository ruoloRepository, ClienteRepository clienteRepository, NegozioRepository negozioRepository, CorriereRepository corriereRepository) {
+    public GestoreCommercianti(GestoreMerci gestoreMerci, RuoloRepository ruoloRepository, ClienteRepository clienteRepository, NegozioRepository negozioRepository, CorriereRepository corriereRepository) {
         this.gestoreMerci = gestoreMerci;
         this.ruoloRepository = ruoloRepository;
         this.clienteRepository = clienteRepository;

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class GestoreAddetto {
+public class GestoreAddetti {
 
     private Negozio negozio;
     private ClienteRepository clienteRepository;
@@ -27,7 +27,7 @@ public class GestoreAddetto {
     private GestoreMerci gestoreMerci;
     private NegozioRepository negozioRepository;
 
-    public GestoreAddetto(ClienteRepository clienteRepository, GestoreCheckout gestoreCheckout, GestoreCarte gestoreCarte, GestoreVendite gestoreVendite, GestoreMerci gestoreMerci, NegozioRepository negozioRepository) {
+    public GestoreAddetti(ClienteRepository clienteRepository, GestoreCheckout gestoreCheckout, GestoreCarte gestoreCarte, GestoreVendite gestoreVendite, GestoreMerci gestoreMerci, NegozioRepository negozioRepository) {
         this.clienteRepository = clienteRepository;
         this.gestoreCheckout = gestoreCheckout;
         this.gestoreCarte = gestoreCarte;

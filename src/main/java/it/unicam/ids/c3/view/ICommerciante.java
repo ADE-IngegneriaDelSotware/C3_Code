@@ -1,15 +1,10 @@
 package it.unicam.ids.c3.view;
 
-import it.unicam.ids.c3.gestori.GestoreCommerciante;
+import it.unicam.ids.c3.gestori.GestoreCommercianti;
 import it.unicam.ids.c3.merce.Categoria;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
-import it.unicam.ids.c3.negozio.Negozio;
-import it.unicam.ids.c3.negozio.TipoScontoCliente;
 import it.unicam.ids.c3.personale.Cliente;
 import it.unicam.ids.c3.personale.Corriere;
-import it.unicam.ids.c3.vendita.LuogoDiRitiro;
-import it.unicam.ids.c3.vendita.TipoDiRitiro;
-import it.unicam.ids.c3.vendita.VenditaSpedita;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -23,7 +18,7 @@ import java.util.List;
 public class ICommerciante {
 
     @Autowired
-    private GestoreCommerciante gestoreCommerciante;
+    private GestoreCommercianti gestoreCommercianti;
 
     @FXML
     private TabPane tabPaneCommerciante;
@@ -146,12 +141,12 @@ public class ICommerciante {
 
     public void getPromozioniAttive(){
         listaPromozioni.getItems().clear();
-        listaPromozioni.getItems().addAll(gestoreCommerciante.getPromozioniAttive());
+        listaPromozioni.getItems().addAll(gestoreCommercianti.getPromozioniAttive());
     }
 
     public void getMerciDoveApplicarePromozioni(){
         listaPromozioniPossibili.getItems().clear();
-        listaPromozioniPossibili.getItems().addAll(gestoreCommerciante.getPromozioniPossibili());
+        listaPromozioniPossibili.getItems().addAll(gestoreCommercianti.getPromozioniPossibili());
     }
 
     @FXML
@@ -169,7 +164,7 @@ public class ICommerciante {
     }
 
     public void addPromozione(MerceInventarioNegozio miv, LocalDate di, LocalDate df, double pp){
-        gestoreCommerciante.addPromozione(miv,di,df,pp);
+        gestoreCommercianti.addPromozione(miv,di,df,pp);
     }
 
     @FXML
@@ -180,7 +175,7 @@ public class ICommerciante {
     }
 
     public void rimuoviPromozione(List<MerceInventarioNegozio> lista){
-        gestoreCommerciante.rimuoviPromozione(lista);
+        gestoreCommercianti.rimuoviPromozione(lista);
     }
     @FXML
     void rimuoviPromozioneButtonEvent(ActionEvent event) {
@@ -210,11 +205,11 @@ public class ICommerciante {
 
     public void getCorrieri() {
         corrieriDaAggiungere.getItems().clear();
-        corrieriDaAggiungere.getItems().addAll(gestoreCommerciante.getCorrieri());
+        corrieriDaAggiungere.getItems().addAll(gestoreCommercianti.getCorrieri());
     }
 
     public void addCorrieri(List<Corriere> corrieriDaAggiungere) {
-        gestoreCommerciante.addCorrieri(corrieriDaAggiungere);
+        gestoreCommercianti.addCorrieri(corrieriDaAggiungere);
     }
 
     @FXML
@@ -227,11 +222,11 @@ public class ICommerciante {
 
     public void getClienti(String email){
         clientiFiltratiAA.getItems().clear();
-        clientiFiltratiAA.getItems().addAll(gestoreCommerciante.getCliente(email));
+        clientiFiltratiAA.getItems().addAll(gestoreCommercianti.getCliente(email));
     }
 
     public void assunzioneAddetto(Cliente cliente){
-        gestoreCommerciante.assunzioneAddetto(cliente);
+        gestoreCommercianti.assunzioneAddetto(cliente);
     }
 
     @FXML
@@ -268,13 +263,13 @@ public class ICommerciante {
 
     public void getMerciInventario() {
         merciInventario.getItems().clear();
-        merciInventario.getItems().addAll(gestoreCommerciante.getInventario());
+        merciInventario.getItems().addAll(gestoreCommercianti.getInventario());
     }
     public void rimuoviMerce(List<MerceInventarioNegozio> min,double quantita) {
-        gestoreCommerciante.removeMerce(min,quantita);
+        gestoreCommercianti.removeMerce(min,quantita);
     }
     private void aggiungiMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto) {
-        gestoreCommerciante.addMerce(nome,descrizione,categoria,quantita,prezzo,sconto);
+        gestoreCommercianti.addMerce(nome,descrizione,categoria,quantita,prezzo,sconto);
     }
 
     @FXML
@@ -318,7 +313,7 @@ public class ICommerciante {
         confermaRimozioneMerceButton.setVisible(true);
     }
 
-    public void setGestoreCommerciante(GestoreCommerciante gestoreCommerciante) {
-        this.gestoreCommerciante = gestoreCommerciante;
+    public void setGestoreCommerciante(GestoreCommercianti gestoreCommercianti) {
+        this.gestoreCommercianti = gestoreCommercianti;
     }
 }

@@ -1,7 +1,7 @@
 package it.unicam.ids.c3.view;
 
 
-import it.unicam.ids.c3.gestori.GestoreAddetto;
+import it.unicam.ids.c3.gestori.GestoreAddetti;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
 import it.unicam.ids.c3.negozio.Negozio;
 import it.unicam.ids.c3.negozio.TipoScontoCliente;
@@ -22,7 +22,7 @@ import java.util.List;
 public class IAddettoNegozio {
 
     @Autowired
-    private GestoreAddetto gestoreAddetto;
+    private GestoreAddetti gestoreAddetti;
 
     @FXML
     private TabPane tabPaneAddetto;
@@ -229,15 +229,15 @@ public class IAddettoNegozio {
     private Button inviaCodiceAllaRegistrazioneButton;
 
     public void startCarrello(){
-        gestoreAddetto.startCarrello();
+        gestoreAddetti.startCarrello();
     }
 
     public double getPrezzo(long id, double quantita){
-        return gestoreAddetto.getPrezzo(id, quantita);
+        return gestoreAddetti.getPrezzo(id, quantita);
     }
 
     public double getSconto(long id) {
-        return gestoreAddetto.getSconto(id);
+        return gestoreAddetti.getSconto(id);
     }
 
     @FXML
@@ -260,7 +260,7 @@ public class IAddettoNegozio {
     }
 
     public double aggiuntaMerceNelCarrello(double prezzo, double sconto, long id, double quantita){
-        return gestoreAddetto.aggiuntaMerceNelCarrello(prezzo,sconto,id,quantita);
+        return gestoreAddetti.aggiuntaMerceNelCarrello(prezzo,sconto,id,quantita);
     }
 
     @FXML
@@ -367,11 +367,11 @@ public class IAddettoNegozio {
     }
 
     public boolean verificaCodiceCarta(long cc) {
-        return gestoreAddetto.verificaCodiceCarta(cc);
+        return gestoreAddetti.verificaCodiceCarta(cc);
     }
 
     public long searchCodiceCartaByEmail(String email) {
-        return gestoreAddetto.searchCodiceCartaFromEmail(email);
+        return gestoreAddetti.searchCodiceCartaFromEmail(email);
     }
 
     @FXML
@@ -417,7 +417,7 @@ public class IAddettoNegozio {
     /********************Fine Richiesta Carta*******************/
 
     public double applyScontoCarta(long cc){
-        return gestoreAddetto.applyScontoCarta(cc);
+        return gestoreAddetti.applyScontoCarta(cc);
     }
 
     @FXML
@@ -479,11 +479,11 @@ public class IAddettoNegozio {
     }
 
     public void addVenditaInventario(){
-        gestoreAddetto.addVenditaInventario();
+        gestoreAddetti.addVenditaInventario();
     }
 
     public double calcolaResto(double denaro){
-        return gestoreAddetto.calcoraResto(denaro);
+        return gestoreAddetti.calcoraResto(denaro);
     }
 
     @FXML
@@ -492,7 +492,7 @@ public class IAddettoNegozio {
     }
 
     public void checkoutCompletato(){
-        gestoreAddetto.checkoutCompletato();
+        gestoreAddetti.checkoutCompletato();
     }
 
     @FXML
@@ -504,7 +504,7 @@ public class IAddettoNegozio {
     }
 
     public void annullaCheckout(){
-        gestoreAddetto.annullaCheckout();
+        gestoreAddetti.annullaCheckout();
     }
 
     @FXML
@@ -564,12 +564,12 @@ public class IAddettoNegozio {
     }
 
     private List<Corriere> getCorrieriDisponibili(){
-        return gestoreAddetto.getCorrieriDisponibili();
+        return gestoreAddetti.getCorrieriDisponibili();
     }
 
     private void getNegoziDisponibili(){
         puntiDiRitiroDisponibili.getItems().clear();
-        puntiDiRitiroDisponibili.getItems().addAll(gestoreAddetto.getNegoziDisponibili());
+        puntiDiRitiroDisponibili.getItems().addAll(gestoreAddetti.getNegoziDisponibili());
     }
 
     @FXML
@@ -601,11 +601,11 @@ public class IAddettoNegozio {
     }
 
     private void registraAcquistoCliente(long cc, Negozio pdr, String indirizzo , Corriere corriere){
-        gestoreAddetto.registraAcquistoCliente(cc,pdr,indirizzo, corriere);
+        gestoreAddetti.registraAcquistoCliente(cc,pdr,indirizzo, corriere);
     }
 
     private void registraAcquistoCliente(long cc){
-        gestoreAddetto.registraAcquistoCliente(cc);
+        gestoreAddetti.registraAcquistoCliente(cc);
     }
 
     @FXML
@@ -640,11 +640,11 @@ public class IAddettoNegozio {
 
     public void getClientiFiltered(String email){
         clientiFiltratiAC.getItems().clear();
-        clientiFiltratiAC.getItems().add(gestoreAddetto.getCliente(email));
+        clientiFiltratiAC.getItems().add(gestoreAddetti.getCliente(email));
     }
 
     public long assegnaCarta(Cliente cliente, TipoScontoCliente tsc){
-        return gestoreAddetto.assegnaCarta(cliente,tsc);
+        return gestoreAddetti.assegnaCarta(cliente,tsc);
     }
 
     @FXML
@@ -682,12 +682,12 @@ public class IAddettoNegozio {
 
     public void getInventario(){
         listViewConsultaInventario.getItems().clear();
-        listViewConsultaInventario.getItems().addAll(gestoreAddetto.getInventario());
+        listViewConsultaInventario.getItems().addAll(gestoreAddetti.getInventario());
     }
 
     public void getInfoMerce(MerceInventarioNegozio min){
         infoMerceConsultaInventario.clear();
-        infoMerceConsultaInventario.setText(gestoreAddetto.getInfoMerce(min));
+        infoMerceConsultaInventario.setText(gestoreAddetti.getInfoMerce(min));
     }
 
     @FXML
@@ -699,11 +699,11 @@ public class IAddettoNegozio {
 
     public void getAcquistiClienteDaRitirare(String email){
         listaVenditeDaConsegnare.getItems().clear();
-        listaVenditeDaConsegnare.getItems().addAll(gestoreAddetto.getAcquistiClienteDaRitirare(email));
+        listaVenditeDaConsegnare.getItems().addAll(gestoreAddetti.getAcquistiClienteDaRitirare(email));
     }
 
     public void confermaConsegnaVenditaAssegnata(List<VenditaSpedita> vendite) {
-        gestoreAddetto.confermaConsegnaVenditaAssegnata(vendite);
+        gestoreAddetti.confermaConsegnaVenditaAssegnata(vendite);
     }
 
     @FXML
@@ -717,7 +717,7 @@ public class IAddettoNegozio {
         getAcquistiClienteDaRitirare(emailConsegnaOrdine.getText());
     }
 
-    public void setGestoreAddetto(GestoreAddetto gestoreAddetto) {
-        this.gestoreAddetto = gestoreAddetto;
+    public void setGestoreAddetto(GestoreAddetti gestoreAddetti) {
+        this.gestoreAddetti = gestoreAddetti;
     }
 }
