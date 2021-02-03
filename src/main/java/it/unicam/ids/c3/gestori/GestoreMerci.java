@@ -10,6 +10,7 @@ import it.unicam.ids.c3.persistenza.MerceInventarioNegozioRepository;
 import it.unicam.ids.c3.persistenza.MerceRepository;
 import it.unicam.ids.c3.persistenza.NegozioRepository;
 import it.unicam.ids.c3.vendita.MerceVendita;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,6 +29,7 @@ public class GestoreMerci {
     private MerceAlPubblicoRepository merceAlPubblicoRepository;
     private NegozioRepository negozioRepository;
 
+    @Autowired
     public GestoreMerci(MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, NegozioRepository negozioRepository) {
         this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
         this.merceRepository = merceRepository;
@@ -123,6 +125,14 @@ public class GestoreMerci {
                 + promozione;
     }
 
+    public boolean verificaIdMerce(Long id) {
+        Optional<Merce> merce = merceRepository.findById(id);
+        if(merce.isPresent()){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * il metodo serve ad agggiungere una nuova merce in un megozio
      * @param nome della merce da inserire
@@ -133,15 +143,29 @@ public class GestoreMerci {
      * @param sconto della merce da inserire
      * @param negozio dove inserire la merce
      */
-    public void addMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto, Negozio negozio) {
-        Merce merce = new Merce(nome,categoria,descrizione);
-        merceRepository.save(merce);
-        MerceAlPubblico mp = new MerceAlPubblico(prezzo,merce,sconto);
-        merceAlPubblicoRepository.save(mp);
-        MerceInventarioNegozio min = new MerceInventarioNegozio(quantita,mp);
+    public void addMerce(Long id, String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto, Negozio negozio) {
+        Merce m;
+        Optional<Merce> merce = merceRepository.findById(id);
+        if(!merce.isPresent()){
+            m = new Merce(nome, categoria, descrizione);
+        } else {
+            m = merce.get();
+        }
+        merceRepository.save(m);
+        MerceAlPubblico map = new MerceAlPubblico(prezzo, m, sconto);
+        merceAlPubblicoRepository.save(map);
+        MerceInventarioNegozio min = new MerceInventarioNegozio(quantita, map);
         merceInventarioNegozioRepository.save(min);
         negozio.addMerceInventarioNegozio(min);
         negozioRepository.save(negozio);
+    }
+
+
+    public void modificaMerce(MerceInventarioNegozio min, double prezzo, double sconto, double quantita) {
+        min.getMerceAlPubblico().setPrezzo(prezzo);
+        min.getMerceAlPubblico().setSconto(sconto);
+        min.setQuantita(quantita);
+        merceInventarioNegozioRepository.save(min);
     }
 
     /**

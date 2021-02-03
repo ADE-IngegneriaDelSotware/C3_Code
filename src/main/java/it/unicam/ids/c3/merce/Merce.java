@@ -20,6 +20,13 @@ public class Merce {
         this.descrizione=descrizione;
     }
 
+//    public Merce(long id, String nome, Categoria categoria, String descrizione) {
+//        this.ID = id;
+//        this.nome=nome;
+//        this.categoria=categoria;
+//        this.descrizione=descrizione;
+//    }
+
     public Merce() {
 
     }

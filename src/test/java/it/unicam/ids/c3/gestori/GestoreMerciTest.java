@@ -26,14 +26,14 @@ class GestoreMerciTest {
     GestoreMerci gestoreMerci;
     @BeforeAll
     void init() {
-        gestoreMerci.addMerce("fanta","lemon",Categoria.ALIMENTI,12.9,1.5,10,negozio);
-        gestoreMerci.addMerce("cola","zero",Categoria.ALIMENTI,10.9,2.5,20,negozio);
+        gestoreMerci.addMerce(1243451L,"fanta","lemon",Categoria.ALIMENTI,12.9,1.5,10,negozio);
+        gestoreMerci.addMerce(2343256L,"cola","zero",Categoria.ALIMENTI,10.9,2.5,20,negozio);
         id=negozio.getMerceInventarioNegozio().get(0).getMerceAlPubblico().getMerce().getID();
         id1=negozio.getMerceInventarioNegozio().get(1).getMerceAlPubblico().getMerce().getID();
     }
     @Test
     void addMerce() {
-        gestoreMerci.addMerce("sprite","lite",Categoria.ALIMENTI,8,5,10,negozio);
+        gestoreMerci.addMerce(51684L,"sprite","lite",Categoria.ALIMENTI,8,5,10,negozio);
         assertTrue(negozio.getMerceInventarioNegozio().size()==3);
     }
 

@@ -17,6 +17,7 @@ public class MerceAlPubblico {
     private double sconto;
 
     //TODO forse c'è da cambiare in ALL
+//    @OneToOne
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "promozione_fk", referencedColumnName = "id")
     private Promozione promozione;
@@ -67,6 +68,14 @@ public class MerceAlPubblico {
                 return promozione.getPrezzoPromozione();
         }
         return prezzo;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setPrezzo(double prezzo) {

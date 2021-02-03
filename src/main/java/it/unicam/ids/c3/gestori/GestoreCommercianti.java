@@ -123,12 +123,20 @@ public class GestoreCommercianti {
         return negozio.getMerceInventarioNegozio();
     }
 
-    public void addMerce(String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto) {
-        gestoreMerci.addMerce(nome,descrizione, categoria, quantita, prezzo , sconto , getNegozio());
+    public boolean verificaIdMerce(Long id) {
+        return gestoreMerci.verificaIdMerce(id);
+    }
+
+    public void addMerce(Long id, String nome, String descrizione, Categoria categoria, double quantita, double prezzo, double sconto) {
+        gestoreMerci.addMerce(id, nome,descrizione, categoria, quantita, prezzo , sconto , getNegozio());
     }
 
     public void removeMerce(List<MerceInventarioNegozio> list, double quantita){
         gestoreMerci.removeMerce(list, quantita, getNegozio());
+    }
+
+    public void modificaMerce(MerceInventarioNegozio min,double prezzo, double sconto, double quantita) {
+        gestoreMerci.modificaMerce(min, prezzo,sconto,quantita);
     }
 
     /************************** Metodi Accessori ******************************/
@@ -140,4 +148,5 @@ public class GestoreCommercianti {
     public void setNegozio(Negozio negozio){
         this.negozio = negozio;
     }
+
 }

@@ -24,19 +24,33 @@ public class C3Application{
 
 	@Bean
 	CommandLineRunner commandLineRunner(ClienteRepository clienteRepository,
-										RuoloRepository ruoloRepository){
+										RuoloRepository ruoloRepository,
+										NegozioRepository negozioRepository){
 		return args -> {
 
 			/*********Parte del personale********************/
 
 			Cliente cliente1 = new Cliente("Andrea", "Rossi", "andrearossi@gmail.com", "rossi");
 			Cliente cliente2 = new Cliente("Davide", "Bianchi", "davidebianchi@gmail.com", "bianchi");
-			clienteRepository.saveAll(List.of(cliente1,cliente2));
+			Cliente cliente3 = new Cliente("Alberto", "Neri", "albertoneri@gmail.com", "neri");
+			clienteRepository.saveAll(List.of(cliente1,cliente2,cliente3));
 
 			Amministratore admin = new Amministratore(RuoloSistema.AMMINISTRATORE);
 			cliente1.setRuolo(admin);
-			ruoloRepository.save(admin);
-			clienteRepository.saveAll(List.of(cliente1,cliente2));
+			Commerciante commerciante = new Commerciante(RuoloSistema.COMMERCIANTE);
+			cliente2.setRuolo(commerciante);
+			Commerciante commerciante1 = new Commerciante(RuoloSistema.COMMERCIANTE);
+			cliente3.setRuolo(commerciante1);
+			ruoloRepository.saveAll(List.of(admin, commerciante,commerciante1));
+			clienteRepository.saveAll(List.of(cliente1,cliente2,cliente3));
+
+			Negozio negozio = new Negozio("MadStore","Via Palmiro Togliatti", "2141234314", List.of(Categoria.ABBIGLIAMENTO));
+			negozio.addAddettoNegozio(commerciante);
+			negozioRepository.save(negozio);
+
+			Negozio negozio1 = new Negozio("Jeans & Co", "Via Campiglione", "3525235", List.of(Categoria.ABBIGLIAMENTO));
+			negozio1.addAddettoNegozio(commerciante1);
+			negozioRepository.save(negozio1);
 			/*********************Parte Merce********************/
 //			Merce merce = new Merce("jeans", Categoria.ABBIGLIAMENTO, "jeans slavati");
 //			Merce merce1 = new Merce("felpa", Categoria.ABBIGLIAMENTO, "felpa aperta");
