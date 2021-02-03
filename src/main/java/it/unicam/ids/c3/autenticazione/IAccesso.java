@@ -1,7 +1,7 @@
 package it.unicam.ids.c3.autenticazione;
 
 import it.unicam.ids.c3.gestori.*;
-import it.unicam.ids.c3.view.InteractManager;
+import it.unicam.ids.c3.view.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 @Component
 public class IAccesso implements Initializable{
 
-    private InteractManager im = new InteractManager();
     @Autowired
     private GestoreAccesso ca;
     @Autowired
@@ -157,9 +156,9 @@ public class IAccesso implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        im.setIc(fxmlLoader.getController());
-        im.getIc().setGestoreCorriere(gestoreCorrieri);
-        im.getIc().init();
+        ICorriere iCorriere = fxmlLoader.getController();
+        iCorriere.setGestoreCorriere(gestoreCorrieri);
+        iCorriere.init();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia Accesso Corriere");
         stage.setScene(new Scene(root1));
@@ -177,9 +176,9 @@ public class IAccesso implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        im.setIcl(fxmlLoader.getController());
-        im.getIcl().setGestoreClienti(gestoreClienti);
-        im.getIcl().init();
+        ICliente icl = fxmlLoader.getController();
+        icl.setGestoreClienti(gestoreClienti);
+        icl.init();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia accesso cliente");
         stage.setScene(new Scene(root1));
@@ -195,9 +194,9 @@ public class IAccesso implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        im.setIam(fxmlLoader.getController());
-        im.getIam().setGestoreAmministratore(gestoreAmministratori);
-        im.getIam().init();
+        IAmministratore iam = fxmlLoader.getController();
+        iam.setGestoreAmministratore(gestoreAmministratori);
+        iam.init();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia Accesso Amministratore");
         stage.setScene(new Scene(root1));
@@ -213,12 +212,12 @@ public class IAccesso implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        im.setIa(fxmlLoader.getController());
-        im.getIa().setGestoreAddetto(gestoreAddetti);
-        im.getIa().initAssegnazioneCartaField();
-        im.getIa().initRichiestaCartField();
-        im.getIa().getInventario();
-        im.getIa().startCarrello();
+        IAddettoNegozio ian = fxmlLoader.getController();
+        ian.setGestoreAddetto(gestoreAddetti);
+        ian.initAssegnazioneCartaField();
+        ian.initRichiestaCartField();
+        ian.getInventario();
+        ian.startCarrello();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia commesso");
         stage.setScene(new Scene(root1));
@@ -234,11 +233,11 @@ public class IAccesso implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        im.setIcm(fxmlLoader.getController());
-        im.getIcm().setGestoreCommerciante(gestoreCommercianti);
-        im.getIcm().initFieldPromozioni();
-        im.getIcm().getCorrieri();
-        im.getIcm().initGestioneInventario();
+        ICommerciante iCommerciante = fxmlLoader.getController();
+        iCommerciante.setGestoreCommerciante(gestoreCommercianti);
+        iCommerciante.initFieldPromozioni();
+        iCommerciante.getCorrieri();
+        iCommerciante.initGestioneInventario();
         Stage stage = new Stage();
         stage.setTitle("Interfaccia commerciante");
         stage.setScene(new Scene(root1));

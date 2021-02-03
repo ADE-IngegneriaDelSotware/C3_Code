@@ -18,7 +18,6 @@ import java.util.Optional;
 public class GestoreAccesso {
 
     private final ClienteRepository clienteRepository;
-    private final RuoloRepository ruoloRepository;
     private final NegozioRepository negozioRepository;
     private final GestoreCorrieri gestoreCorrieri;
     private final GestoreClienti gestoreClienti;
@@ -27,9 +26,8 @@ public class GestoreAccesso {
     private final GestoreAmministratori gestoreAmministratori;
 
     @Autowired
-    public GestoreAccesso(ClienteRepository clienteRepository, RuoloRepository ruoloRepository, NegozioRepository negozioRepository, GestoreCorrieri gestoreCorrieri, GestoreClienti gestoreClienti, GestoreAddetti gestoreAddetti, GestoreCommercianti gestoreCommercianti, GestoreAmministratori gestoreAmministratori) {
+    public GestoreAccesso(ClienteRepository clienteRepository, NegozioRepository negozioRepository, GestoreCorrieri gestoreCorrieri, GestoreClienti gestoreClienti, GestoreAddetti gestoreAddetti, GestoreCommercianti gestoreCommercianti, GestoreAmministratori gestoreAmministratori) {
         this.clienteRepository = clienteRepository;
-        this.ruoloRepository = ruoloRepository;
         this.negozioRepository = negozioRepository;
         this.gestoreCorrieri = gestoreCorrieri;
         this.gestoreClienti = gestoreClienti;
@@ -37,7 +35,6 @@ public class GestoreAccesso {
         this.gestoreCommercianti = gestoreCommercianti;
         this.gestoreAmministratori = gestoreAmministratori;
     }
-
 
     public String accesso(String email, String password) {
         Optional<Cliente> cliente = clienteRepository.findByEmail(email);
