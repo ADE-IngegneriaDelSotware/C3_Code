@@ -125,6 +125,11 @@ public class GestoreMerci {
                 + promozione;
     }
 
+    /**
+     * Il metodo serve a verificare se una merce con l id selezionato è gia presente nel sistema
+     * @param id della merce da verificare
+     * @return se la merce è presente o meno
+     */
     public boolean verificaIdMerce(Long id) {
         Optional<Merce> merce = merceRepository.findById(id);
         if(merce.isPresent()){
@@ -134,7 +139,7 @@ public class GestoreMerci {
     }
 
     /**
-     * il metodo serve ad agggiungere una nuova merce in un megozio
+     * il metodo serve ad aggiungere una nuova merce in un megozio
      * @param nome della merce da inserire
      * @param descrizione della merce da inserire
      * @param categoria della merce da inserire
@@ -160,7 +165,14 @@ public class GestoreMerci {
         negozioRepository.save(negozio);
     }
 
-
+    /**
+     * Il metodo serve per modificare una merce nel prezzo,quantita, e sconto
+     *
+     * @param min merce da modificare
+     * @param prezzo
+     * @param sconto
+     * @param quantita
+     */
     public void modificaMerce(MerceInventarioNegozio min, double prezzo, double sconto, double quantita) {
         min.getMerceAlPubblico().setPrezzo(prezzo);
         min.getMerceAlPubblico().setSconto(sconto);
