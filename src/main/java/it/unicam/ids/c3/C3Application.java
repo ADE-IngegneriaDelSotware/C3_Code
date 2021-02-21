@@ -1,17 +1,19 @@
 package it.unicam.ids.c3;
 
-import it.unicam.ids.c3.persistenza.CartaRepository;
-import it.unicam.ids.c3.persistenza.NegozioRepository;
-import it.unicam.ids.c3.persistenza.*;
 import it.unicam.ids.c3.javafx.JavaFxApplication;
-import it.unicam.ids.c3.merce.*;
-import it.unicam.ids.c3.personale.*;
+import it.unicam.ids.c3.merce.Categoria;
+import it.unicam.ids.c3.persistenza.ClienteRepository;
+import it.unicam.ids.c3.persistenza.NegozioRepository;
+import it.unicam.ids.c3.persistenza.RuoloRepository;
+import it.unicam.ids.c3.personale.Amministratore;
+import it.unicam.ids.c3.personale.Cliente;
+import it.unicam.ids.c3.personale.Commerciante;
+import it.unicam.ids.c3.personale.RuoloSistema;
 import javafx.application.Application;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -51,7 +53,8 @@ public class C3Application{
 			Negozio negozio1 = new Negozio("Jeans & Co", "Via Campiglione", "3525235", List.of(Categoria.ABBIGLIAMENTO));
 			negozio1.addAddettoNegozio(commerciante1);
 			negozioRepository.save(negozio1);
-			/*********************Parte Merce********************/
+
+		};
 //			Merce merce = new Merce("jeans", Categoria.ABBIGLIAMENTO, "jeans slavati");
 //			Merce merce1 = new Merce("felpa", Categoria.ABBIGLIAMENTO, "felpa aperta");
 //			Merce merce2 = new Merce("iphone 12", Categoria.TECNOLOGIA, "256 GB , 8 GB di RAM");
@@ -84,6 +87,6 @@ public class C3Application{
 //			negozio1.addCorriere(corriere2);
 //			negozioRepository.save(negozio);
 //			negozioRepository.save(negozio1);
-		};
+
 	}
 }
