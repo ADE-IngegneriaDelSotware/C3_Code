@@ -1,20 +1,14 @@
-package it.unicam.ids.c3.autenticazione;
+package it.unicam.ids.c3.autenticazione.view;
 
-import it.unicam.ids.c3.gestori.GestoreClienti;
-import it.unicam.ids.c3.view.ICliente;
+import it.unicam.ids.c3.autenticazione.gestori.GestoreIscrizione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 @Component
 public class IIscrizione {

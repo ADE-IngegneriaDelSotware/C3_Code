@@ -1,5 +1,7 @@
-package it.unicam.ids.c3.autenticazione;
+package it.unicam.ids.c3.autenticazione.view;
 
+import it.unicam.ids.c3.autenticazione.gestori.GestoreAccesso;
+import it.unicam.ids.c3.autenticazione.gestori.GestoreIscrizione;
 import it.unicam.ids.c3.gestori.*;
 import it.unicam.ids.c3.view.*;
 import javafx.event.ActionEvent;

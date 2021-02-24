@@ -1,4 +1,4 @@
-package it.unicam.ids.c3.autenticazione;
+package it.unicam.ids.c3.autenticazione.gestori;
 
 import it.unicam.ids.c3.personale.Cliente;
 import it.unicam.ids.c3.persistenza.ClienteRepository;

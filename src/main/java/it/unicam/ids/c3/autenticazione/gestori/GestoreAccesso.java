@@ -1,4 +1,4 @@
-package it.unicam.ids.c3.autenticazione;
+package it.unicam.ids.c3.autenticazione.gestori;
 
 import it.unicam.ids.c3.gestori.*;
 import it.unicam.ids.c3.Negozio;
