@@ -1,6 +1,7 @@
 package it.unicam.ids.c3.gestori;
 
 
+import it.unicam.ids.c3.gestorispecifici.GestoreMerci;
 import it.unicam.ids.c3.merce.*;
 import it.unicam.ids.c3.Negozio;
 import it.unicam.ids.c3.persistenza.*;

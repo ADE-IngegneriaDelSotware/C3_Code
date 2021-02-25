@@ -1,4 +1,4 @@
-package it.unicam.ids.c3.gestori;
+package it.unicam.ids.c3.gestorispecifici;
 
 import it.unicam.ids.c3.carta.Carta;
 import it.unicam.ids.c3.Negozio;

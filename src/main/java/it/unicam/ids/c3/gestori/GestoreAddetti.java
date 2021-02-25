@@ -1,5 +1,9 @@
 package it.unicam.ids.c3.gestori;
 
+import it.unicam.ids.c3.gestorispecifici.GestoreCarte;
+import it.unicam.ids.c3.gestorispecifici.GestoreCheckout;
+import it.unicam.ids.c3.gestorispecifici.GestoreMerci;
+import it.unicam.ids.c3.gestorispecifici.GestoreVendite;
 import it.unicam.ids.c3.merce.MerceInventarioNegozio;
 import it.unicam.ids.c3.Negozio;
 import it.unicam.ids.c3.carta.TipoScontoCliente;

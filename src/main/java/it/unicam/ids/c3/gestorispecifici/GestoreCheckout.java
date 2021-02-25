@@ -1,4 +1,4 @@
-package it.unicam.ids.c3.gestori;
+package it.unicam.ids.c3.gestorispecifici;
 
 import it.unicam.ids.c3.merce.MerceAlPubblico;
 import it.unicam.ids.c3.carta.Carta;
@@ -21,9 +21,6 @@ public class GestoreCheckout {
 
     private List<MerceVendita> merciCarrello;
     private double prezzoCarrello;
-    private MerceRepository merceRepository;
-    private MerceAlPubblicoRepository merceAlPubblicoRepository;
-    private MerceInventarioNegozioRepository merceInventarioNegozioRepository;
     private MerceVenditaRepository merceVenditaRepository;
     private VenditaRepository venditaRepository;
     private VenditaSpeditaRepository venditaSpeditaRepository;
@@ -33,10 +30,7 @@ public class GestoreCheckout {
     private GestoreCarte gestoreCarte;
     private GestoreMerci gestoreMerci;
 
-    public GestoreCheckout(MerceRepository merceRepository, MerceAlPubblicoRepository merceAlPubblicoRepository, MerceInventarioNegozioRepository merceInventarioNegozioRepository, MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, ClienteRepository clienteRepository, RuoloRepository ruoloRepository, GestoreCarte gestoreCarte, GestoreMerci gestoreMerci) {
-        this.merceRepository = merceRepository;
-        this.merceAlPubblicoRepository = merceAlPubblicoRepository;
-        this.merceInventarioNegozioRepository = merceInventarioNegozioRepository;
+    public GestoreCheckout(MerceVenditaRepository merceVenditaRepository, VenditaRepository venditaRepository, VenditaSpeditaRepository venditaSpeditaRepository, NegozioRepository negozioRepository, ClienteRepository clienteRepository, RuoloRepository ruoloRepository, GestoreCarte gestoreCarte, GestoreMerci gestoreMerci) {
         this.merceVenditaRepository = merceVenditaRepository;
         this.venditaRepository = venditaRepository;
         this.venditaSpeditaRepository = venditaSpeditaRepository;

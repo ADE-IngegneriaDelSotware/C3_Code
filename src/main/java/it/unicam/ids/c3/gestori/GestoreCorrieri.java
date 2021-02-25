@@ -1,6 +1,6 @@
 package it.unicam.ids.c3.gestori;
 
-import it.unicam.ids.c3.persistenza.CorriereRepository;
+import it.unicam.ids.c3.gestorispecifici.GestoreVendite;
 import it.unicam.ids.c3.persistenza.VenditaSpeditaRepository;
 import it.unicam.ids.c3.personale.Corriere;
 import it.unicam.ids.c3.vendita.LuogoDiRitiro;
